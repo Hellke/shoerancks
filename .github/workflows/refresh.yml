@@ -1,0 +1,69 @@
+name: Refresh Shoe Dashboard
+
+on:
+  schedule:
+    # Runs every Monday at 07:00 UTC (9:00 Stockholm time)
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+    # Also allows manual trigger from the GitHub Actions tab
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run refresh script
+        env:
+          STRAVA_CLIENT_ID:     ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+        run: python refresh.py
+
+      - name: Commit updated dashboard
+        run: |
+          git config user.name  "Shorancks Bot"
+          git config user.email "actions@github.com"
+          git add dashboard.html
+          git diff --staged --quiet || git commit -m "chore: refresh dashboard $(date +'%Y-%m-%d')"
+          git push
+
+  deploy:
+    needs: refresh
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: main   # use freshly committed dashboard
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."   # serve the whole repo root (dashboard.html is there)
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
