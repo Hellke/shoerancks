@@ -1,305 +1,625 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Jacob Hellke · Shoe Dashboard</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<style>
-  :root { --bg:#0c0c0e; --surface:#141418; --surface2:#1c1c22; --border:#2a2a32; --text:#f0f0f0; --muted:#666; --orange:#FC4C02; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--text); font-family:'Helvetica Neue',Arial,sans-serif; padding:40px 32px; min-height:100vh; }
-  .header { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:48px; flex-wrap:wrap; gap:16px; }
-  .header-left h1 { font-size:13px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
-  .header-left h2 { font-size:36px; font-weight:300; letter-spacing:-0.5px; }
-  .header-left h2 span { color:var(--orange); font-weight:700; }
-  .header-right { display:flex; gap:32px; }
-  .stat { text-align:right; }
-  .stat-val { font-size:28px; font-weight:700; line-height:1; }
-  .stat-label { font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-top:4px; }
-  .generated { font-size:11px; color:var(--muted); margin-bottom:36px; }
-  .section-title { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:20px; }
-  .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(210px, 1fr)); gap:14px; margin-bottom:48px; }
-  .card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; position:relative; overflow:hidden; transition:border-color 0.2s; }
-  .card:hover { border-color:#3a3a44; }
-  .card.retired { opacity:0.55; }
-  .card.warning { border-color:#f59e0b55; }
-  .card-accent { position:absolute; top:0; left:0; right:0; height:3px; border-radius:14px 14px 0 0; }
-  .card-tag { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
-  .card-model { font-size:13px; font-weight:600; margin-bottom!3px; line-height:1.3; }
-  .card-km { font-size:30px; font-weight:700; line-height:1; margin-bottom:3px; }
-  .card-runs { font-size:11px; color:var(--muted); margin-bottom:14px; }
-  .card-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
-  .mini-stat { background:var(--surface2); border-radius:8px; padding:8px 10px; }
-  .mini-stat-val { font-size:15px; font-weight:700; line-height:1; margin-bottom:2px; }
-  .mini-stat-label { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; }
-  .card-retire { font-size:11px; color:var(--muted); margin-bottom:12px; }
-  .card-retire span { font-weight:600; color:var(--text); }
-  .life-track { background:var(--surface2); border-radius:99px; height:5px; overflow:hidden; }
-  .life-fill { height:5px; border-radius:99px; }
-  .life-label { font-size:10px; color:var(--muted); margin-top:6px; display:flex; justify-content:space-between; }
-  .warning-badge { margin-top:10px; font-size:10px; color:#f59e0b; letter-spacing:0.5px; }
-  .retired-badge { margin-top:10px; font-size:10px; color:var(--muted); letter-spacing:0.5px; }
-  .charts { display:grid; gap:20px; }
-  .chart-block { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:28px; }
-  .chart-block h3 { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:24px; }
-  .two-col { grid-template-columns:3fr 2fr; }
-  @media(max-width:900px){ .two-col { grid-template-columns:1fr; } }
-  canvas { width:100% !important; }
-</style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jacob Hellke · Shoe Dashboard</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <style>
+    :root {
+      --bg:#0c0c0e; --surface:#141418; --surface2:#1c1c22;
+      --border:#2a2a32; --text:#f0f0f0; --muted:#666; --orange:#FC4C02;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:'Helvetica Neue',Arial,sans-serif; padding:40px 32px; min-height:100vh; }
+    .header { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:48px; flex-wrap:wrap; gap:16px; }
+    .header-left h1 { font-size:13px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+    .header-left h2 { font-size:36px; font-weight:300; letter-spacing:-0.5px; }
+    .header-left h2 span { color:var(--orange); font-weight:700; }
+    .header-right { display:flex; gap:32px; }
+    .stat { text-align:right; }
+    .stat-val { font-size:28px; font-weight:700; line-height:1; }
+    .stat-label { font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-top:4px; }
+    .generated { font-size:11px; color:var(--muted); margin-bottom:36px; }
+    .section-title { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:20px; }
+    .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(210px, 1fr)); gap:14px; margin-bottom:48px; }
+    .card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; position:relative; overflow:hidden; transition:border-color 0.2s, transform 0.15s; }
+    .card:hover { border-color:#3a3a44; transform:translateY(-2px); }
+    .card.retired { opacity:0.55; }
+    .card.warning { border-color:#f59e0b55; }
+    .card-accent { position:absolute; top:0; left:0; right:0; height:3px; border-radius:14px 14px 0 0; }
+    .card-tag { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+    .card-model { font-size:13px; font-weight:600; margin-bottom:3px; line-height:1.3; }
+    .card-km { font-size:30px; font-weight:700; line-height:1; margin-bottom:3px; }
+    .card-runs { font-size:11px; color:var(--muted); margin-bottom:14px; }
+    .card-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+    .mini-stat { background:var(--surface2); border-radius:8px; padding:8px 10px; }
+    .mini-stat-val { font-size:15px; font-weight:700; line-height:1; margin-bottom:2px; }
+    .mini-stat-label { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; }
+    .card-retire { font-size:11px; color:var(--muted); margin-bottom:12px; }
+    .card-retire span { font-weight:600; color:var(--text); }
+    .life-track { background:var(--surface2); border-radius:99px; height:5px; overflow:hidden; }
+    .life-fill { height:5px; border-radius:99px; }
+    .life-label { font-size:10px; color:var(--muted); margin-top:6px; display:flex; justify-content:space-between; }
+    .warning-badge { margin-top:10px; font-size:10px; color:#f59e0b; letter-spacing:0.5px; }
+    .retired-badge { margin-top:10px; font-size:10px; color:var(--muted); letter-spacing:0.5px; }
+    .charts { display:grid; gap:20px; }
+    .chart-block { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:28px; }
+    .chart-block h3 { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:24px; }
+    .two-col { grid-template-columns:3fr 2fr; }
+    @media(max-width:900px) { .two-col { grid-template-columns:1fr; } }
+    canvas { width:100% !important; }
+
+    /* ── Overlay ──────────────────────────────────────────────────────────── */
+    #overlay {
+      display:none; position:fixed; inset:0; background:var(--bg);
+      z-index:100; overflow-y:auto; padding:40px 32px;
+      animation: fadeIn 0.18s ease;
+    }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    .back-btn {
+      background:none; border:1px solid var(--border); color:var(--muted);
+      font-size:12px; letter-spacing:1px; padding:8px 18px; border-radius:8px;
+      cursor:pointer; margin-bottom:40px; display:inline-flex; align-items:center;
+      gap:8px; transition:color 0.2s, border-color 0.2s; font-family:inherit;
+    }
+    .back-btn:hover { color:var(--text); border-color:#3a3a44; }
+    .overlay-accent { height:4px; border-radius:99px; margin-bottom:20px; max-width:120px; }
+    .overlay-tag { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+    .overlay-name { font-size:42px; font-weight:700; letter-spacing:-1px; margin-bottom:32px; line-height:1; }
+    .overlay-stats { display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:14px; margin-bottom:24px; }
+    .overlay-stat { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 20px; }
+    .overlay-stat-val { font-size:28px; font-weight:700; line-height:1; margin-bottom:4px; }
+    .overlay-stat-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+    .overlay-life-section {
+      background:var(--surface); border:1px solid var(--border); border-radius:14px;
+      padding:20px 24px; margin-bottom:32px;
+    }
+    .overlay-life-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; gap:16px; flex-wrap:wrap; }
+    .overlay-life-pct { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+    .ret-km-editor { display:flex; align-items:center; gap:8px; }
+    .ret-km-editor label { font-size:11px; color:var(--muted); }
+    .ret-km-input {
+      background:var(--surface2); border:1px solid var(--border); color:var(--text);
+      font-size:14px; font-weight:700; padding:6px 10px; border-radius:8px;
+      width:80px; text-align:center; font-family:inherit;
+    }
+    .ret-km-input:focus { outline:none; border-color:#3a3a44; }
+    .ret-km-save {
+      background:none; border:1px solid var(--border); color:var(--muted);
+      font-size:11px; padding:6px 14px; border-radius:8px; cursor:pointer;
+      transition:all 0.2s; font-family:inherit; letter-spacing:0.5px;
+    }
+    .ret-km-save:hover { color:var(--text); border-color:#3a3a44; }
+    .ret-km-save.saved { color:#34D399; border-color:#34D399; }
+    .overlay-charts { display:grid; grid-template-columns:2fr 1fr; gap:20px; margin-top:0; }
+    @media(max-width:900px) { .overlay-charts { grid-template-columns:1fr; } }
+    .no-supabase-note { font-size:11px; color:var(--muted); margin-left:8px; }
+  </style>
 </head>
 <body>
-<div class="header">
-  <div class="header-left">
-    <h1>Shoe Dashboard</h1>
-    <h2>Jacob <span>Hellke</span></h2>
-  </div>
-  <div class="header-right">
-    <div class="stat"><div class="stat-val" style="color:var(--orange)">2805</div><div class="stat-label">Total km</div></div>
-    <div class="stat"><div class="stat-val">316</div><div class="stat-label">Activities</div></div>
-    <div class="stat"><div class="stat-val">8</div><div class="stat-label">Shoes</div></div>
-  </div>
-</div>
-<p class="generated">Last updated 23 Mar 2026</p>
-<p class="section-title">Your rotation</p>
-<div class="cards">
 
-  <div class="card">
-    <div class="card-accent" style="background:#10B981"></div>
-    <div class="card-tag">ASICS · Trabuco Terra 2</div>
-    <div class="card-model">Trail workhorse</div>
-    <div class="card-km" style="color:#10B981">304 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
-    <div class="card-runs">27 activities</div>
-    <div class="card-stats">
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#10B981">11.2</div>
-        <div class="mini-stat-label">avg km/run</div>
-      </div>
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#10B981">~45</div>
-        <div class="mini-stat-label">runs left</div>
-      </div>
+  <div class="header">
+    <div class="header-left">
+      <h1>Shoe Dashboard</h1>
+      <h2>Jacob <span>Hellke</span></h2>
     </div>
-    <div class="card-retire">Est. retirement <span>Sep 2028</span></div>
-    <div class="life-track"><div class="life-fill" style="width:38.0%;background:#10B981"></div></div>
-    <div class="life-label"><span>38.0% of 800km</span><span>496 km left</span></div>
+    <div class="header-right">
+      <div class="stat"><div class="stat-val" style="color:var(--orange)">2805</div><div class="stat-label">Total km</div></div>
+      <div class="stat"><div class="stat-val">316</div><div class="stat-label">Activities</div></div>
+      <div class="stat"><div class="stat-val">8</div><div class="stat-label">Shoes</div></div>
+    </div>
+  </div>
+
+  <p class="generated">Last updated 23 Mar 2026</p>
+  <p class="section-title">Your rotation</p>
+  <div class="cards">
     
+    <div class="card" onclick="openShoe('g19945538')" style="cursor:pointer">
+      <div class="card-accent" style="background:#10B981"></div>
+      <div class="card-tag">ASICS · Trabuco Terra 2</div>
+      <div class="card-model">Trail workhorse</div>
+      <div class="card-km" style="color:#10B981">304 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
+      <div class="card-runs">27 activities</div>
+      <div class="card-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#10B981">11.2</div>
+          <div class="mini-stat-label">avg km/run</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#10B981">~45</div>
+          <div class="mini-stat-label">runs left</div>
+        </div>
+      </div>
+      <div class="card-retire">Est. retirement <span>Sep 2028</span></div>
+      <div class="life-track"><div class="life-fill" style="width:38.0%;background:#10B981"></div></div>
+      <div class="life-label"><span>38.0% of 800km</span><span>496 km left</span></div>
+      
+    </div>
+
+    <div class="card" onclick="openShoe('g23195462')" style="cursor:pointer">
+      <div class="card-accent" style="background:#06D6A0"></div>
+      <div class="card-tag">ASICS · Metaspeed Sky Paris </div>
+      <div class="card-model">Race</div>
+      <div class="card-km" style="color:#06D6A0">189 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
+      <div class="card-runs">13 activities</div>
+      <div class="card-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#06D6A0">14.6</div>
+          <div class="mini-stat-label">avg km/run</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#06D6A0">~42</div>
+          <div class="mini-stat-label">runs left</div>
+        </div>
+      </div>
+      <div class="card-retire">Est. retirement <span>Mar 2029</span></div>
+      <div class="life-track"><div class="life-fill" style="width:23.7%;background:#06D6A0"></div></div>
+      <div class="life-label"><span>23.7% of 800km</span><span>611 km left</span></div>
+      
+    </div>
+
+    <div class="card" onclick="openShoe('g21173164')" style="cursor:pointer">
+      <div class="card-accent" style="background:#34D399"></div>
+      <div class="card-tag">ASICS · GEL-Trabuco 12 GTX</div>
+      <div class="card-model">the mudfuckers</div>
+      <div class="card-km" style="color:#34D399">294 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
+      <div class="card-runs">23 activities</div>
+      <div class="card-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#34D399">12.8</div>
+          <div class="mini-stat-label">avg km/run</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#34D399">~40</div>
+          <div class="mini-stat-label">runs left</div>
+        </div>
+      </div>
+      <div class="card-retire">Est. retirement <span>Apr 2028</span></div>
+      <div class="life-track"><div class="life-fill" style="width:36.8%;background:#34D399"></div></div>
+      <div class="life-label"><span>36.8% of 800km</span><span>506 km left</span></div>
+      
+    </div>
+
+    <div class="card retired" onclick="openShoe('g19867062')" style="cursor:pointer">
+      <div class="card-accent" style="background:#6B7280"></div>
+      <div class="card-tag">ASICS · Gel-Nimbus 25</div>
+      <div class="card-model">ASICS Gel-Nimbus 25</div>
+      <div class="card-km" style="color:#6B7280">253 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
+      <div class="card-runs">37 activities</div>
+      <div class="card-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#6B7280">6.8</div>
+          <div class="mini-stat-label">avg km/run</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#6B7280">—</div>
+          <div class="mini-stat-label">runs left</div>
+        </div>
+      </div>
+      <div class="card-retire">Retired <span>Dec 2026</span></div>
+      <div class="life-track"><div class="life-fill" style="width:31.6%;background:#6B7280"></div></div>
+      <div class="life-label"><span>31.6% of 800km</span><span>547 km left</span></div>
+      <div class="retired-badge">✓ Retired</div>
+    </div>
+
+    <div class="card" onclick="openShoe('g29593716')" style="cursor:pointer">
+      <div class="card-accent" style="background:#FC4C02"></div>
+      <div class="card-tag">ASICS · Megablast</div>
+      <div class="card-model">Tempo & Threshold</div>
+      <div class="card-km" style="color:#FC4C02">24 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
+      <div class="card-runs">2 activities</div>
+      <div class="card-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#FC4C02">12.1</div>
+          <div class="mini-stat-label">avg km/run</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#FC4C02">~65</div>
+          <div class="mini-stat-label">runs left</div>
+        </div>
+      </div>
+      <div class="card-retire">Est. retirement <span>Dec 2026</span></div>
+      <div class="life-track"><div class="life-fill" style="width:3.0%;background:#FC4C02"></div></div>
+      <div class="life-label"><span>3.0% of 800km</span><span>776 km left</span></div>
+      
+    </div>
+
+    <div class="card warning" onclick="openShoe('g21011736')" style="cursor:pointer">
+      <div class="card-accent" style="background:#FFD166"></div>
+      <div class="card-tag">ASICS · GEL-Kayano 31</div>
+      <div class="card-model">Easy run</div>
+      <div class="card-km" style="color:#FFD166">666 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
+      <div class="card-runs">96 activities</div>
+      <div class="card-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#FFD166">6.9</div>
+          <div class="mini-stat-label">avg km/run</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#FFD166">~20</div>
+          <div class="mini-stat-label">runs left</div>
+        </div>
+      </div>
+      <div class="card-retire">Est. retirement <span>Jul 2026</span></div>
+      <div class="life-track"><div class="life-fill" style="width:83.2%;background:#FFD166"></div></div>
+      <div class="life-label"><span>83.2% of 800km</span><span>134 km left</span></div>
+      <div class="warning-badge">⚠ Approaching retirement</div>
+    </div>
+
+    <div class="card" onclick="openShoe('g23052419')" style="cursor:pointer">
+      <div class="card-accent" style="background:#FF8C42"></div>
+      <div class="card-tag">ASICS · Novablast 5</div>
+      <div class="card-model">Workhorse</div>
+      <div class="card-km" style="color:#FF8C42">485 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
+      <div class="card-runs">68 activities</div>
+      <div class="card-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#FF8C42">7.1</div>
+          <div class="mini-stat-label">avg km/run</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#FF8C42">~45</div>
+          <div class="mini-stat-label">runs left</div>
+        </div>
+      </div>
+      <div class="card-retire">Est. retirement <span>Dec 2026</span></div>
+      <div class="life-track"><div class="life-fill" style="width:60.6%;background:#FF8C42"></div></div>
+      <div class="life-label"><span>60.6% of 800km</span><span>315 km left</span></div>
+      
+    </div>
+
+    <div class="card warning" onclick="openShoe('g23262007')" style="cursor:pointer">
+      <div class="card-accent" style="background:#8B5CF6"></div>
+      <div class="card-tag">ASICS · Superblast 2</div>
+      <div class="card-model">Long run</div>
+      <div class="card-km" style="color:#8B5CF6">590 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
+      <div class="card-runs">50 activities</div>
+      <div class="card-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#8B5CF6">11.8</div>
+          <div class="mini-stat-label">avg km/run</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#8B5CF6">~18</div>
+          <div class="mini-stat-label">runs left</div>
+        </div>
+      </div>
+      <div class="card-retire">Est. retirement <span>Jul 2026</span></div>
+      <div class="life-track"><div class="life-fill" style="width:73.8%;background:#8B5CF6"></div></div>
+      <div class="life-label"><span>73.8% of 800km</span><span>210 km left</span></div>
+      
+    </div>
   </div>
 
-  <div class="card">
-    <div class="card-accent" style="background:#06D6A0"></div>
-    <div class="card-tag">ASICS · Metaspeed Sky Paris </div>
-    <div class="card-model">Race</div>
-    <div class="card-km" style="color:#06D6A0">189 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
-    <div class="card-runs">13 activities</div>
-    <div class="card-stats">
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#06D6A0">14.6</div>
-        <div class="mini-stat-label">avg km/run</div>
-      </div>
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#06D6A0">~42</div>
-        <div class="mini-stat-label">runs left</div>
-      </div>
-    </div>
-    <div class="card-retire">Est. retirement <span>Mar 2029</span></div>
-    <div class="life-track"><div class="life-fill" style="width:23.7%;background:#06D6A0"></div></div>
-    <div class="life-label"><span>23.7% of 800km</span><span>611 km left</span></div>
-    
-  </div>
-
-  <div class="card">
-    <div class="card-accent" style="background:#FF8C42"></div>
-    <div class="card-tag">ASICS · Novablast 5</div>
-    <div class="card-model">Workhorse</div>
-    <div class="card-km" style="color:#FF8C42">485 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
-    <div class="card-runs">68 activities</div>
-    <div class="card-stats">
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#FF8C42">7.1</div>
-        <div class="mini-stat-label">avg km/run</div>
-      </div>
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#FF8C42">~45</div>
-        <div class="mini-stat-label">runs left</div>
-      </div>
-    </div>
-    <div class="card-retire">Est. retirement <span>Dec 2026</span></div>
-    <div class="life-track"><div class="life-fill" style="width:60.6%;background:#FF8C42"></div></div>
-    <div class="life-label"><span>60.6% of 800km</span><span>315 km left</span></div>
-    
-  </div>
-
-  <div class="card">
-    <div class="card-accent" style="background:#34D399"></div>
-    <div class="card-tag">ASICS · GEL-Trabuco 12 GTX</div>
-    <div class="card-model">the mudfuckers</div>
-    <div class="card-km" style="color:#34D399">294 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
-    <div class="card-runs">23 activities</div>
-    <div class="card-stats">
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#34D399">12.8</div>
-        <div class="mini-stat-label">avg km/run</div>
-      </div>
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#34D399">~40</div>
-        <div class="mini-stat-label">runs left</div>
-      </div>
-    </div>
-    <div class="card-retire">Est. retirement <span>Apr 2028</span></div>
-    <div class="life-track"><div class="life-fill" style="width:36.8%;background:#34D399"></div></div>
-    <div class="life-label"><span>36.8% of 800km</span><span>506 km left</span></div>
-    
-  </div>
-
-  <div class="card retired">
-    <div class="card-accent" style="background:#6B7280"></div>
-    <div class="card-tag">ASICS · Gel-Nimbus 25</div>
-    <div class="card-model">ASICS Gel-Nimbus 25</div>
-    <div class="card-km" style="color:#6B7280">253 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
-    <div class="card-runs">37 activities</div>
-    <div class="card-stats">
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#6B7280">6.8</div>
-        <div class="mini-stat-label">avg km/run</div>
-      </div>
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#6B7280">—</div>
-        <div class="mini-stat-label">runs left</div>
-      </div>
-    </div>
-    <div class="card-retire">Retired <span>Dec 2026</span></div>
-    <div class="life-track"><div class="life-fill" style="width:31.6%;background:#6B7280"></div></div>
-    <div class="life-label"><span>31.6% of 800km</span><span>547 km left</span></div>
-    <div class="retired-badge">✓ Retired</div>
-  </div>
-
-  <div class="card warning">
-    <div class="card-accent" style="background:#FFD166"></div>
-    <div class="card-tag">ASICS · GEL-Kayano 31</div>
-    <div class="card-model">Easy run</div>
-    <div class="card-km" style="color:#FFD166">666 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
-    <div class="card-runs">96 activities</div>
-    <div class="card-stats">
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#FFD166">6.9</div>
-        <div class="mini-stat-label">avg km/run</div>
-      </div>
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#FFD166">~20</div>
-        <div class="mini-stat-label">runs left</div>
-      </div>
-    </div>
-    <div class="card-retire">Est. retirement <span>Jul 2026</span></div>
-    <div class="life-track"><div class="life-fill" style="width:83.2%;background:#FFD166"></div></div>
-    <div class="life-label"><span>83.2% of 800km</span><span>134 km left</span></div>
-    <div class="warning-badge">⚠ Approaching retirement</div>
-  </div>
-
-  <div class="card">
-    <div class="card-accent" style="background:#FC4C02"></div>
-    <div class="card-tag">ASICS · Megablast</div>
-    <div class="card-model">Tempo & Threshold</div>
-    <div class="card-km" style="color:#FC4C02">24 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
-    <div class="card-runs">2 activities</div>
-    <div class="card-stats">
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#FC4C02">12.1</div>
-        <div class="mini-stat-label">avg km/run</div>
-      </div>
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#FC4C02">~65</div>
-        <div class="mini-stat-label">runs left</div>
-      </div>
-    </div>
-    <div class="card-retire">Est. retirement <span>Dec 2026</span></div>
-    <div class="life-track"><div class="life-fill" style="width:3.0%;background:#FC4C02"></div></div>
-    <div class="life-label"><span>3.0% of 800km</span><span>776 km left</span></div>
-    
-  </div>
-
-  <div class="card warning">
-    <div class="card-accent" style="background:#8B5CF6"></div>
-    <div class="card-tag">ASICS · Superblast 2</div>
-    <div class="card-model">Long run</div>
-    <div class="card-km" style="color:#8B5CF6">590 <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
-    <div class="card-runs">50 activities</div>
-    <div class="card-stats">
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#8B5CF6">11.8</div>
-        <div class="mini-stat-label">avg km/run</div>
-      </div>
-      <div class="mini-stat">
-        <div class="mini-stat-val" style="color:#8B5CF6">~18</div>
-        <div class="mini-stat-label">runs left</div>
-      </div>
-    </div>
-    <div class="card-retire">Est. retirement <span>Jul 2026</span></div>
-    <div class="life-track"><div class="life-fill" style="width:73.8%;background:#8B5CF6"></div></div>
-    <div class="life-label"><span>73.8% of 800km</span><span>210 km left</span></div>
-    
-  </div>
-</div>
-<p class="section-title">Usage over time</p>
-<div class="charts">
-  <div class="chart-block">
-    <h3>Cumulative km per shoe</h3>
-    <canvas id="cumChart" height="300"></canvas>
-  </div>
-  <div class="charts two-col">
+  <p class="section-title">Usage over time</p>
+  <div class="charts">
     <div class="chart-block">
-      <h3>Monthly km per shoe</h3>
-      <canvas id="monthlyChart" height="280"></canvas>
+      <h3>Cumulative km per shoe</h3>
+      <canvas id="cumChart" height="300"></canvas>
     </div>
-    <div class="chart-block">
-      <h3>Activity type per shoe</h3>
-      <canvas id="typeChart" height="280"></canvas>
+    <div class="charts two-col">
+      <div class="chart-block">
+        <h3>Monthly km per shoe</h3>
+        <canvas id="monthlyChart" height="280"></canvas>
+      </div>
+      <div class="chart-block">
+        <h3>Activity type per shoe</h3>
+        <canvas id="typeChart" height="280"></canvas>
+      </div>
     </div>
   </div>
-</div>
-<script>
-const months = ["2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03"];
-const shoes  = [{"name": "Trail workhorse", "color": "#10B981", "retired": false, "cumulative": [0, 0, 26.5, 51.8, 123.4, 127.4, 127.4, 142.4, 142.4, 155.1, 170.0, 170.0, 177.2, 193.7, 225.8, 247.1, 263.3, 263.3, 270.8, 303.7], "monthly": [0, 0, 26.5, 25.3, 71.6, 4.0, 0, 15.0, 0, 12.7, 14.9, 0, 7.2, 16.5, 32.1, 21.3, 16.2, 0, 7.5, 32.9], "types": {"Run": 18, "TrailRun": 9}}, {"name": "Race", "color": "#06D6A0", "retired": false, "cumulative": [0, 0, 0, 0, 0, 0, 0, 0, 0, 50.2, 55.3, 55.3, 75.3, 126.0, 171.6, 171.6, 180.0, 180.0, 180.0, 189.4], "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 50.2, 5.1, 0, 20.0, 50.7, 45.6, 0, 8.4, 0, 0, 9.4], "types": {"Run": 13}}, {"name": "Workhorse", "color": "#FF8C42", "retired": false, "cumulative": [0, 0, 0, 0, 0, 0, 0, 0, 41.5, 70.3, 111.5, 158.5, 182.4, 228.7, 294.1, 338.6, 393.6, 436.8, 458.2, 484.7], "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 41.5, 28.8, 41.2, 47.0, 23.9, 46.3, 65.4, 44.5, 55.0, 43.2, 21.4, 26.5], "types": {"Run": 66, "Walk": 1, "TrailRun": 1}}, {"name": "the mudfuckers", "color": "#34D399", "retired": false, "cumulative": [0, 0, 0, 0, 0, 79.9, 90.7, 95.8, 95.8, 122.1, 122.1, 141.4, 188.3, 188.3, 188.3, 192.3, 200.7, 250.4, 277.8, 294.4], "monthly": [0, 0, 0, 0, 0, 79.9, 10.8, 5.1, 0, 26.3, 0, 19.3, 46.9, 0, 0, 4.0, 8.4, 49.7, 27.4, 16.6], "types": {"Run": 11, "Walk": 3, "TrailRun": 8, "Hike": 1}}, {"name": "ASICS Gel-Nimbus 25", "color": "#6B7280", "retired": true, "cumulative": [20.8, 57.5, 130.5, 200.9, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0], "monthly": [20.8, 36.7, 73.0, 70.4, 52.1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "types": {"Run": 37}}, {"name": "Easy run", "color": "#FFD166", "retired": false, "cumulative": [0, 0, 2.3, 2.3, 15.2, 66.6, 113.6, 186.1, 258.4, 288.1, 312.3, 326.2, 363.2, 402.5, 454.7, 529.7, 595.9, 612.4, 646.0, 665.7], "monthly": [0, 0, 2.3, 0, 12.9, 51.4, 47.0, 72.5, 72.3, 29.7, 24.2, 13.9, 37.0, 39.3, 52.2, 75.0, 66.2, 16.5, 33.6, 19.7], "types": {"Run": 96}}, {"name": "Tempo & Threshold", "color": "#FC4C02", "retired": false, "cumulative": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24.1], "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24.1], "types": {"Run": 2}}, {"name": "Long run", "color": "#8B5CF6", "retired": false, "cumulative": [0, 0, 0, 0, 0, 0, 0, 0, 0, 52.0, 160.5, 200.0, 261.4, 328.0, 390.1, 454.4, 547.2, 567.8, 578.6, 590.2], "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 52.0, 108.5, 39.5, 61.4, 66.6, 62.1, 64.3, 92.8, 20.6, 10.8, 11.6], "types": {"Run": 47, "TrailRun": 2, "Hike": 1}}];
-const grid   = '#1f1f28', tick = '#555';
-const tip    = { backgroundColor:'#1c1c22', borderColor:'#2a2a32', borderWidth:1, titleColor:'#aaa', bodyColor:'#eee' };
 
-new Chart(document.getElementById('cumChart'), {
-  type:'line',
-  data:{ labels:months, datasets:shoes.map(s=>( {
-    label:s.name, data:s.cumulative, borderColor:s.color,
-    backgroundColor:s.color+'12', borderWidth:s.retired?1.5:2.5,
-    borderDash:s.retired?[4,3]:[], pointRadius:0, pointHoverRadius:5, fill:false, tension:0.4
-  })) },
-  options:{ responsive:true, interaction:{mode:'index',intersect:false},
-    plugins:{ legend:{labels:{color:'#888',font:{size:11},boxWidth:24,padding:16}}, tooltip:{...tip, callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y} km`}} },
-    scales:{ x:{ticks:{color:tick,font:{size:10},maxRotation:45},grid:{color:grid}}, y:{ticks:{color:tick,font:{size:10},callback:v=>v+'km'},grid:{color:grid}} }
-  }
-});
+  <!-- ── Full-screen shoe detail overlay ──────────────────────────────────── -->
+  <div id="overlay">
+    <button class="back-btn" onclick="closeShoe()">← Back to shoes</button>
+    <div id="overlay-content"></div>
+  </div>
 
-new Chart(document.getElementById('monthlyChart'), {
-  type:'bar',
-  data:{ labels:months, datasets:shoes.map(s=>( {
-    label:s.name, data:s.monthly, backgroundColor:s.color+'cc', borderRadius:2, borderSkipped:false
-  })) },
-  options:{ responsive:true,
-    plugins:{ legend:{display:false}, tooltip:{...tip, callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y} km`}} },
-    scales:{ x:{stacked:true,ticks:{color:tick,font:{size:9},maxRotation:60},grid:{color:grid}}, y:{stacked:true,ticks:{color:tick,font:{size:10},callback:v=>v+'km'},grid:{color:grid}} }
-  }
-});
+  <script>
+    // ── Data ──────────────────────────────────────────────────────────────────
+    const months = ["2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03"];
+    const shoes  = [{"id": "g19945538", "name": "Trail workhorse", "brand": "ASICS", "model": "Trabuco Terra 2", "color": "#10B981", "retired": false, "total_km": 304, "runs": 27, "avg_km": 11.2, "retirement_km": 800, "pct_life": 38.0, "types": {"Run": 18, "TrailRun": 9}, "monthly": [0, 0, 26.5, 25.3, 71.6, 4.0, 0, 15.0, 0, 12.7, 14.9, 0, 7.2, 16.5, 32.1, 21.3, 16.2, 0, 7.5, 32.9], "cumulative": [0, 0, 26.5, 51.8, 123.4, 127.4, 127.4, 142.4, 142.4, 155.1, 170.0, 170.0, 177.2, 193.7, 225.8, 247.1, 263.3, 263.3, 270.8, 303.7], "run_distances": [10.02, 16.45, 25.34, 30.03, 9.83, 14.23, 17.46, 4.04, 15.04, 12.72, 3.4, 1.06, 5.45, 4.97, 7.15, 16.53, 5.25, 11.51, 15.33, 10.06, 11.24, 16.22, 2.01, 5.49, 8.02, 9.32, 15.51]}, {"id": "g23195462", "name": "Race", "brand": "ASICS", "model": "Metaspeed Sky Paris ", "color": "#06D6A0", "retired": false, "total_km": 189, "runs": 13, "avg_km": 14.6, "retirement_km": 800, "pct_life": 23.7, "types": {"Run": 13}, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 50.2, 5.1, 0, 20.0, 50.7, 45.6, 0, 8.4, 0, 0, 9.4], "cumulative": [0, 0, 0, 0, 0, 0, 0, 0, 0, 50.2, 55.3, 55.3, 75.3, 126.0, 171.6, 171.6, 180.0, 180.0, 180.0, 189.4], "run_distances": [7.13, 20.41, 1.36, 21.26, 5.06, 9.16, 10.85, 8.13, 42.53, 3.1, 42.5, 8.38, 9.45]}, {"id": "g21173164", "name": "the mudfuckers", "brand": "ASICS", "model": "GEL-Trabuco 12 GTX", "color": "#34D399", "retired": false, "total_km": 294, "runs": 23, "avg_km": 12.8, "retirement_km": 800, "pct_life": 36.8, "types": {"Run": 11, "Walk": 3, "TrailRun": 8, "Hike": 1}, "monthly": [0, 0, 0, 0, 0, 79.9, 10.8, 5.1, 0, 26.3, 0, 19.3, 46.9, 0, 0, 4.0, 8.4, 49.7, 27.4, 16.6], "cumulative": [0, 0, 0, 0, 0, 79.9, 90.7, 95.8, 95.8, 122.1, 122.1, 141.4, 188.3, 188.3, 188.3, 192.3, 200.7, 250.4, 277.8, 294.4], "run_distances": [8.8, 9.36, 31.6, 30.12, 5.61, 5.16, 5.07, 12.04, 14.3, 19.32, 46.88, 3.95, 8.45, 9.19, 8.51, 8.43, 9.02, 7.17, 7.38, 9.31, 16.55, 1.5, 16.58]}, {"id": "g19867062", "name": "ASICS Gel-Nimbus 25", "brand": "ASICS", "model": "Gel-Nimbus 25", "color": "#6B7280", "retired": true, "total_km": 253, "runs": 37, "avg_km": 6.8, "retirement_km": 800, "pct_life": 31.6, "types": {"Run": 37}, "monthly": [20.8, 36.7, 73.0, 70.4, 52.1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "cumulative": [20.8, 57.5, 130.5, 200.9, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0, 253.0], "run_distances": [13.79, 4.02, 3.02, 3.91, 14.77, 2.85, 6.52, 5.01, 3.69, 3.19, 6.02, 21.42, 1.17, 5.78, 3.3, 4.82, 8.02, 7.51, 1.65, 10.13, 6.03, 3.32, 15.61, 9.23, 1.53, 6.49, 7.16, 8.13, 12.9, 1.16, 6.82, 10.05, 7.12, 7.35, 7.63, 7.04, 4.96]}, {"id": "g29593716", "name": "Tempo & Threshold", "brand": "ASICS", "model": "Megablast", "color": "#FC4C02", "retired": false, "total_km": 24, "runs": 2, "avg_km": 12.1, "retirement_km": 800, "pct_life": 3.0, "types": {"Run": 2}, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24.1], "cumulative": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24.1], "run_distances": [10.02, 14.1]}, {"id": "g21011736", "name": "Easy run", "brand": "ASICS", "model": "GEL-Kayano 31", "color": "#FFD166", "retired": false, "total_km": 666, "runs": 96, "avg_km": 6.9, "retirement_km": 800, "pct_life": 83.2, "types": {"Run": 96}, "monthly": [0, 0, 2.3, 0, 12.9, 51.4, 47.0, 72.5, 72.3, 29.7, 24.2, 13.9, 37.0, 39.3, 52.2, 75.0, 66.2, 16.5, 33.6, 19.7], "cumulative": [0, 0, 2.3, 2.3, 15.2, 66.6, 113.6, 186.1, 258.4, 288.1, 312.3, 326.2, 363.2, 402.5, 454.7, 529.7, 595.9, 612.4, 646.0, 665.7], "run_distances": [2.27, 12.94, 7.06, 5.05, 8.43, 9.52, 5.18, 8.58, 7.61, 21.4, 4.04, 5.73, 6.15, 6.1, 3.55, 6.53, 7.03, 2.62, 5.81, 10.51, 17.06, 2.11, 6.33, 7.18, 4.91, 2.42, 8.27, 8.01, 9.14, 12.93, 3.01, 1.14, 5.01, 7.63, 4.14, 5.57, 7.45, 4.46, 2.13, 5.28, 3.06, 5.04, 1.86, 2.03, 4.14, 1.66, 1.87, 6.56, 1.82, 1.85, 2.03, 8.02, 2.01, 5.43, 3.95, 4.53, 5.4, 0.84, 7.14, 10.52, 6.36, 6.7, 6.51, 5.81, 10.23, 6.06, 6.63, 4.02, 12.11, 8.47, 8.44, 7.68, 7.03, 8.46, 11.21, 8.46, 7.25, 8.4, 8.45, 12.06, 6.12, 13.02, 8.41, 8.44, 8.45, 8.45, 15.45, 8.57, 8.46, 8.3, 8.25, 13.31, 12.23, 8.02, 12.02, 7.68]}, {"id": "g23052419", "name": "Workhorse", "brand": "ASICS", "model": "Novablast 5", "color": "#FF8C42", "retired": false, "total_km": 485, "runs": 68, "avg_km": 7.1, "retirement_km": 800, "pct_life": 60.6, "types": {"Run": 66, "Walk": 1, "TrailRun": 1}, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 41.5, 28.8, 41.2, 47.0, 23.9, 46.3, 65.4, 44.5, 55.0, 43.2, 21.4, 26.5], "cumulative": [0, 0, 0, 0, 0, 0, 0, 0, 41.5, 70.3, 111.5, 158.5, 182.4, 228.7, 294.1, 338.6, 393.6, 436.8, 458.2, 484.7], "run_distances": [7.37, 8.21, 6.34, 11.44, 8.14, 5.55, 1.61, 3.11, 2.4, 3.14, 3.62, 5.36, 4.02, 4.13, 8.16, 7.02, 3.29, 3.58, 1.87, 5.05, 2.04, 6.04, 12.03, 6.08, 5.29, 6.24, 12.37, 4.33, 0.68, 9.04, 3.12, 1.03, 1.62, 9.05, 10.04, 6.93, 5.03, 7.72, 8.79, 7.75, 8.05, 3.73, 9.23, 8.36, 8.39, 8.41, 12.14, 7.11, 14.13, 8.26, 3.58, 2.99, 15.55, 8.26, 9.15, 8.74, 22.62, 0.53, 5.74, 10.66, 14.38, 9.52, 8.63, 10.23, 11.15, 13.01, 6.78, 6.71]}, {"id": "g23262007", "name": "Long run", "brand": "ASICS", "model": "Superblast 2", "color": "#8B5CF6", "retired": false, "total_km": 590, "runs": 50, "avg_km": 11.8, "retirement_km": 800, "pct_life": 73.8, "types": {"Run": 47, "TrailRun": 2, "Hike": 1}, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 52.0, 108.5, 39.5, 61.4, 66.6, 62.1, 64.3, 92.8, 20.6, 10.8, 11.6], "cumulative": [0, 0, 0, 0, 0, 0, 0, 0, 0, 52.0, 160.5, 200.0, 261.4, 328.0, 390.1, 454.4, 547.2, 567.8, 578.6, 590.2], "run_distances": [12.2, 7.16, 1.99, 1.49, 3.08, 9.56, 8.36, 8.2, 24.06, 7.63, 8.02, 30.73, 38.04, 8.77, 7.6, 6.56, 16.53, 16.16, 8.44, 7.43, 8.16, 21.24, 10.53, 15.01, 8.33, 21.58, 11.13, 9.14, 6.24, 7.28, 5.02, 8.37, 8.36, 8.43, 9.23, 8.37, 8.42, 8.21, 8.68, 8.45, 6.61, 15.52, 9.21, 8.01, 8.39, 67.18, 12.66, 7.96, 10.78, 11.6]}];
 
-const allTypes=['Run','TrailRun','Walk','Hike'];
-const typeColors={Run:'#FC4C02cc',TrailRun:'#10B981cc',Walk:'#3d9af1cc',Hike:'#f59e0bcc'};
-new Chart(document.getElementById('typeChart'), {
-  type:'bar',
-  data:{ labels:shoes.map(s=>s.name.split(' · ')[0].split(' - ')[0]),
-    datasets:allTypes.map(t=>( {
-      label:t, data:shoes.map(s=>s.types[t]||0), backgroundColor:typeColors[t], borderRadius:2, borderSkipped:false
-    })) },
-  options:{ responsive:true, indexAxis:'y',
-    plugins:{ legend:{labels:{color:'#888',font:{size:11},boxWidth:20,padding:12}}, tooltip:{...tip} },
-    scales:{ x:{stacked:true,ticks:{color:tick,font:{size:10}},grid:{color:grid}}, y:{stacked:true,ticks:{color:tick,font:{size:10}},grid:{color:grid}} }
-  }
-});
-</script>
+    // ── Supabase ──────────────────────────────────────────────────────────────
+    const SUPABASE_URL = "https://dlthorzndgeecxpuergr.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_1mj4MFkoldVvbpSS26FXUw_LUduDfzR";
+    let supabaseClient = null;
+    let shoeSettings   = {};
+
+    if (SUPABASE_URL && SUPABASE_KEY) {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      supabaseClient.from('shoe_settings').select('*').then(({ data, error }) => {
+        if (data) data.forEach(row => { shoeSettings[row.shoe_id] = row; });
+      });
+    }
+
+    // ── Chart shared config ───────────────────────────────────────────────────
+    const grid = '#1f1f28', tick = '#555';
+    const tip  = {
+      backgroundColor:'#1c1c22', borderColor:'#2a2a32', borderWidth:1,
+      titleColor:'#aaa', bodyColor:'#eee',
+    };
+
+    // ── Main page charts ──────────────────────────────────────────────────────
+    new Chart(document.getElementById('cumChart'), {
+      type: 'line',
+      data: {
+        labels: months,
+        datasets: shoes.map(s => ({
+          label: s.name, data: s.cumulative, borderColor: s.color,
+          backgroundColor: s.color + '12', borderWidth: s.retired ? 1.5 : 2.5,
+          borderDash: s.retired ? [4,3] : [], pointRadius: 0, pointHoverRadius: 5,
+          fill: false, tension: 0.4,
+        })),
+      },
+      options: {
+        responsive: true,
+        interaction: { mode:'index', intersect:false },
+        plugins: {
+          legend: { labels: { color:'#888', font:{ size:11 }, boxWidth:24, padding:16 } },
+          tooltip: { ...tip, callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y} km` } },
+        },
+        scales: {
+          x: { ticks:{ color:tick, font:{ size:10 }, maxRotation:45 }, grid:{ color:grid } },
+          y: { ticks:{ color:tick, font:{ size:10 }, callback: v => v+'km' }, grid:{ color:grid } },
+        },
+      },
+    });
+
+    new Chart(document.getElementById('monthlyChart'), {
+      type: 'bar',
+      data: {
+        labels: months,
+        datasets: shoes.map(s => ({
+          label: s.name, data: s.monthly,
+          backgroundColor: s.color + 'cc', borderRadius: 2, borderSkipped: false,
+        })),
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: { ...tip, callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y} km` } },
+        },
+        scales: {
+          x: { stacked:true, ticks:{ color:tick, font:{ size:9 }, maxRotation:60 }, grid:{ color:grid } },
+          y: { stacked:true, ticks:{ color:tick, font:{ size:10 }, callback: v => v+'km' }, grid:{ color:grid } },
+        },
+      },
+    });
+
+    const allTypes   = ['Run','TrailRun','Walk','Hike'];
+    const typeColors = { Run:'#FC4C02cc', TrailRun:'#10B981cc', Walk:'#3d9af1cc', Hike:'#f59e0bcc' };
+    new Chart(document.getElementById('typeChart'), {
+      type: 'bar',
+      data: {
+        labels: shoes.map(s => s.name.split(' · ')[0].split(' - ')[0]),
+        datasets: allTypes.map(t => ({
+          label: t, data: shoes.map(s => s.types[t] || 0),
+          backgroundColor: typeColors[t], borderRadius: 2, borderSkipped: false,
+        })),
+      },
+      options: {
+        responsive: true,
+        indexAxis: 'y',
+        plugins: {
+          legend: { labels: { color:'#888', font:{ size:11 }, boxWidth:20, padding:12 } },
+          tooltip: { ...tip },
+        },
+        scales: {
+          x: { stacked:true, ticks:{ color:tick, font:{ size:10 } }, grid:{ color:grid } },
+          y: { stacked:true, ticks:{ color:tick, font:{ size:10 } }, grid:{ color:grid } },
+        },
+      },
+    });
+
+    // ── Shoe detail overlay ───────────────────────────────────────────────────
+    let histChart = null;
+    let pieChart  = null;
+
+    function openShoe(shoeId) {
+      const shoe  = shoes.find(s => s.id === shoeId);
+      if (!shoe) return;
+
+      const retKm    = (shoeSettings[shoeId] && shoeSettings[shoeId].retirement_km)
+                       || shoe.retirement_km;
+      const pct      = Math.min(100, shoe.total_km / retKm * 100).toFixed(1);
+      const remaining = Math.max(0, retKm - shoe.total_km);
+
+      // Build histogram (1 km buckets, index 0 = 0–1 km, index 50 = 50+ km)
+      const allBuckets = new Array(51).fill(0);
+      shoe.run_distances.forEach(d => {
+        allBuckets[Math.min(Math.floor(d), 50)]++;
+      });
+      const maxRun    = shoe.run_distances.length
+                        ? Math.ceil(Math.max(...shoe.run_distances)) : 15;
+      const dispMax   = Math.min(50, Math.max(15, maxRun));
+      const histData  = allBuckets.slice(0, dispMax + 1);
+      histData.push(allBuckets[50]);
+      const histLabels = Array.from({length: dispMax + 1}, (_, i) => `${i}–${i+1}`);
+      histLabels.push('50+');
+
+      // Pie chart data
+      const pieLabels = Object.keys(shoe.types);
+      const pieData   = Object.values(shoe.types);
+
+      const supabaseNote = supabaseClient
+        ? '' : '<span class="no-supabase-note">(Supabase not configured — changes saved locally only)</span>';
+
+      document.getElementById('overlay-content').innerHTML = `
+        <div class="overlay-accent" style="background:${shoe.color}"></div>
+        <div class="overlay-tag">${shoe.brand} · ${shoe.model}</div>
+        <div class="overlay-name" style="color:${shoe.color}">${shoe.name}</div>
+
+        <div class="overlay-stats">
+          <div class="overlay-stat">
+            <div class="overlay-stat-val" style="color:${shoe.color}">${shoe.total_km}</div>
+            <div class="overlay-stat-label">Total km</div>
+          </div>
+          <div class="overlay-stat">
+            <div class="overlay-stat-val">${shoe.runs}</div>
+            <div class="overlay-stat-label">Activities</div>
+          </div>
+          <div class="overlay-stat">
+            <div class="overlay-stat-val">${shoe.avg_km}</div>
+            <div class="overlay-stat-label">Avg km / run</div>
+          </div>
+        </div>
+
+        <div class="overlay-life-section">
+          <div class="overlay-life-header">
+            <span class="overlay-life-pct" id="overlay-pct-label">${pct}% of retirement distance</span>
+            <div class="ret-km-editor">
+              <label>Retirement at</label>
+              <input class="ret-km-input" id="ret-km-val" type="number" value="${retKm}" min="1" max="9999"/>
+              <label>km</label>
+              <button class="ret-km-save" id="ret-km-save-btn" onclick="saveRetirementKm('${shoe.id}', '${shoe.color}')">Save</button>
+              ${supabaseNote}
+            </div>
+          </div>
+          <div class="life-track">
+            <div class="life-fill" id="overlay-life-fill" style="width:${pct}%;background:${shoe.color}"></div>
+          </div>
+          <div class="life-label" style="margin-top:8px">
+            <span id="overlay-pct-right">${pct}%</span>
+            <span id="overlay-remaining">${remaining} km left</span>
+          </div>
+        </div>
+
+        <div class="overlay-charts">
+          <div class="chart-block">
+            <h3>Run distance distribution</h3>
+            <canvas id="overlayHist"></canvas>
+          </div>
+          <div class="chart-block">
+            <h3>Activity types</h3>
+            <canvas id="overlayPie"></canvas>
+          </div>
+        </div>
+      `;
+
+      // Destroy any previous chart instances
+      if (histChart) { histChart.destroy(); histChart = null; }
+      if (pieChart)  { pieChart.destroy();  pieChart  = null; }
+
+      histChart = new Chart(document.getElementById('overlayHist'), {
+        type: 'bar',
+        data: {
+          labels: histLabels,
+          datasets: [{
+            label: 'Runs',
+            data: histData,
+            backgroundColor: shoe.color + 'bb',
+            borderRadius: 3,
+            borderSkipped: false,
+          }],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: { ...tip, callbacks: {
+              label: c => ` ${c.parsed.y} run${c.parsed.y !== 1 ? 's' : ''}`,
+            } },
+          },
+          scales: {
+            x: { ticks:{ color:tick, font:{ size:10 }, maxRotation:60 }, grid:{ color:grid } },
+            y: { ticks:{ color:tick, font:{ size:10 }, stepSize:1 }, grid:{ color:grid } },
+          },
+        },
+      });
+
+      const pieColorMap = {
+        Run:'#FC4C02', TrailRun:'#10B981', Walk:'#3d9af1',
+        Hike:'#f59e0b', VirtualRun:'#8B5CF6', NordicSki:'#34D399',
+      };
+
+      pieChart = new Chart(document.getElementById('overlayPie'), {
+        type: 'doughnut',
+        data: {
+          labels: pieLabels,
+          datasets: [{
+            data: pieData,
+            backgroundColor: pieLabels.map(l => (pieColorMap[l] || '#888') + 'dd'),
+            borderColor: '#1c1c22',
+            borderWidth: 2,
+            hoverOffset: 8,
+          }],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { labels: { color:'#888', font:{ size:11 }, padding:16 } },
+            tooltip: { ...tip },
+          },
+        },
+      });
+
+      document.getElementById('overlay').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      window.scrollTo(0, 0);
+    }
+
+    function closeShoe() {
+      document.getElementById('overlay').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    async function saveRetirementKm(shoeId, color) {
+      const input = document.getElementById('ret-km-val');
+      const km    = parseInt(input.value, 10);
+      if (!km || km < 1) return;
+
+      // Update shoeSettings cache
+      shoeSettings[shoeId] = shoeSettings[shoeId] || {};
+      shoeSettings[shoeId].retirement_km = km;
+
+      // Update progress bar live
+      const shoe = shoes.find(s => s.id === shoeId);
+      if (shoe) {
+        const pct       = Math.min(100, shoe.total_km / km * 100).toFixed(1);
+        const remaining = Math.max(0, km - shoe.total_km);
+        const fill      = document.getElementById('overlay-life-fill');
+        if (fill) fill.style.width = pct + '%';
+        const pctLabel  = document.getElementById('overlay-pct-label');
+        if (pctLabel)   pctLabel.textContent = pct + '% of retirement distance';
+        const pctRight  = document.getElementById('overlay-pct-right');
+        if (pctRight)   pctRight.textContent = pct + '%';
+        const remEl     = document.getElementById('overlay-remaining');
+        if (remEl)      remEl.textContent = remaining + ' km left';
+      }
+
+      const btn = document.getElementById('ret-km-save-btn');
+      if (!supabaseClient) {
+        if (btn) { btn.textContent = 'Saved locally'; btn.classList.add('saved'); }
+        return;
+      }
+
+      try {
+        const { error } = await supabaseClient
+          .from('shoe_settings')
+          .upsert({ shoe_id: shoeId, retirement_km: km },
+                  { onConflict: 'shoe_id' });
+        if (error) throw error;
+        if (btn) {
+          btn.textContent = 'Saved ✓';
+          btn.classList.add('saved');
+          setTimeout(() => { btn.textContent = 'Save'; btn.classList.remove('saved'); }, 2000);
+        }
+      } catch(e) {
+        console.error('Supabase save failed:', e);
+        if (btn) btn.textContent = 'Error — check console';
+      }
+    }
+
+    // Close overlay with Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && document.getElementById('overlay').style.display !== 'none') {
+        closeShoe();
+      }
+    });
+  </script>
 </body>
 </html>
