@@ -262,7 +262,7 @@ def render_card(shoe, color):
         display_name = display_name.split(" · ", 1)[-1]
 
     return f"""
-    <div class="{css_cls}" onclick="openShoe('{shoe['id']}')" style="cursor:pointer">
+    <div class="{css_cls}" data-shoe-id="{shoe['id']}" onclick="openShoe('{shoe['id']}')" style="cursor:pointer">
       <div class="card-accent" style="background:{color}"></div>
       <div class="card-tag">{shoe["brand"]} · {shoe["model"]}</div>
       <div class="card-model">{display_name}</div>
@@ -720,19 +720,44 @@ def build_html(data, supabase_url="", supabase_anon_key=""):
       shoeSettings[shoeId] = shoeSettings[shoeId] || {{}};
       shoeSettings[shoeId].retirement_km = km;
 
-      // Update progress bar live
+      // Update overlay + mirror to main dashboard card
       const shoe = shoes.find(s => s.id === shoeId);
       if (shoe) {{
         const pct       = Math.min(100, shoe.total_km / km * 100).toFixed(1);
+        const pctNum    = parseFloat(pct);
         const remaining = Math.max(0, km - shoe.total_km);
-        const fill      = document.getElementById('overlay-life-fill');
+
+        // Overlay
+        const fill = document.getElementById('overlay-life-fill');
         if (fill) fill.style.width = pct + '%';
-        const pctLabel  = document.getElementById('overlay-pct-label');
-        if (pctLabel)   pctLabel.textContent = pct + '% of retirement distance';
-        const pctRight  = document.getElementById('overlay-pct-right');
-        if (pctRight)   pctRight.textContent = pct + '%';
-        const remEl     = document.getElementById('overlay-remaining');
-        if (remEl)      remEl.textContent = remaining + ' km left';
+        const pctLabel = document.getElementById('overlay-pct-label');
+        if (pctLabel)  pctLabel.textContent = pct + '% of retirement distance';
+        const pctRight = document.getElementById('overlay-pct-right');
+        if (pctRight)  pctRight.textContent = pct + '%';
+        const remEl = document.getElementById('overlay-remaining');
+        if (remEl)     remEl.textContent = remaining + ' km left';
+
+        // Main dashboard card
+        const card = document.querySelector('[data-shoe-id="' + shoeId + '"]');
+        if (card) {{
+          const cardFill = card.querySelector('.life-fill');
+          if (cardFill) {{ cardFill.style.width = pct + '%'; cardFill.style.background = color; }}
+          const spans = card.querySelectorAll('.life-label span');
+          if (spans[0]) spans[0].textContent = pct + '% of ' + km + 'km';
+          if (spans[1]) spans[1].textContent = remaining + ' km left';
+          card.classList.toggle('warning', pctNum >= 70 && !shoe.retired);
+          let badge = card.querySelector('.warning-badge');
+          if (pctNum >= 83 && !shoe.retired) {{
+            if (!badge) {{
+              badge = document.createElement('div');
+              badge.className = 'warning-badge';
+              badge.textContent = '⚠ Approaching retirement';
+              card.appendChild(badge);
+            }}
+          }} else if (badge) {{
+            badge.remove();
+          }}
+        }}
       }}
 
       const btn = document.getElementById('ret-km-save-btn');
