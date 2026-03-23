@@ -2,10 +2,8 @@ name: Refresh Shoe Dashboard
 
 on:
   schedule:
-    # Runs every Monday at 07:00 UTC (9:00 Stockholm time)
     - cron: "0 7 * * 1"
   workflow_dispatch:
-    # Also allows manual trigger from the GitHub Actions tab
 
 permissions:
   contents: write
@@ -33,6 +31,8 @@ jobs:
           STRAVA_CLIENT_ID:     ${{ secrets.STRAVA_CLIENT_ID }}
           STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
           STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+          SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY:    ${{ secrets.SUPABASE_ANON_KEY }}
         run: python refresh.py
 
       - name: Commit updated dashboard
@@ -54,7 +54,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          ref: main   # use freshly committed dashboard
+          ref: main
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -62,7 +62,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "."   # serve the whole repo root (dashboard.html is there)
+          path: "."
 
       - name: Deploy to GitHub Pages
         id: deployment
