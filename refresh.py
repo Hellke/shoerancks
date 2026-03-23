@@ -119,8 +119,8 @@ def process(activities, gear_map):
         recent   = acts[-min(30, len(acts)):]
         avg_days = 7.0
         if len(recent) >= 2:
-            span     = (datetime.fromisoformat(recent[-1]["start_date_local"]) -
-                        datetime.fromisoformat(recent[0]["start_date_local"])).days
+            span     = (datetime.fromisoformat(recent[-1]["start_date_local"].replace("Z", "+00:00")) -
+                        datetime.fromisoformat(recent[0]["start_date_local"].replace("Z", "+00:00"))).days
             avg_days = span / (len(recent) - 1) if len(recent) > 1 else 7.0
 
         remaining_km = max(0, RETIREMENT_KM - total_km)
