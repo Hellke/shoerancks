@@ -27,6 +27,8 @@ def load_config():
             "refresh_token":      env_refresh,
             "supabase_url":       os.environ.get("SUPABASE_URL", ""),
             "supabase_anon_key":  os.environ.get("SUPABASE_ANON_KEY", ""),
+            "github_pat":         os.environ.get("GITHUB_PAT", ""),
+            "github_repo":        os.environ.get("GITHUB_REPO", ""),
         }
     config_path = Path(__file__).parent / "config.json"
     if config_path.exists():
@@ -285,7 +287,7 @@ def render_card(shoe, color):
     </div>"""
 
 
-def build_html(data, supabase_url="", supabase_anon_key=""):
+def build_html(data, supabase_url="", supabase_anon_key="", github_pat="", github_repo=""):
     athlete    = data["athlete"]
     name       = f'{athlete["firstname"]} {athlete["lastname"]}'
     shoes      = data["shoes"]
@@ -313,9 +315,11 @@ def build_html(data, supabase_url="", supabase_anon_key=""):
         "run_distances": s["run_distances"],
     } for s in shoes])
 
-    js_months       = json.dumps(data["all_months"])
-    js_supabase_url = json.dumps(supabase_url or None)
-    js_supabase_key = json.dumps(supabase_anon_key or None)
+    js_months        = json.dumps(data["all_months"])
+    js_supabase_url  = json.dumps(supabase_url or None)
+    js_supabase_key  = json.dumps(supabase_anon_key or None)
+    js_github_token  = json.dumps(github_pat or None)
+    js_github_repo   = json.dumps(github_repo or None)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -415,6 +419,16 @@ def build_html(data, supabase_url="", supabase_anon_key=""):
     .overlay-charts {{ display:grid; grid-template-columns:2fr 1fr; gap:20px; margin-top:0; }}
     @media(max-width:900px) {{ .overlay-charts {{ grid-template-columns:1fr; }} }}
     .no-supabase-note {{ font-size:11px; color:var(--muted); margin-left:8px; }}
+    .generated-row {{ display:flex; align-items:center; gap:16px; margin-bottom:36px; }}
+    .generated-row .generated {{ margin-bottom:0; }}
+    .refresh-btn {{
+      background:none; border:1px solid var(--border); color:var(--muted);
+      font-size:11px; letter-spacing:0.5px; padding:5px 14px; border-radius:8px;
+      cursor:pointer; display:inline-flex; align-items:center; gap:6px;
+      transition:color 0.2s, border-color 0.2s; font-family:inherit;
+    }}
+    .refresh-btn:hover {{ color:var(--text); border-color:#3a3a44; }}
+    .refresh-btn:disabled {{ opacity:0.5; cursor:default; }}
   </style>
 </head>
 <body>
@@ -431,7 +445,10 @@ def build_html(data, supabase_url="", supabase_anon_key=""):
     </div>
   </div>
 
-  <p class="generated">Last updated {data["generated"]}</p>
+  <div class="generated-row">
+    <p class="generated">Last updated {data["generated"]}</p>
+    <button class="refresh-btn" id="refresh-btn" onclick="refreshData()">↻ Refresh data</button>
+  </div>
   <p class="section-title">Your rotation</p>
   <div class="cards">
     {cards_html}
@@ -477,6 +494,51 @@ def build_html(data, supabase_url="", supabase_anon_key=""):
       supabaseClient.from('shoe_settings').select('*').then(({{ data, error }}) => {{
         if (data) data.forEach(row => {{ shoeSettings[row.shoe_id] = row; }});
       }});
+    }}
+
+    // ── GitHub Actions refresh ────────────────────────────────────────────────
+    const GITHUB_TOKEN = {js_github_token};
+    const GITHUB_REPO  = {js_github_repo};
+
+    async function refreshData() {{
+      const btn = document.getElementById('refresh-btn');
+      if (!GITHUB_TOKEN || !GITHUB_REPO) {{
+        alert('No GitHub token configured. Add github_pat and github_repo to config.json and regenerate the dashboard.');
+        return;
+      }}
+      btn.disabled = true;
+      btn.textContent = '↻ Triggering…';
+      try {{
+        const res = await fetch(
+          `https://api.github.com/repos/${{GITHUB_REPO}}/actions/workflows/refresh.yml/dispatches`,
+          {{
+            method: 'POST',
+            headers: {{
+              'Authorization': `Bearer ${{GITHUB_TOKEN}}`,
+              'Accept': 'application/vnd.github+json',
+              'Content-Type': 'application/json',
+            }},
+            body: JSON.stringify({{ ref: 'main' }}),
+          }}
+        );
+        if (res.status === 204) {{
+          btn.textContent = '✓ Refresh triggered';
+          btn.style.color = '#34D399';
+          btn.style.borderColor = '#34D399';
+          setTimeout(() => {{
+            btn.textContent = '↻ Refresh data';
+            btn.style.color = '';
+            btn.style.borderColor = '';
+            btn.disabled = false;
+          }}, 5000);
+        }} else {{
+          throw new Error(`HTTP ${{res.status}}`);
+        }}
+      }} catch(e) {{
+        console.error('Refresh failed:', e);
+        btn.textContent = 'Error — check console';
+        setTimeout(() => {{ btn.textContent = '↻ Refresh data'; btn.disabled = false; }}, 3000);
+      }}
     }}
 
     // ── Chart shared config ───────────────────────────────────────────────────
@@ -572,17 +634,14 @@ def build_html(data, supabase_url="", supabase_anon_key=""):
       const pct      = Math.min(100, shoe.total_km / retKm * 100).toFixed(1);
       const remaining = Math.max(0, retKm - shoe.total_km);
 
-      // Build histogram (1 km buckets, index 0 = 0–1 km, index 50 = 50+ km)
-      const allBuckets = new Array(51).fill(0);
+      // Build histogram (5 km buckets: 0–5, 5–10, …, 45–50, 50+)
+      const BUCKET = 5;
+      const buckets = new Array(11).fill(0); // indices 0–9 = 0–50 km, index 10 = 50+
       shoe.run_distances.forEach(d => {{
-        allBuckets[Math.min(Math.floor(d), 50)]++;
+        buckets[Math.min(Math.floor(d / BUCKET), 10)]++;
       }});
-      const maxRun    = shoe.run_distances.length
-                        ? Math.ceil(Math.max(...shoe.run_distances)) : 15;
-      const dispMax   = Math.min(50, Math.max(15, maxRun));
-      const histData  = allBuckets.slice(0, dispMax + 1);
-      histData.push(allBuckets[50]);
-      const histLabels = Array.from({{length: dispMax + 1}}, (_, i) => `${{i}}–${{i+1}}`);
+      const histData   = buckets;
+      const histLabels = Array.from({{length: 10}}, (_, i) => `${{i * BUCKET}}–${{(i + 1) * BUCKET}}`);
       histLabels.push('50+');
 
       // Pie chart data
@@ -822,7 +881,9 @@ def main():
     out_dir = Path(__file__).parent
     html    = build_html(data,
                          supabase_url      = config.get("supabase_url", ""),
-                         supabase_anon_key = config.get("supabase_anon_key", ""))
+                         supabase_anon_key = config.get("supabase_anon_key", ""),
+                         github_pat        = config.get("github_pat", ""),
+                         github_repo       = config.get("github_repo", ""))
     (out_dir / "dashboard.html").write_text(html)
     print(f"\nDashboard saved to {out_dir / 'dashboard.html'}")
 
