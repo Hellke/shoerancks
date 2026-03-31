@@ -147,6 +147,7 @@
     // ── Global state ──────────────────────────────────────────────────────────
     let shoes        = [];
     let months       = [];
+    let weeks        = [];
     let shoeSettings = {};
     let cumChart, monthlyChart, typeChart, histChart, pieChart;
 
@@ -163,6 +164,7 @@
         const d = dataRes.data.data;
         shoes  = d.shoes;
         months = d.all_months;
+        weeks  = d.all_weeks || [];
 
         if (settingsRes.data) {
           settingsRes.data.forEach(row => { shoeSettings[row.shoe_id] = row; });
@@ -230,7 +232,7 @@
           </div>
           <div class="charts two-col">
             <div class="chart-block">
-              <h3>Monthly km per shoe</h3>
+              <h3>Weekly km per shoe</h3>
               <canvas id="monthlyChart" height="280"></canvas>
             </div>
             <div class="chart-block">
@@ -332,9 +334,9 @@
       monthlyChart = new Chart(document.getElementById('monthlyChart'), {
         type: 'bar',
         data: {
-          labels: months,
+          labels: weeks,
           datasets: shoes.map(s => ({
-            label: s.name, data: s.monthly,
+            label: s.name, data: s.weekly,
             backgroundColor: s.color + 'cc', borderRadius: 2, borderSkipped: false,
           })),
         },
@@ -345,7 +347,7 @@
             tooltip: { ...tip, callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y} km` } },
           },
           scales: {
-            x: { stacked:true, ticks:{ color:tick, font:{ size:9 }, maxRotation:60 }, grid:{ color:grid } },
+            x: { stacked:true, ticks:{ color:tick, font:{ size:9 }, maxRotation:60, autoSkip:true, maxTicksLimit:24 }, grid:{ color:grid } },
             y: { stacked:true, ticks:{ color:tick, font:{ size:10 }, callback: v => v+'km' }, grid:{ color:grid } },
           },
         },

@@ -188,6 +188,7 @@ def process(activities, gear_map, shoe_settings=None):
     shoe_settings  = shoe_settings or {}
     shoe_ids       = [gid for gid, g in gear_map.items() if not gid.startswith("b")]
     shoe_monthly   = {id: defaultdict(float) for id in shoe_ids}
+    shoe_weekly    = {id: defaultdict(float) for id in shoe_ids}
     shoe_types     = {id: defaultdict(int)   for id in shoe_ids}
     shoe_total_km  = {id: 0.0               for id in shoe_ids}
     shoe_run_count = {id: 0                 for id in shoe_ids}
@@ -199,14 +200,18 @@ def process(activities, gear_map, shoe_settings=None):
             continue
         km    = act["distance"] / 1000
         month = act["start_date_local"][:7]
+        iso   = datetime.strptime(act["start_date_local"][:10], "%Y-%m-%d").date().isocalendar()
+        week  = f"{iso[0]}-W{iso[1]:02d}"
         atype = act.get("sport_type") or act.get("type") or "Run"
         shoe_monthly[gid][month] += km
+        shoe_weekly[gid][week]   += km
         shoe_types[gid][atype]   += 1
         shoe_total_km[gid]       += km
         shoe_run_count[gid]      += 1
         shoe_acts[gid].append(act)
 
     all_months = sorted({m for sid in shoe_ids for m in shoe_monthly[sid]})
+    all_weeks  = sorted({w for sid in shoe_ids for w in shoe_weekly[sid]})
     today      = datetime.utcnow().date()
     shoes_out  = []
 
@@ -242,8 +247,9 @@ def process(activities, gear_map, shoe_settings=None):
         elif " · " in display_name:
             display_name = display_name.split(" · ", 1)[-1]
 
-        # Monthly & cumulative series
+        # Monthly, weekly & cumulative series
         monthly_series = [round(shoe_monthly[gid].get(m, 0), 1) for m in all_months]
+        weekly_series  = [round(shoe_weekly[gid].get(w, 0), 1)  for w in all_weeks]
         cum, cum_series = 0, []
         for v in monthly_series:
             cum += v
@@ -266,6 +272,7 @@ def process(activities, gear_map, shoe_settings=None):
             "remaining":     max(0, round(ret_km - total_km)),
             "types":         dict(shoe_types[gid]),
             "monthly":       monthly_series,
+            "weekly":        weekly_series,
             "cumulative":    cum_series,
             "run_distances": [round(a["distance"] / 1000, 2) for a in acts],
         })
@@ -273,6 +280,7 @@ def process(activities, gear_map, shoe_settings=None):
     return {
         "generated":  datetime.utcnow().strftime("%d %b %Y"),
         "all_months": all_months,
+        "all_weeks":  all_weeks,
         "shoes":      shoes_out,
         "totals": {
             "km":         round(sum(shoe_total_km[sid] for sid in shoe_ids)),
