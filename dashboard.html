@@ -386,14 +386,21 @@
       const pct       = shoe.pct_life;
       const remaining = shoe.remaining ?? Math.max(0, retKm - shoe.total_km);
 
-      // Histogram: 5km buckets (0–5, 5–10, …, 45–50, 50+)
-      const BUCKET  = 5;
-      const buckets = new Array(11).fill(0);
+      // Histogram: 1km buckets 0–10, 2km buckets 10–20, 5km buckets 20–50, then 50+
+      const HIST_EDGES = [
+        ...Array.from({length: 10}, (_, i) => i),          // 0,1,2,...,9  → 10 buckets of 1km
+        ...Array.from({length: 5},  (_, i) => 10 + i * 2), // 10,12,14,16,18 → 5 buckets of 2km
+        ...Array.from({length: 6},  (_, i) => 20 + i * 5), // 20,25,30,35,40,45 → 6 buckets of 5km
+        50,                                                  // 50+ catch-all
+      ]; // 22 edges → 22 buckets (last is open-ended)
+      const buckets = new Array(HIST_EDGES.length).fill(0);
       shoe.run_distances.forEach(d => {
-        buckets[Math.min(Math.floor(d / BUCKET), 10)]++;
+        let idx = HIST_EDGES.findIndex((edge, i) => i === HIST_EDGES.length - 1 || d < HIST_EDGES[i + 1]);
+        buckets[Math.max(0, idx)]++;
       });
-      const histLabels = Array.from({length: 10}, (_, i) => `${i * BUCKET}–${(i + 1) * BUCKET}`);
-      histLabels.push('50+');
+      const histLabels = HIST_EDGES.map((edge, i) =>
+        i === HIST_EDGES.length - 1 ? '50+' : `${edge}–${HIST_EDGES[i + 1]}`
+      );
 
       const pieLabels = Object.keys(shoe.types);
       const pieData   = Object.values(shoe.types);
