@@ -2,7 +2,7 @@ name: Refresh Shoe Dashboard
 
 on:
   schedule:
-    - cron: "0 7 * * 1"   # every Monday 07:00 UTC
+    - cron: "0 6 * * *"   # every day 06:00 UTC
   workflow_dispatch:        # manual trigger
 
 permissions:
