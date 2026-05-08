@@ -20,10 +20,18 @@ import json
 import os
 import re
 import math
+import time
 import requests
 from datetime import datetime, timedelta
 from collections import defaultdict
 from pathlib import Path
+
+# Strava's standard best-effort distance names (lowercased to match API)
+BEST_EFFORT_DISTANCES = {
+    "400m", "800m", "1k", "1 mile", "2 mile", "5k", "10k", "half marathon", "marathon",
+}
+# Display order for UI
+BEST_EFFORT_ORDER = ["400m", "800m", "1k", "1 mile", "2 mile", "5k", "10k", "half marathon", "marathon"]
 
 
 # ── Credentials ────────────────────────────────────────────────────────────────
@@ -112,6 +120,83 @@ def fetch_gear(gear_id, headers):
     return r.json()
 
 
+def fetch_activity_detail(activity_id, headers):
+    r = requests.get(f"{BASE}/activities/{activity_id}", headers=headers)
+    r.raise_for_status()
+    return r.json()
+
+
+# ── Best Efforts Cache ──────────────────────────────────────────────────────────
+def load_best_efforts_cache():
+    path = Path(__file__).parent / "best_efforts_cache.json"
+    if path.exists():
+        with open(path) as f:
+            return json.load(f)
+    return {}
+
+
+def save_best_efforts_cache(cache):
+    path = Path(__file__).parent / "best_efforts_cache.json"
+    with open(path, "w") as f:
+        json.dump(cache, f, separators=(",", ":"))
+
+
+def sync_best_efforts(activities, shoe_ids, headers):
+    """Fetch best_efforts for any Run activities on tracked shoes not yet cached.
+
+    Strava allows 100 requests/15 min. We use a ~10s gap between calls so the
+    initial sync of ~300 activities takes ~50 min. Progress is saved every 20
+    fetches so re-running picks up where it left off on rate-limit errors.
+    """
+    cache = load_best_efforts_cache()
+    run_ids = [
+        str(a["id"]) for a in activities
+        if a.get("gear_id") in shoe_ids
+        and (a.get("sport_type") or a.get("type", "")) == "Run"
+    ]
+    new_ids = [aid for aid in run_ids if aid not in cache]
+    if not new_ids:
+        print(f"  Best efforts cache up to date ({len(run_ids)} activities cached).")
+        return cache
+    print(f"  Fetching best_efforts for {len(new_ids)} new activities (cached: {len(run_ids) - len(new_ids)})...")
+    for i, aid in enumerate(new_ids):
+        # Retry once on 429 after a 15-minute pause
+        for attempt in range(2):
+            try:
+                detail = fetch_activity_detail(aid, headers)
+                break
+            except requests.exceptions.HTTPError as e:
+                if e.response.status_code == 429 and attempt == 0:
+                    print(f"    Rate limited at {i + 1}/{len(new_ids)} — waiting 15 min...")
+                    save_best_efforts_cache(cache)
+                    time.sleep(15 * 60)
+                else:
+                    raise
+        cache[aid] = detail.get("best_efforts", [])
+        # Save progress every 20 fetches
+        if (i + 1) % 20 == 0:
+            save_best_efforts_cache(cache)
+            print(f"    {i + 1}/{len(new_ids)} (progress saved)")
+        # ~10s between calls keeps us well under 100 req/15 min
+        time.sleep(10)
+    save_best_efforts_cache(cache)
+    print(f"  Cache saved ({len(cache)} activities total).")
+    return cache
+
+
+# ── Formatting helpers ──────────────────────────────────────────────────────────
+def fmt_time(seconds):
+    s = int(seconds)
+    if s < 3600:
+        return f"{s // 60}:{s % 60:02d}"
+    return f"{s // 3600}:{(s % 3600) // 60:02d}:{s % 60:02d}"
+
+
+def fmt_pace(elapsed_seconds, distance_m):
+    pace_sec = elapsed_seconds / (distance_m / 1000)
+    return f"{int(pace_sec) // 60}:{int(pace_sec) % 60:02d}/km"
+
+
 # ── Output ─────────────────────────────────────────────────────────────────────
 def write_dashboard_json(data):
     """Inject dashboard data inline into index.html."""
@@ -169,8 +254,9 @@ def color_for(shoe):
 
 
 # ── Data Processing ────────────────────────────────────────────────────────────
-def process(activities, gear_map, shoe_config=None):
+def process(activities, gear_map, shoe_config=None, be_cache=None):
     shoe_config    = shoe_config or {}
+    be_cache       = be_cache or {}
     ret_distances  = shoe_config.get("retirement_distances", {})
     default_ret_km = shoe_config.get("default_retirement_km", 500)
 
@@ -267,6 +353,25 @@ def process(activities, gear_map, shoe_config=None):
         primary    = cfg_colors["primary"]   if cfg_colors else color_for(g)
         secondary  = cfg_colors["secondary"] if cfg_colors else "#6B7280"
 
+        # Best efforts: find fastest time per distance across all cached activities for this shoe
+        shoe_prs = {}
+        for act in acts:
+            for effort in be_cache.get(str(act["id"]), []):
+                name = effort.get("name", "").lower()
+                if name not in BEST_EFFORT_DISTANCES:
+                    continue
+                t = effort.get("elapsed_time", 0)
+                if not t:
+                    continue
+                if name not in shoe_prs or t < shoe_prs[name]["elapsed_time"]:
+                    shoe_prs[name] = {
+                        "elapsed_time":  t,
+                        "time_str":      fmt_time(t),
+                        "pace_str":      fmt_pace(t, effort["distance"]),
+                        "date":          effort["start_date_local"][:10],
+                        "is_overall_pr": effort.get("pr_rank") == 1,
+                    }
+
         shoes_out.append({
             "id":            gid,
             "name":          display_name,
@@ -292,15 +397,29 @@ def process(activities, gear_map, shoe_config=None):
             "weekly":        weekly_series,
             "cumulative":    cum_series,
             "run_distances": [round(a["distance"] / 1000, 2) for a in acts],
+            "best_efforts":  shoe_prs,
         })
 
     shoes_out.sort(key=lambda s: s.get("last_run_iso") or "", reverse=True)
 
+    # Build speed leaderboard: fastest shoe per distance
+    leaderboard = {}
+    for shoe in shoes_out:
+        for dist, effort in shoe.get("best_efforts", {}).items():
+            if dist not in leaderboard or effort["elapsed_time"] < leaderboard[dist]["elapsed_time"]:
+                leaderboard[dist] = {
+                    **effort,
+                    "shoe_id":    shoe["id"],
+                    "shoe_name":  shoe["name"],
+                    "shoe_color": shoe["color"],
+                }
+
     return {
-        "generated":  datetime.utcnow().strftime("%d %b %Y"),
-        "all_months": all_months,
-        "all_weeks":  all_weeks,
-        "shoes":      shoes_out,
+        "generated":   datetime.utcnow().strftime("%d %b %Y"),
+        "all_months":  all_months,
+        "all_weeks":   all_weeks,
+        "shoes":       shoes_out,
+        "leaderboard": leaderboard,
         "totals": {
             "km":         round(sum(shoe_total_km[sid] for sid in shoe_ids)),
             "activities": sum(shoe_run_count[sid] for sid in shoe_ids),
@@ -329,7 +448,11 @@ def main():
         gear_map[gid] = fetch_gear(gid, headers)
         print(f"  · {gear_map[gid]['name']}")
 
-    data = process(activities, gear_map, shoe_config)
+    shoe_ids = {gid for gid in gear_map if not gid.startswith("b")}
+    print("Syncing best efforts cache...")
+    be_cache = sync_best_efforts(activities, shoe_ids, headers)
+
+    data = process(activities, gear_map, shoe_config, be_cache)
     data["athlete"] = {"firstname": athlete["firstname"], "lastname": athlete["lastname"]}
 
     print("Injecting data into index.html...")
