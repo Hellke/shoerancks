@@ -78,6 +78,20 @@ def load_shoe_config():
 BASE = "https://www.strava.com/api/v3"
 
 
+def _get(url, headers, params=None, retries=2):
+    """GET with automatic retry on 429 (waits 16 min between attempts)."""
+    for attempt in range(retries + 1):
+        r = requests.get(url, headers=headers, params=params)
+        if r.status_code == 429 and attempt < retries:
+            wait = 16 * 60
+            print(f"  429 rate limit — waiting {wait // 60} min before retry...")
+            time.sleep(wait)
+            continue
+        r.raise_for_status()
+        return r
+    r.raise_for_status()
+
+
 def get_access_token(config):
     print("Refreshing access token...")
     r = requests.post("https://www.strava.com/oauth/token", data={
@@ -93,18 +107,14 @@ def get_access_token(config):
 
 
 def fetch_athlete(headers):
-    r = requests.get(f"{BASE}/athlete", headers=headers)
-    r.raise_for_status()
-    return r.json()
+    return _get(f"{BASE}/athlete", headers).json()
 
 
 def fetch_all_activities(headers):
     print("Fetching activities...")
     activities, page = [], 1
     while True:
-        r = requests.get(f"{BASE}/athlete/activities", headers=headers,
-                         params={"per_page": 200, "page": page})
-        r.raise_for_status()
+        r = _get(f"{BASE}/athlete/activities", headers, params={"per_page": 200, "page": page})
         batch = r.json()
         if not batch:
             break
@@ -115,15 +125,11 @@ def fetch_all_activities(headers):
 
 
 def fetch_gear(gear_id, headers):
-    r = requests.get(f"{BASE}/gear/{gear_id}", headers=headers)
-    r.raise_for_status()
-    return r.json()
+    return _get(f"{BASE}/gear/{gear_id}", headers).json()
 
 
 def fetch_activity_detail(activity_id, headers):
-    r = requests.get(f"{BASE}/activities/{activity_id}", headers=headers)
-    r.raise_for_status()
-    return r.json()
+    return _get(f"{BASE}/activities/{activity_id}", headers).json()
 
 
 # ── Best Efforts Cache ──────────────────────────────────────────────────────────
@@ -160,18 +166,7 @@ def sync_best_efforts(activities, shoe_ids, headers):
         return cache
     print(f"  Fetching best_efforts for {len(new_ids)} new activities (cached: {len(run_ids) - len(new_ids)})...")
     for i, aid in enumerate(new_ids):
-        # Retry once on 429 after a 15-minute pause
-        for attempt in range(2):
-            try:
-                detail = fetch_activity_detail(aid, headers)
-                break
-            except requests.exceptions.HTTPError as e:
-                if e.response.status_code == 429 and attempt == 0:
-                    print(f"    Rate limited at {i + 1}/{len(new_ids)} — waiting 15 min...")
-                    save_best_efforts_cache(cache)
-                    time.sleep(15 * 60)
-                else:
-                    raise
+        detail = fetch_activity_detail(aid, headers)
         cache[aid] = detail.get("best_efforts", [])
         # Save progress every 20 fetches
         if (i + 1) % 20 == 0:
