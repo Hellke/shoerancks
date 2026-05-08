@@ -4,14 +4,14 @@ A personal Strava shoe dashboard that tracks mileage, rotation habits, and retir
 
 ## Live dashboard
 
-Once deployed: `https://hellke.github.io/shoerancks/dashboard.html`
+Once deployed: `https://hellke.github.io/shoerancks/index.html`
 
 ## Local usage
 
 ```bash
 pip install requests
 python refresh.py
-open dashboard.html
+open index.html
 ```
 
 Credentials are read from `config.json` (never commit this file — it's in `.gitignore`).

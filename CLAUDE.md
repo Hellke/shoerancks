@@ -4,14 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this project is
 
-A personal Strava shoe dashboard. `refresh.py` fetches Strava activity data, processes it, and writes a JSON blob to Supabase. `dashboard.html` is a fully static frontend that reads that blob from Supabase at page load time — no server, no build step.
+A personal Strava shoe dashboard. `refresh.py` fetches Strava activity data, processes it, and writes a JSON blob to Supabase. `index.html` is a fully static frontend that reads that blob from Supabase at page load time — no server, no build step.
 
 ## Running locally
 
 ```bash
 pip install requests
 python refresh.py
-open dashboard.html
+open index.html
 ```
 
 Credentials are read from `config.json` (gitignored). Required keys:
@@ -29,14 +29,14 @@ When running in GitHub Actions, the same keys are read from environment variable
 
 ```
 refresh.py          — Python script: Strava API -> Supabase
-dashboard.html      — Static HTML/JS: Supabase -> Chart.js visualisations
+index.html      — Static HTML/JS: Supabase -> Chart.js visualisations
 ```
 
 **Data flow:**
 1. `refresh.py` calls Strava OAuth token endpoint, then `/athlete`, `/athlete/activities` (paginated, 200/page), and `/gear/{id}` for each unique gear ID.
 2. It also reads a `shoe_settings` table from Supabase (per-shoe custom `retirement_km`).
 3. Processed data is upserted as a single JSON blob into `dashboard_data` (row `id=1`).
-4. `dashboard.html` fetches that row from Supabase on load and renders everything client-side with Chart.js.
+4. `index.html` fetches that row from Supabase on load and renders everything client-side with Chart.js.
 
 **Supabase schema (one-time setup):**
 ```sql

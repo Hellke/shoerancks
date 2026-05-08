@@ -1,8 +1,8 @@
 """
 Shorancks — Strava Shoe Dashboard Refresher
 
-Fetches Strava data, processes it, and injects it inline into dashboard.html.
-The dashboard.html is a fully self-contained static file — open it directly.
+Fetches Strava data, processes it, and injects it inline into index.html.
+The index.html is a fully self-contained static file — open it directly.
 
 Run locally:  python refresh.py
 GitHub Actions reads credentials from environment variables automatically.
@@ -114,8 +114,8 @@ def fetch_gear(gear_id, headers):
 
 # ── Output ─────────────────────────────────────────────────────────────────────
 def write_dashboard_json(data):
-    """Inject dashboard data inline into dashboard.html."""
-    html_path = Path(__file__).parent / "dashboard.html"
+    """Inject dashboard data inline into index.html."""
+    html_path = Path(__file__).parent / "index.html"
     html = html_path.read_text(encoding="utf-8")
     json_str = json.dumps(data, separators=(",", ":"), ensure_ascii=False)
     html, n = re.subn(
@@ -124,9 +124,9 @@ def write_dashboard_json(data):
         html,
     )
     if n == 0:
-        raise RuntimeError("Could not find DASHBOARD_DATA placeholder in dashboard.html")
+        raise RuntimeError("Could not find DASHBOARD_DATA placeholder in index.html")
     html_path.write_text(html, encoding="utf-8")
-    print("  Dashboard data injected into dashboard.html ✓")
+    print("  Dashboard data injected into index.html ✓")
 
 
 def write_shoe_lookup(data):
@@ -332,7 +332,7 @@ def main():
     data = process(activities, gear_map, shoe_config)
     data["athlete"] = {"firstname": athlete["firstname"], "lastname": athlete["lastname"]}
 
-    print("Injecting data into dashboard.html...")
+    print("Injecting data into index.html...")
     write_dashboard_json(data)
     write_shoe_lookup(data)
     print(f"\nDone. {data['totals']['activities']} activities across {data['totals']['shoes']} shoes.")
