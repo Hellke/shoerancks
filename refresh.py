@@ -248,16 +248,40 @@ def process(activities, gear_map, shoe_config=None):
             cum += v
             cum_series.append(round(cum, 1))
 
+        first_run = acts[0]["start_date_local"][:10]  if acts else None
+        last_run  = acts[-1]["start_date_local"][:10] if acts else None
+
+        # Format as "15 Aug 2024"
+        def fmt_date(d):
+            return datetime.strptime(d, "%Y-%m-%d").strftime("%-d %b %Y") if d else None
+
+        # Weeks active (span from first to last run)
+        weeks_active = 1
+        if acts and len(acts) >= 2:
+            span_days = (datetime.strptime(last_run, "%Y-%m-%d") -
+                         datetime.strptime(first_run, "%Y-%m-%d")).days
+            weeks_active = max(1, round(span_days / 7))
+        km_per_week = round(total_km / weeks_active, 1) if weeks_active else 0
+
+        cfg_colors = shoe_config.get("shoe_colors", {}).get(gid)
+        primary    = cfg_colors["primary"]   if cfg_colors else color_for(g)
+        secondary  = cfg_colors["secondary"] if cfg_colors else "#6B7280"
+
         shoes_out.append({
             "id":            gid,
             "name":          display_name,
             "model":         g.get("model_name", ""),
             "brand":         g.get("brand_name", "ASICS"),
-            "color":         color_for(g),
+            "color":         primary,
+            "secondary":     secondary,
             "retired":       retired,
             "total_km":      round(total_km),
             "runs":          runs,
             "avg_km":        avg_km,
+            "km_per_week":   km_per_week,
+            "first_run":     fmt_date(first_run),
+            "last_run":      fmt_date(last_run),
+            "last_run_iso":  last_run,
             "runs_left":     runs_left,
             "retire_date":   retire_date,
             "retirement_km": ret_km,
@@ -269,6 +293,8 @@ def process(activities, gear_map, shoe_config=None):
             "cumulative":    cum_series,
             "run_distances": [round(a["distance"] / 1000, 2) for a in acts],
         })
+
+    shoes_out.sort(key=lambda s: s.get("last_run_iso") or "", reverse=True)
 
     return {
         "generated":  datetime.utcnow().strftime("%d %b %Y"),

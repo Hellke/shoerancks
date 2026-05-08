@@ -2,5 +2,15 @@
   "retirement_distances": {
     "g23195462": 500
   },
-  "default_retirement_km": 800
+  "default_retirement_km": 800,
+  "shoe_colors": {
+    "g21011736": { "primary": "#2DD4BF", "secondary": "#7DD3FC" },
+    "g23262007": { "primary": "#87A878", "secondary": "#E2E8F0" },
+    "g23052419": { "primary": "#9CA3AF", "secondary": "#E2E8F0" },
+    "g21173164": { "primary": "#ADFF2F", "secondary": "#4B5563" },
+    "g19945538": { "primary": "#7B9EB8", "secondary": "#D4C5A0" },
+    "g23195462": { "primary": "#14B8A6", "secondary": "#F97316" },
+    "g29593716": { "primary": "#4F81BD", "secondary": "#B0BAC4" },
+    "g19867062": { "primary": "#60A5FA", "secondary": "#FBBF24" }
+  }
 }
