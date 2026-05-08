@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shoe Dashboard</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <style>
     :root {
       --bg:#0c0c0e; --surface:#141418; --surface2:#1c1c22;
@@ -96,21 +95,13 @@
     .overlay-life-section { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px 24px; margin-bottom:32px; }
     .overlay-life-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; gap:16px; flex-wrap:wrap; }
     .overlay-life-pct { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
-    .ret-km-editor { display:flex; align-items:center; gap:8px; }
-    .ret-km-editor label { font-size:11px; color:var(--muted); }
-    .ret-km-input { background:var(--surface2); border:1px solid var(--border); color:var(--text); font-size:14px; font-weight:700; padding:6px 10px; border-radius:8px; width:80px; text-align:center; font-family:inherit; }
-    .ret-km-input:focus { outline:none; border-color:#3a3a44; }
-    .ret-km-save { background:none; border:1px solid var(--border); color:var(--muted); font-size:11px; padding:6px 14px; border-radius:8px; cursor:pointer; transition:all 0.2s; font-family:inherit; letter-spacing:0.5px; }
-    .ret-km-save:hover { color:var(--text); border-color:#3a3a44; }
-    .ret-km-save.saved { color:#34D399; border-color:#34D399; }
     .overlay-charts { display:grid; grid-template-columns:2fr 1fr; gap:20px; }
     @media(max-width:900px) { .overlay-charts { grid-template-columns:1fr; } }
-    .no-supabase-note { font-size:11px; color:var(--muted); margin-left:8px; }
   </style>
 </head>
 <body>
 
-  <!-- Content is rendered dynamically after Supabase fetch -->
+  <!-- Content is rendered dynamically from inline dashboard data -->
   <div id="app">
     <div class="loading">
       <div class="spinner"></div>
@@ -125,17 +116,14 @@
   </div>
 
   <script>
-    // ── Supabase config ───────────────────────────────────────────────────────
-    const SUPABASE_URL = "https://dlthorzndgeecxpuergr.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_1mj4MFkoldVvbpSS26FXUw_LUduDfzR";
+    // ── Data (injected by refresh.py) ────────────────────────────────────────
+    const DASHBOARD_DATA = null; // injected by refresh.py
 
     // ── GitHub Actions trigger (optional) ────────────────────────────────────
     // Set github_pat + github_repo in config.json and re-run refresh.py to enable.
     // The PAT needs Actions: write permission on the repo.
     const GITHUB_TOKEN = null;
     const GITHUB_REPO  = null;
-
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     // ── Chart shared config ───────────────────────────────────────────────────
     const grid = '#1f1f28', tick = '#555';
@@ -145,54 +133,34 @@
     };
 
     // ── Global state ──────────────────────────────────────────────────────────
-    let shoes        = [];
-    let months       = [];
-    let weeks        = [];
-    let shoeSettings = {};
+    let shoes  = [];
+    let months = [];
+    let weeks  = [];
     let cumChart, monthlyChart, typeChart, histChart, pieChart;
 
-    // ── Load data from Supabase ───────────────────────────────────────────────
-    async function loadDashboard() {
+    // ── Load data ─────────────────────────────────────────────────────────────
+    function loadDashboard() {
+      if (!DASHBOARD_DATA) {
+        document.getElementById('app').innerHTML = `
+          <div class="loading">
+            <span>Run <code style="font-family:monospace;background:var(--surface2);padding:2px 6px;border-radius:4px">python refresh.py</code> to generate data.</span>
+          </div>`;
+        return;
+      }
       try {
-        const [dataRes, settingsRes] = await Promise.all([
-          sb.from('dashboard_data').select('data').eq('id', 1).single(),
-          sb.from('shoe_settings').select('*'),
-        ]);
-
-        if (dataRes.error) throw dataRes.error;
-
-        const d = dataRes.data.data;
+        const d = DASHBOARD_DATA;
         shoes  = d.shoes;
         months = d.all_months;
         weeks  = d.all_weeks || [];
-
-        if (settingsRes.data) {
-          settingsRes.data.forEach(row => { shoeSettings[row.shoe_id] = row; });
-        }
-
-        // Apply any shoe_settings overrides to shoes
-        shoes = shoes.map(s => applySettings(s));
-
         renderApp(d);
       } catch (err) {
         document.getElementById('app').innerHTML = `
           <div class="loading">
-            <span style="color:#e74c3c">Failed to load data</span>
-            <span style="font-size:11px">${err.message || 'Check Supabase connection'}</span>
+            <span style="color:#e74c3c">Failed to render dashboard</span>
+            <span style="font-size:11px">${err.message}</span>
           </div>`;
         console.error(err);
       }
-    }
-
-    function applySettings(shoe) {
-      const s   = { ...shoe };
-      const ov  = shoeSettings[shoe.id];
-      if (ov?.retirement_km) {
-        s.retirement_km = ov.retirement_km;
-        s.pct_life      = Math.min(100, s.total_km / s.retirement_km * 100).toFixed(1) * 1;
-        s.remaining     = Math.max(0, s.retirement_km - s.total_km);
-      }
-      return s;
     }
 
     // ── Render the full page ──────────────────────────────────────────────────
@@ -407,8 +375,6 @@
       const pieLabels = Object.keys(shoe.types);
       const pieData   = Object.values(shoe.types);
 
-      const supabaseNote = '<span class="no-supabase-note"></span>';
-
       document.getElementById('overlay-content').innerHTML = `
         <div class="overlay-accent" style="background:${shoe.color}"></div>
         <div class="overlay-tag">${shoe.brand} · ${shoe.model}</div>
@@ -431,13 +397,7 @@
 
         <div class="overlay-life-section">
           <div class="overlay-life-header">
-            <span class="overlay-life-pct" id="overlay-pct-label">${pct}% of retirement distance</span>
-            <div class="ret-km-editor">
-              <label>Retirement at</label>
-              <input class="ret-km-input" id="ret-km-val" type="number" value="${retKm}" min="1" max="9999"/>
-              <label>km</label>
-              <button class="ret-km-save" id="ret-km-save-btn" onclick="saveRetirementKm('${shoe.id}', '${shoe.color}')">Save</button>
-            </div>
+            <span class="overlay-life-pct" id="overlay-pct-label">${pct}% of ${retKm}km retirement distance</span>
           </div>
           <div class="life-track">
             <div class="life-fill" id="overlay-life-fill" style="width:${pct}%;background:${shoe.color}"></div>
@@ -513,74 +473,6 @@
     function closeShoe() {
       document.getElementById('overlay').style.display = 'none';
       document.body.style.overflow = '';
-    }
-
-    // ── Save retirement km ────────────────────────────────────────────────────
-    async function saveRetirementKm(shoeId, color) {
-      const input = document.getElementById('ret-km-val');
-      const km    = parseInt(input.value, 10);
-      if (!km || km < 1) return;
-
-      shoeSettings[shoeId] = shoeSettings[shoeId] || {};
-      shoeSettings[shoeId].retirement_km = km;
-
-      const shoe = shoes.find(s => s.id === shoeId);
-      if (shoe) {
-        shoe.retirement_km = km;
-        shoe.pct_life      = Math.min(100, shoe.total_km / km * 100).toFixed(1) * 1;
-        shoe.remaining     = Math.max(0, km - shoe.total_km);
-
-        const pct       = shoe.pct_life;
-        const remaining = shoe.remaining;
-
-        // Update overlay
-        const fill = document.getElementById('overlay-life-fill');
-        if (fill) fill.style.width = pct + '%';
-        const pctLabel = document.getElementById('overlay-pct-label');
-        if (pctLabel)  pctLabel.textContent = pct + '% of retirement distance';
-        const pctRight = document.getElementById('overlay-pct-right');
-        if (pctRight)  pctRight.textContent = pct + '%';
-        const remEl = document.getElementById('overlay-remaining');
-        if (remEl)     remEl.textContent = remaining + ' km left';
-
-        // Update main card
-        const card = document.querySelector(`[data-shoe-id="${shoeId}"]`);
-        if (card) {
-          const cardFill = card.querySelector('.life-fill');
-          if (cardFill) { cardFill.style.width = pct + '%'; cardFill.style.background = color; }
-          const spans = card.querySelectorAll('.life-label span');
-          if (spans[0]) spans[0].textContent = pct + '% of ' + km + 'km';
-          if (spans[1]) spans[1].textContent = remaining + ' km left';
-          card.classList.toggle('warning', pct >= 70 && !shoe.retired);
-          let badge = card.querySelector('.warning-badge');
-          if (pct >= 83 && !shoe.retired) {
-            if (!badge) {
-              badge = document.createElement('div');
-              badge.className = 'warning-badge';
-              badge.textContent = '⚠ Approaching retirement';
-              card.appendChild(badge);
-            }
-          } else if (badge) {
-            badge.remove();
-          }
-        }
-      }
-
-      const btn = document.getElementById('ret-km-save-btn');
-      try {
-        const { error } = await sb
-          .from('shoe_settings')
-          .upsert({ shoe_id: shoeId, retirement_km: km }, { onConflict: 'shoe_id' });
-        if (error) throw error;
-        if (btn) {
-          btn.textContent = 'Saved ✓';
-          btn.classList.add('saved');
-          setTimeout(() => { btn.textContent = 'Save'; btn.classList.remove('saved'); }, 2000);
-        }
-      } catch(e) {
-        console.error('Supabase save failed:', e);
-        if (btn) btn.textContent = 'Error — check console';
-      }
     }
 
     // ── Refresh data via GitHub Actions ───────────────────────────────────────

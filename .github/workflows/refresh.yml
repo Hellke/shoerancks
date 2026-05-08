@@ -11,8 +11,11 @@ permissions:
   id-token: write
 
 jobs:
-  refresh:
+  refresh-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -25,25 +28,12 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Fetch Strava data and push to Supabase
+      - name: Fetch Strava data and generate dashboard
         env:
-          STRAVA_CLIENT_ID:      ${{ secrets.STRAVA_CLIENT_ID }}
-          STRAVA_CLIENT_SECRET:  ${{ secrets.STRAVA_CLIENT_SECRET }}
-          STRAVA_REFRESH_TOKEN:  ${{ secrets.STRAVA_REFRESH_TOKEN }}
-          SUPABASE_URL:          ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY:     ${{ secrets.SUPABASE_ANON_KEY }}
-          SUPABASE_SERVICE_KEY:  ${{ secrets.SUPABASE_SERVICE_KEY }}
+          STRAVA_CLIENT_ID:     ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
         run: python refresh.py
-
-  deploy:
-    needs: refresh
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

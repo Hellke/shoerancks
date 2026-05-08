@@ -1,31 +1,24 @@
 """
 Shorancks — Strava Shoe Dashboard Refresher
 
-Fetches Strava data, processes it, and writes to Supabase.
-The dashboard.html is a static file that reads from Supabase on load —
-no HTML generation happens here.
+Fetches Strava data, processes it, and injects it inline into dashboard.html.
+The dashboard.html is a fully self-contained static file — open it directly.
 
 Run locally:  python refresh.py
 GitHub Actions reads credentials from environment variables automatically.
 
-Supabase setup (one-time, run in Supabase SQL editor):
-  create table dashboard_data (
-    id int8 primary key,
-    data jsonb not null,
-    updated_at timestamptz default now()
-  );
-  alter table dashboard_data enable row level security;
-  create policy "Public read" on dashboard_data for select using (true);
-
 config.json keys:
   client_id, client_secret, refresh_token   — Strava OAuth
-  supabase_url, supabase_anon_key           — for reading (already used by dashboard)
-  supabase_service_key                      — for writing (service role key from Supabase settings)
   github_pat, github_repo                   — optional, for the Refresh button in the dashboard
+
+shoe_config.json keys:
+  retirement_distances   — dict of shoe_id -> retirement_km
+  default_retirement_km  — fallback when a shoe has no explicit entry (default: 500)
 """
 
 import json
 import os
+import re
 import math
 import requests
 from datetime import datetime, timedelta
@@ -40,14 +33,11 @@ def load_config():
     env_refresh = os.environ.get("STRAVA_REFRESH_TOKEN")
     if env_id and env_secret and env_refresh:
         return {
-            "client_id":            env_id,
-            "client_secret":        env_secret,
-            "refresh_token":        env_refresh,
-            "supabase_url":         os.environ.get("SUPABASE_URL", ""),
-            "supabase_anon_key":    os.environ.get("SUPABASE_ANON_KEY", ""),
-            "supabase_service_key": os.environ.get("SUPABASE_SERVICE_KEY", ""),
-            "github_pat":           os.environ.get("GITHUB_PAT", ""),
-            "github_repo":          os.environ.get("GITHUB_REPO", ""),
+            "client_id":     env_id,
+            "client_secret": env_secret,
+            "refresh_token": env_refresh,
+            "github_pat":    os.environ.get("GITHUB_PAT", ""),
+            "github_repo":   os.environ.get("GITHUB_REPO", ""),
         }
     config_path = Path(__file__).parent / "config.json"
     if config_path.exists():
@@ -64,9 +54,20 @@ def save_refresh_token(config, new_token):
             json.dump(config, f, indent=2)
 
 
+def load_shoe_config():
+    """Load per-shoe retirement distances from shoe_config.json."""
+    path = Path(__file__).parent / "shoe_config.json"
+    if path.exists():
+        with open(path) as f:
+            cfg = json.load(f)
+        print(f"  Loaded shoe config: {len(cfg.get('retirement_distances', {}))} shoe(s) configured.")
+        return cfg
+    print("  No shoe_config.json found — using default retirement distance for all shoes.")
+    return {"retirement_distances": {}, "default_retirement_km": 500}
+
+
 # ── Strava API ─────────────────────────────────────────────────────────────────
 BASE = "https://www.strava.com/api/v3"
-RETIREMENT_KM = 800
 
 
 def get_access_token(config):
@@ -111,55 +112,39 @@ def fetch_gear(gear_id, headers):
     return r.json()
 
 
-# ── Supabase ───────────────────────────────────────────────────────────────────
-def fetch_shoe_settings(config):
-    """Fetch per-shoe settings (e.g. custom retirement_km) from Supabase."""
-    url = config.get("supabase_url", "")
-    key = config.get("supabase_anon_key", "")
-    if not url or not key:
-        return {}
-    try:
-        r = requests.get(
-            f"{url}/rest/v1/shoe_settings",
-            headers={"apikey": key, "Authorization": f"Bearer {key}"},
-            timeout=5,
-        )
-        if r.ok:
-            rows = r.json()
-            print(f"  Loaded {len(rows)} shoe setting(s) from Supabase.")
-            return {row["shoe_id"]: row for row in rows}
-        print(f"  Warning: Supabase shoe_settings returned {r.status_code}")
-    except Exception as e:
-        print(f"  Warning: Could not fetch shoe settings: {e}")
-    return {}
+# ── Output ─────────────────────────────────────────────────────────────────────
+def write_dashboard_json(data):
+    """Inject dashboard data inline into dashboard.html."""
+    html_path = Path(__file__).parent / "dashboard.html"
+    html = html_path.read_text(encoding="utf-8")
+    json_str = json.dumps(data, separators=(",", ":"), ensure_ascii=False)
+    html, n = re.subn(
+        r'const DASHBOARD_DATA = .*; // injected by refresh\.py',
+        f'const DASHBOARD_DATA = {json_str}; // injected by refresh.py',
+        html,
+    )
+    if n == 0:
+        raise RuntimeError("Could not find DASHBOARD_DATA placeholder in dashboard.html")
+    html_path.write_text(html, encoding="utf-8")
+    print("  Dashboard data injected into dashboard.html ✓")
 
 
-def push_to_supabase(data, config):
-    """Write the full dashboard data blob to Supabase dashboard_data table."""
-    url = config.get("supabase_url", "")
-    key = config.get("supabase_service_key", "")
-    if not url or not key:
-        print("  Supabase service key not configured — skipping push.")
-        print("  Add 'supabase_service_key' to config.json (Settings > API > service_role key).")
-        return
-    try:
-        r = requests.post(
-            f"{url}/rest/v1/dashboard_data",
-            headers={
-                "apikey":        key,
-                "Authorization": f"Bearer {key}",
-                "Content-Type":  "application/json",
-                "Prefer":        "resolution=merge-duplicates",
-            },
-            json={"id": 1, "data": data, "updated_at": datetime.utcnow().isoformat()},
-            timeout=10,
-        )
-        if r.ok:
-            print("  Dashboard data written to Supabase ✓")
-        else:
-            print(f"  Warning: Supabase write returned {r.status_code}: {r.text}")
-    except Exception as e:
-        print(f"  Warning: Could not push to Supabase: {e}")
+def write_shoe_lookup(data):
+    """Write shoe_ids.md — a human-readable name→ID reference for shoe_config.json."""
+    shoes = sorted(data["shoes"], key=lambda s: s["total_km"], reverse=True)
+    lines = [
+        "# Shoe IDs\n",
+        "Use these IDs in `shoe_config.json` under `retirement_distances`.\n",
+        f"Last updated: {data['generated']}\n",
+        "\n",
+        "| Name | Brand | Total km | Strava ID |\n",
+        "|------|-------|----------|-----------|\n",
+    ]
+    for s in shoes:
+        lines.append(f"| {s['name']} | {s['brand']} | {s['total_km']} km | `{s['id']}` |\n")
+    path = Path(__file__).parent / "shoe_ids.md"
+    path.write_text("".join(lines), encoding="utf-8")
+    print(f"  Shoe ID lookup written to {path.name} ✓")
 
 
 # ── Colors ─────────────────────────────────────────────────────────────────────
@@ -184,8 +169,11 @@ def color_for(shoe):
 
 
 # ── Data Processing ────────────────────────────────────────────────────────────
-def process(activities, gear_map, shoe_settings=None):
-    shoe_settings  = shoe_settings or {}
+def process(activities, gear_map, shoe_config=None):
+    shoe_config    = shoe_config or {}
+    ret_distances  = shoe_config.get("retirement_distances", {})
+    default_ret_km = shoe_config.get("default_retirement_km", 500)
+
     shoe_ids       = [gid for gid, g in gear_map.items() if not gid.startswith("b")]
     shoe_monthly   = {id: defaultdict(float) for id in shoe_ids}
     shoe_weekly    = {id: defaultdict(float) for id in shoe_ids}
@@ -223,7 +211,7 @@ def process(activities, gear_map, shoe_settings=None):
         runs     = shoe_run_count[gid]
         avg_km   = round(total_km / runs, 1) if runs else 0
 
-        ret_km = shoe_settings.get(gid, {}).get("retirement_km", RETIREMENT_KM)
+        ret_km = ret_distances.get(gid, default_ret_km)
 
         # Retirement projection from recent cadence (last 30 activities)
         recent   = acts[-min(30, len(acts)):]
@@ -292,9 +280,10 @@ def process(activities, gear_map, shoe_settings=None):
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 def main():
-    config  = load_config()
-    token   = get_access_token(config)
-    headers = {"Authorization": f"Bearer {token}"}
+    config      = load_config()
+    shoe_config = load_shoe_config()
+    token       = get_access_token(config)
+    headers     = {"Authorization": f"Bearer {token}"}
 
     athlete = fetch_athlete(headers)
     print(f"Hello, {athlete['firstname']} {athlete['lastname']}!")
@@ -309,14 +298,12 @@ def main():
         gear_map[gid] = fetch_gear(gid, headers)
         print(f"  · {gear_map[gid]['name']}")
 
-    print("Fetching Supabase shoe settings...")
-    shoe_settings = fetch_shoe_settings(config)
-
-    data = process(activities, gear_map, shoe_settings)
+    data = process(activities, gear_map, shoe_config)
     data["athlete"] = {"firstname": athlete["firstname"], "lastname": athlete["lastname"]}
 
-    print("Pushing to Supabase...")
-    push_to_supabase(data, config)
+    print("Injecting data into dashboard.html...")
+    write_dashboard_json(data)
+    write_shoe_lookup(data)
     print(f"\nDone. {data['totals']['activities']} activities across {data['totals']['shoes']} shoes.")
 
 
