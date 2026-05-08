@@ -190,7 +190,12 @@ def process(activities, gear_map, shoe_config=None):
         month = act["start_date_local"][:7]
         iso   = datetime.strptime(act["start_date_local"][:10], "%Y-%m-%d").date().isocalendar()
         week  = f"{iso[0]}-W{iso[1]:02d}"
-        atype = act.get("sport_type") or act.get("type") or "Run"
+        sport = act.get("sport_type") or act.get("type") or "Run"
+        if sport == "Run":
+            wt    = act.get("workout_type") or 0
+            atype = {1: "Race", 2: "Long Run", 3: "Workout"}.get(wt, "Run")
+        else:
+            atype = sport
         shoe_monthly[gid][month] += km
         shoe_weekly[gid][week]   += km
         shoe_types[gid][atype]   += 1
