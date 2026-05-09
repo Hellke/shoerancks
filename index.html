@@ -44,6 +44,22 @@
     .warning-badge { margin-top:10px; font-size:10px; color:#f59e0b; letter-spacing:0.5px; }
     .retired-badge { margin-top:10px; font-size:10px; color:var(--muted); letter-spacing:0.5px; }
     .idle-badge    { margin-top:10px; font-size:10px; color:#60a5fa; letter-spacing:0.5px; }
+    .target-input-wrap { display:flex; align-items:center; gap:8px; font-size:11px; color:var(--muted); }
+    .target-input-wrap input { width:52px; background:var(--surface); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:3px 8px; font-size:12px; font-family:inherit; text-align:right; outline:none; }
+    .target-input-wrap input:focus { border-color:#3a3a44; }
+    .card-alloc { font-size:10px; color:var(--muted); margin-top:3px; letter-spacing:0.3px; }
+    .card-pts { font-size:11px; color:#FBBF24; margin-top:5px; font-weight:600; }
+    .sort-bar { display:flex; gap:6px; }
+    .sort-btn { background:none; border:1px solid var(--border); color:var(--muted); font-size:10px; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:6px; cursor:pointer; font-family:inherit; transition:color 0.15s, border-color 0.15s; }
+    .sort-btn.active, .sort-btn:hover { color:var(--text); border-color:#3a3a44; }
+    .overlay-pts { margin-top:32px; }
+    .overlay-pts h3 { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:16px; }
+    .pts-total { font-size:32px; font-weight:700; color:#FBBF24; line-height:1; margin-bottom:16px; }
+    .pts-breakdown { display:flex; flex-wrap:wrap; gap:8px; }
+    .pts-chip { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:8px 14px; }
+    .pts-chip-dist { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+    .pts-chip-val { font-size:13px; font-weight:700; color:#FBBF24; }
+    .pts-chip-rank { font-size:10px; color:var(--muted); margin-left:4px; }
     .charts { display:grid; gap:20px; }
     .chart-block { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:28px; }
     .chart-block h3 { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:24px; }
@@ -158,6 +174,108 @@
     let months = [];
     let weeks  = [];
     let cumChart, monthlyChart, typeChart, histChart, pieChart;
+    let retirementProjections = {};
+    let speedPoints = { pts: {}, breakdown: {} };
+    let currentSort = 'latest';
+
+    // ── Speed points ─────────────────────────────────────────────────────────
+    const SPEED_PTS = [8, 5, 3, 2, 1]; // 1st → 5th place
+
+    function computeSpeedPoints() {
+      const pts = {}, breakdown = {};
+      shoes.forEach(s => { pts[s.id] = 0; breakdown[s.id] = {}; });
+      DISTANCE_ORDER.forEach(dist => {
+        const ranked = shoes
+          .filter(s => s.best_efforts && s.best_efforts[dist])
+          .sort((a, b) => a.best_efforts[dist].elapsed_time - b.best_efforts[dist].elapsed_time);
+        ranked.forEach((s, i) => {
+          if (i < SPEED_PTS.length) {
+            pts[s.id] += SPEED_PTS[i];
+            breakdown[s.id][dist] = { rank: i + 1, pts: SPEED_PTS[i] };
+          }
+        });
+      });
+      speedPoints = { pts, breakdown };
+    }
+
+    // ── Sorting ───────────────────────────────────────────────────────────────
+    function sortedShoes() {
+      return [...shoes].sort((a, b) => {
+        if (currentSort === 'points') return (speedPoints.pts[b.id] || 0) - (speedPoints.pts[a.id] || 0);
+        if (currentSort === 'expiry') {
+          if (a.retired && !b.retired) return 1;
+          if (!a.retired && b.retired) return -1;
+          if (a.retired && b.retired) return 0;
+          return (a.remaining ?? 9999) - (b.remaining ?? 9999);
+        }
+        // default: latest use
+        if (!a.last_run_iso) return 1;
+        if (!b.last_run_iso) return -1;
+        return b.last_run_iso.localeCompare(a.last_run_iso);
+      });
+    }
+
+    function setSort(mode) {
+      currentSort = mode;
+      document.querySelectorAll('.sort-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.sort === mode)
+      );
+      renderCards();
+    }
+
+    // ── Weekly target retirement projection ───────────────────────────────────
+    function computeRetirementProjection(weeklyKm) {
+      const today = new Date();
+      let pool = shoes
+        .filter(s => !s.retired && !s.race && s.km_per_week > 0)
+        .map(s => ({
+          id: s.id,
+          remaining: s.remaining ?? Math.max(0, s.retirement_km - s.total_km),
+          weight: s.km_per_week,
+          weeklyAlloc: 0,
+          weeksToRetire: 0,
+        }));
+      let weekOffset = 0;
+      const projections = {};
+      while (pool.length > 0) {
+        const totalWeight = pool.reduce((acc, x) => acc + x.weight, 0);
+        pool.forEach(s => { s.weeklyAlloc = weeklyKm * (s.weight / totalWeight); });
+        pool.forEach(s => { s.weeksToRetire = s.remaining / s.weeklyAlloc; });
+        const minWeeks = Math.min(...pool.map(s => s.weeksToRetire));
+        pool.forEach(s => { s.remaining -= s.weeklyAlloc * minWeeks; });
+        weekOffset += minWeeks;
+        pool = pool.filter(s => {
+          if (s.remaining <= 0.5) {
+            const d = new Date(today);
+            d.setDate(d.getDate() + Math.round(weekOffset * 7));
+            projections[s.id] = {
+              retireDate: d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }),
+              weeklyAlloc: Math.round(s.weeklyAlloc),
+            };
+            return false;
+          }
+          return true;
+        });
+      }
+      return projections;
+    }
+
+    function updateRetirementProjection() {
+      const val = parseInt(document.getElementById('weekly-target')?.value || '50', 10);
+      retirementProjections = computeRetirementProjection(isNaN(val) || val < 1 ? 50 : val);
+      renderCards();
+    }
+
+    function initTargetInput() {
+      const input = document.getElementById('weekly-target');
+      if (!input) return;
+      const saved = localStorage.getItem('shoerancks_weekly_target');
+      input.value = saved ?? '50';
+      input.addEventListener('input', () => {
+        localStorage.setItem('shoerancks_weekly_target', input.value);
+        updateRetirementProjection();
+      });
+    }
 
     // ── Leaderboard top-5 expand ──────────────────────────────────────────────
     function toggleTop5(row, dist) {
@@ -208,7 +326,10 @@
         shoes  = d.shoes;
         months = d.all_months;
         weeks  = d.all_weeks || [];
+        computeSpeedPoints();
         renderApp(d);
+        initTargetInput();
+        updateRetirementProjection();
       } catch (err) {
         document.getElementById('app').innerHTML = `
           <div class="loading">
@@ -237,12 +358,23 @@
             <div class="stat"><div class="stat-val" style="color:var(--orange)">${totals.km ?? '—'}</div><div class="stat-label">Total km</div></div>
             <div class="stat"><div class="stat-val">${totals.activities ?? '—'}</div><div class="stat-label">Activities</div></div>
             <div class="stat"><div class="stat-val">${totals.shoes ?? '—'}</div><div class="stat-label">Shoes</div></div>
+            <div class="target-input-wrap">
+              <label for="weekly-target">Weekly target</label>
+              <input type="number" id="weekly-target" min="1" max="999" step="1"> km/wk
+            </div>
           </div>
         </div>
 
         <p class="generated">Last updated ${d.generated || '—'}</p>
 
-        <p class="section-title">Your rotation</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px;">
+          <p class="section-title" style="margin-bottom:0">Your rotation</p>
+          <div class="sort-bar">
+            <button class="sort-btn active" data-sort="latest" onclick="setSort('latest')">Last used</button>
+            <button class="sort-btn" data-sort="points" onclick="setSort('points')">Speed pts</button>
+            <button class="sort-btn" data-sort="expiry" onclick="setSort('expiry')">Expiry</button>
+          </div>
+        </div>
         <div class="cards" id="cards-container"></div>
 
         <p class="section-title">Usage over time</p>
@@ -296,7 +428,7 @@
     function renderCards() {
       const container = document.getElementById('cards-container');
       if (!container) return;
-      container.innerHTML = shoes.map(cardHTML).join('');
+      container.innerHTML = sortedShoes().map(cardHTML).join('');
     }
 
     function cardHTML(s) {
@@ -306,11 +438,14 @@
       const warn      = !s.retired && pct >= 70;
       const cls       = 'card' + (s.retired ? ' retired' : '') + (warn ? ' warning' : '');
       const runsLeft  = s.retired ? '—' : (s.runs_left ? `~${s.runs_left}` : '?');
+      const proj      = (!s.retired && !s.race) ? retirementProjections[s.id] : null;
+      const totalPts  = speedPoints.pts?.[s.id] || 0;
 
       let retireLine = '';
-      if (s.retire_date && !s.retired) {
-        retireLine = `<div class="card-retire">Est. retirement <span>${s.retire_date}</span></div>`;
-      } else if (s.retire_date && s.retired) {
+      if (!s.retired) {
+        const retDate = proj ? proj.retireDate : s.retire_date;
+        if (retDate) retireLine = `<div class="card-retire">Est. retirement <span>${retDate}</span></div>`;
+      } else if (s.retire_date) {
         retireLine = `<div class="card-retire">Retired <span>${s.retire_date}</span></div>`;
       }
 
@@ -332,6 +467,7 @@
           <div class="card-accent" style="background:repeating-linear-gradient(45deg,${s.color},${s.color} 8px,${s.secondary} 8px,${s.secondary} 16px)"></div>
           <div class="card-tag">${s.brand} · ${s.model}</div>
           <div class="card-model">${s.name}</div>
+          ${totalPts > 0 ? `<div class="card-pts">${totalPts} speed pts</div>` : ''}
           <div class="card-km" style="color:${s.color}">${s.total_km} <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
           <div class="card-runs">${s.runs} activities</div>
           <div class="card-stats">
@@ -345,6 +481,7 @@
             </div>
           </div>
           ${retireLine}
+          ${proj ? `<div class="card-alloc">~${proj.weeklyAlloc} km/wk at target</div>` : ''}
           <div class="life-track"><div class="life-fill" style="width:${pct}%;background:${s.color}"></div></div>
           <div class="life-label"><span>${pct}% of ${retKm}km</span><span>${remaining} km left</span></div>
           ${badge}
@@ -537,6 +674,18 @@
             }).join('')}
           </div>
         </div>` : ''}
+        ${(speedPoints.pts?.[shoe.id] || 0) > 0 ? (() => {
+          const totalPts = speedPoints.pts[shoe.id];
+          const chips = Object.entries(speedPoints.breakdown[shoe.id])
+            .sort(([,a],[,b]) => a.rank - b.rank)
+            .map(([dist, info]) =>
+              '<div class="pts-chip">' +
+              '<div class="pts-chip-dist">' + dist + '</div>' +
+              '<div><span class="pts-chip-val">+' + info.pts + ' pts</span><span class="pts-chip-rank"> · #' + info.rank + '</span></div>' +
+              '</div>'
+            ).join('');
+          return '<div class="overlay-pts"><h3>Speed points</h3><div class="pts-total">' + totalPts + ' pts</div><div class="pts-breakdown">' + chips + '</div></div>';
+        })() : ''}
       `;
 
       if (histChart) { histChart.destroy(); histChart = null; }

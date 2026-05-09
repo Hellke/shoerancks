@@ -252,6 +252,7 @@ def color_for(shoe):
 def process(activities, gear_map, shoe_config=None, be_cache=None):
     shoe_config    = shoe_config or {}
     be_cache       = be_cache or {}
+    race_ids       = set(shoe_config.get("race_shoe_ids", []))
     ret_distances  = shoe_config.get("retirement_distances", {})
     default_ret_km = shoe_config.get("default_retirement_km", 500)
 
@@ -393,6 +394,7 @@ def process(activities, gear_map, shoe_config=None, be_cache=None):
             "cumulative":    cum_series,
             "run_distances": [round(a["distance"] / 1000, 2) for a in acts],
             "best_efforts":  shoe_prs,
+            "race":          gid in race_ids,
         })
 
     shoes_out.sort(key=lambda s: s.get("last_run_iso") or "", reverse=True)
