@@ -99,13 +99,25 @@
     .pr-pace { font-size:11px; color:var(--muted); margin-bottom:2px; }
     .pr-date { font-size:10px; color:#555; }
     .pr-badge { position:absolute; top:8px; right:10px; font-size:9px; font-weight:700; letter-spacing:1px; color:#FBBF24; }
-    .leaderboard-wrap { margin-bottom:48px; overflow-x:auto; }
+    .leaderboard-wrap { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:28px; margin-bottom:32px; overflow-x:auto; }
+    .leaderboard-wrap h3 { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:24px; }
     .leaderboard-wrap table { width:100%; border-collapse:collapse; font-size:13px; }
     .leaderboard-wrap th { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); font-weight:400; padding:0 12px 10px; text-align:left; border-bottom:1px solid var(--border); }
-    .leaderboard-wrap td { padding:12px; border-bottom:1px solid #1a1a22; vertical-align:middle; }
-    .leaderboard-wrap tr:last-child td { border-bottom:none; }
+    .leaderboard-wrap td { padding:10px 12px; border-bottom:1px solid #1a1a22; vertical-align:middle; }
+    .lb-row { cursor:pointer; transition:background 0.12s; }
+    .lb-row:hover td { background:rgba(255,255,255,0.03); }
+    .lb-expand-row td { padding:0 !important; border-bottom:1px solid var(--border) !important; }
+    .lb-expand-inner { padding:12px 12px 16px 28px; }
+    .lb-top5 { display:flex; flex-direction:column; gap:8px; }
+    .lb-top5-item { display:flex; align-items:center; gap:10px; font-size:12px; }
+    .lb-rank-num { width:16px; font-size:10px; color:#555; text-align:right; flex-shrink:0; }
+    .lb-top5-time { font-weight:700; font-size:13px; min-width:44px; }
+    .lb-top5-pace { color:var(--muted); font-size:11px; min-width:64px; }
+    .lb-top5-name { color:#ccc; font-size:12px; }
+    .lb-top5-model { color:#555; font-size:10px; margin-left:4px; }
     .lb-swatch { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:8px; flex-shrink:0; }
     .lb-shoe { display:flex; align-items:center; }
+    .lb-shoe-model { font-size:10px; color:#555; margin-left:4px; }
     .lb-time { font-weight:700; font-size:15px; }
     .lb-pace { color:var(--muted); font-size:12px; }
     .lb-date { color:#555; font-size:11px; }
@@ -146,6 +158,41 @@
     let months = [];
     let weeks  = [];
     let cumChart, monthlyChart, typeChart, histChart, pieChart;
+
+    // ── Leaderboard top-5 expand ──────────────────────────────────────────────
+    function toggleTop5(row, dist) {
+      const id = dist.replace(/ /g, '_');
+      const expandRow = document.getElementById('lb-expand-' + id);
+      // Close any other open expand
+      document.querySelectorAll('.lb-expand-row').forEach(r => {
+        if (r !== expandRow) r.style.display = 'none';
+      });
+      if (expandRow.style.display !== 'none') {
+        expandRow.style.display = 'none';
+        return;
+      }
+      const ranked = shoes
+        .filter(s => s.best_efforts && s.best_efforts[dist])
+        .map(s => ({ shoe: s, effort: s.best_efforts[dist] }))
+        .sort((a, b) => a.effort.elapsed_time - b.effort.elapsed_time)
+        .slice(0, 5);
+      expandRow.querySelector('.lb-expand-inner').innerHTML =
+        '<div class="lb-top5">' +
+        ranked.map((item, i) => {
+          const s = item.shoe, e = item.effort;
+          return '<div class="lb-top5-item">' +
+            '<span class="lb-rank-num">' + (i + 1) + '</span>' +
+            '<span class="lb-swatch" style="background:' + s.color + '"></span>' +
+            '<span class="lb-top5-time" style="color:' + s.color + '">' + e.time_str + '</span>' +
+            '<span class="lb-top5-pace">' + e.pace_str + '</span>' +
+            '<span class="lb-top5-name">' + s.name + '</span>' +
+            '<span class="lb-top5-model">' + s.model + '</span>' +
+            (e.is_overall_pr ? '<span class="lb-pr">PR</span>' : '') +
+            '</div>';
+        }).join('') +
+        '</div>';
+      expandRow.style.display = '';
+    }
 
     // ── Load data ─────────────────────────────────────────────────────────────
     function loadDashboard() {
@@ -221,16 +268,21 @@
             .filter(dist => d.leaderboard[dist])
             .map(dist => {
               const e = d.leaderboard[dist];
-              return '<tr>' +
+              const shoeMeta = shoes.find(s => s.id === e.shoe_id);
+              const model = shoeMeta ? shoeMeta.model : '';
+              const escapedDist = dist.replace(/'/g, "\\'");
+              return '<tr class="lb-row" onclick="toggleTop5(this,\'' + escapedDist + '\')">' +
                 '<td>' + dist + '</td>' +
-                '<td><span class="lb-shoe"><span class="lb-swatch" style="background:' + e.shoe_color + '"></span>' + e.shoe_name + (e.is_overall_pr ? '<span class="lb-pr">PR</span>' : '') + '</span></td>' +
+                '<td><span class="lb-shoe"><span class="lb-swatch" style="background:' + e.shoe_color + '"></span>' + e.shoe_name + '<span class="lb-shoe-model">· ' + model + '</span>' + (e.is_overall_pr ? '<span class="lb-pr">PR</span>' : '') + '</span></td>' +
                 '<td class="lb-time" style="color:' + e.shoe_color + '">' + e.time_str + '</td>' +
                 '<td class="lb-pace">' + e.pace_str + '</td>' +
                 '<td class="lb-date">' + e.date + '</td>' +
-                '</tr>';
+                '</tr>' +
+                '<tr class="lb-expand-row" id="lb-expand-' + dist.replace(/ /g,'_') + '" style="display:none"><td colspan="5"><div class="lb-expand-inner"></div></td></tr>';
             }).join('');
-          return '<p class="section-title">Speed leaderboard</p>' +
-            '<div class="leaderboard-wrap"><table>' +
+          return '<div class="leaderboard-wrap">' +
+            '<h3>Speed leaderboard</h3>' +
+            '<table>' +
             '<thead><tr><th>Distance</th><th>Fastest shoe</th><th>Time</th><th>Pace</th><th>Date</th></tr></thead>' +
             '<tbody>' + rows + '</tbody></table></div>';
         })() : ''}
