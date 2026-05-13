@@ -49,6 +49,8 @@
     .target-input-wrap input:focus { border-color:#3a3a44; }
     .card-alloc { font-size:10px; color:var(--muted); margin-top:3px; letter-spacing:0.3px; }
     .card-pts { font-size:11px; color:#FBBF24; margin-top:5px; font-weight:600; }
+    .card-shoe-img { margin:-20px -20px 16px; padding-top:6px; height:130px; overflow:hidden; }
+    .card-shoe-img img { width:100%; height:100%; object-fit:contain; padding:10px 20px; }
     .sort-bar { display:flex; gap:6px; }
     .sort-btn { background:none; border:1px solid var(--border); color:var(--muted); font-size:10px; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:6px; cursor:pointer; font-family:inherit; transition:color 0.15s, border-color 0.15s; }
     .sort-btn.active, .sort-btn:hover { color:var(--text); border-color:#3a3a44; }
@@ -168,6 +170,34 @@
       backgroundColor:'#1c1c22', borderColor:'#2a2a32', borderWidth:1,
       titleColor:'#aaa', bodyColor:'#eee',
     };
+
+    // ── Shoe image map ────────────────────────────────────────────────────────
+    const SHOE_IMAGES = {
+      'gel-kayano 31':      'Kayano-31 lightshow_clean.png',
+      'megablast':          'Megablast_clean.png',
+      'novablast 5':        'Novablast 5_clean.png',
+      'superblast 2':       'Superblast 2_clean.png',
+      'trabuco terra 2':    'trabuco terra 2_clean.png',
+      'metaspeed sky paris':'metaspeed sky paris_clean.png',
+      'gel-trabuco 12 gtx': 'trabuco gtx 12_clean.png',
+    };
+    function shoeImage(model) {
+      return SHOE_IMAGES[(model || '').trim().toLowerCase()] || null;
+    }
+
+    // ── Shoe image-extracted palette ──────────────────────────────────────────
+    const SHOE_PALETTE = {
+      'gel-kayano 31':      { primary: '#589bb4', secondary: '#85ca9d' },
+      'megablast':          { primary: '#506a85', secondary: '#64809d' },
+      'novablast 5':        { primary: '#727d80', secondary: '#97a4ab' },
+      'superblast 2':       { primary: '#c8c4ba', secondary: '#bbb7ac' },
+      'trabuco terra 2':    { primary: '#3a5566', secondary: '#dcc680' },
+      'metaspeed sky paris':{ primary: '#97d3ca', secondary: '#fe3939' },
+      'gel-trabuco 12 gtx': { primary: '#c5d352', secondary: '#7e893e' },
+    };
+    function shoePalette(model) {
+      return SHOE_PALETTE[(model || '').trim().toLowerCase()] || null;
+    }
 
     // ── Global state ──────────────────────────────────────────────────────────
     let shoes  = [];
@@ -462,27 +492,37 @@
         if (idle)       badge += `<div class="idle-badge">— Not used in ${daysSinceUse}d</div>`;
       }
 
+      const imgFile = shoeImage(s.model);
+      const imgHTML = imgFile
+        ? `<div class="card-shoe-img"><img src="${imgFile.replace(/ /g,'%20')}" alt="${s.model}" loading="lazy" onerror="this.parentElement.remove()"></div>`
+        : '';
+
+      const pal       = shoePalette(s.model);
+      const primary   = pal ? pal.primary   : s.color;
+      const secondary = pal ? pal.secondary : s.secondary;
+
       return `
         <div class="${cls}" data-shoe-id="${s.id}" onclick="openShoe('${s.id}')">
-          <div class="card-accent" style="background:repeating-linear-gradient(45deg,${s.color},${s.color} 8px,${s.secondary} 8px,${s.secondary} 16px)"></div>
+          <div class="card-accent" style="background:repeating-linear-gradient(45deg,${primary},${primary} 8px,${secondary} 8px,${secondary} 16px)"></div>
+          ${imgHTML}
           <div class="card-tag">${s.brand} · ${s.model}</div>
           <div class="card-model">${s.name}</div>
           ${totalPts > 0 ? `<div class="card-pts">${totalPts} speed pts</div>` : ''}
-          <div class="card-km" style="color:${s.color}">${s.total_km} <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
+          <div class="card-km" style="color:${primary}">${s.total_km} <span style="font-size:14px;font-weight:400;color:var(--muted)">km</span></div>
           <div class="card-runs">${s.runs} activities</div>
           <div class="card-stats">
             <div class="mini-stat">
-              <div class="mini-stat-val" style="color:${s.secondary}">${s.avg_km}</div>
+              <div class="mini-stat-val" style="color:${secondary}">${s.avg_km}</div>
               <div class="mini-stat-label">avg km/run</div>
             </div>
             <div class="mini-stat">
-              <div class="mini-stat-val" style="color:${s.secondary}">${runsLeft}</div>
+              <div class="mini-stat-val" style="color:${secondary}">${runsLeft}</div>
               <div class="mini-stat-label">runs left</div>
             </div>
           </div>
           ${retireLine}
           ${proj ? `<div class="card-alloc">~${proj.weeklyAlloc} km/wk at target</div>` : ''}
-          <div class="life-track"><div class="life-fill" style="width:${pct}%;background:${s.color}"></div></div>
+          <div class="life-track"><div class="life-fill" style="width:${pct}%;background:${primary}"></div></div>
           <div class="life-label"><span>${pct}% of ${retKm}km</span><span>${remaining} km left</span></div>
           ${badge}
         </div>`;
