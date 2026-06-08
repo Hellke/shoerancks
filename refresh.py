@@ -26,12 +26,16 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 from pathlib import Path
 
-# Strava's standard best-effort distance names (lowercased to match API)
+# Strava's actual best-effort distance names (lowercased to match API)
 BEST_EFFORT_DISTANCES = {
-    "400m", "800m", "1k", "1 mile", "2 mile", "5k", "10k", "half marathon", "marathon",
+    "400m", "1/2 mile", "1k", "1 mile", "2 mile", "5k", "10k",
+    "15k", "10 mile", "20k", "half-marathon", "30k", "marathon",
 }
-# Display order for UI
-BEST_EFFORT_ORDER = ["400m", "800m", "1k", "1 mile", "2 mile", "5k", "10k", "half marathon", "marathon"]
+# Display order for UI (sorted by actual distance)
+BEST_EFFORT_ORDER = [
+    "400m", "1/2 mile", "1k", "1 mile", "2 mile", "5k", "10k",
+    "15k", "10 mile", "20k", "half-marathon", "30k", "marathon",
+]
 
 
 # ── Credentials ────────────────────────────────────────────────────────────────
