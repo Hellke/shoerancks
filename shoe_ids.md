@@ -6,7 +6,7 @@ Last updated: 20 Jun 2026
 |------|-------|----------|-----------|
 | Easy run | ASICS | 744 km | `g21011736` |
 | Long run | ASICS | 651 km | `g23262007` |
-| Workhorse | ASICS | 584 km | `g23052419` |
+| Workhorse | ASICS | 598 km | `g23052419` |
 | Trail workhorse | ASICS | 325 km | `g19945538` |
 | the mudfuckers | ASICS | 324 km | `g21173164` |
 | ASICS Gel-Nimbus 25 | ASICS | 253 km | `g19867062` |
