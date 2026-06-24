@@ -1,7 +1,9 @@
 {
   "race_shoe_ids": ["g23195462"],
   "retirement_distances": {
-    "g23195462": 500
+    "g23195462": 500,
+    "g23052419": 700,
+    "g23262007": 1000
   },
   "default_retirement_km": 800,
   "shoe_colors": {
