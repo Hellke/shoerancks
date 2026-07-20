@@ -4,7 +4,7 @@ Last updated: 20 Jul 2026
 
 | Name | Brand | Total km | Strava ID |
 |------|-------|----------|-----------|
-| Easy run | ASICS | 795 km | `g21011736` |
+| Easy run | ASICS | 800 km | `g21011736` |
 | Long run | ASICS | 657 km | `g23262007` |
 | Workhorse | ASICS | 617 km | `g23052419` |
 | Trail workhorse | ASICS | 325 km | `g19945538` |
