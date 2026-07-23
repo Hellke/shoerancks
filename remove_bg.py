@@ -12,6 +12,7 @@ IMAGES = [
     "Megablast.jpeg",
     "Novablast 5.jpeg",
     "Superblast 2.jpeg",
+    "Superblast 3.JPG",
     "trabuco terra 2.jpeg",
     "metaspeed sky paris.jpeg",
     "trabuco gtx 12.png",
