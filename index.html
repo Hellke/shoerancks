@@ -169,9 +169,10 @@
     .podium-value { font-size:14px; font-weight:700; text-align:center; }
     .podium-sub { font-size:10px; color:var(--muted); text-align:center; margin-top:-2px; }
     .podium-block { width:100%; border-radius:5px 5px 0 0; margin-top:6px; }
-    .podium-place.gold   .podium-block { height:80px; background:#B8860B; }
-    .podium-place.silver .podium-block { height:56px; background:#808080; }
-    .podium-place.bronze .podium-block { height:36px; background:#8B5E3C; }
+    .podium-place.gold   .podium-block { height:80px; }
+    .podium-place.silver .podium-block { height:56px; }
+    .podium-place.bronze .podium-block { height:36px; }
+    .podium-block-empty { background:var(--border); }
     .lb-tail { border-top:1px solid var(--border); padding-top:12px; display:flex; flex-direction:column; gap:7px; }
     .lb-tail-item { display:flex; align-items:center; gap:8px; font-size:12px; }
     .lb-tail-rank { color:var(--muted); width:14px; font-size:11px; flex-shrink:0; }
@@ -534,13 +535,14 @@
     // ── Podium helper ─────────────────────────────────────────────────────────
     function podiumHTML(label, ranked) {
       // ranked = [{shoe, value, sub?}] sorted best-first, up to 5
-      // Display order: silver(left) gold(center) bronze(right)
+      // Display order: 2nd(left) 1st(center) 3rd(right). The medal class now
+      // only sets the block height; the block colour comes from the shoe.
       const order  = [ranked[1], ranked[0], ranked[2]];
       const medals = ['silver', 'gold', 'bronze'];
       const ranks  = ['2', '1', '3'];
 
       const placesHTML = order.map((item, di) => {
-        if (!item) return `<div class="podium-place ${medals[di]}"><div class="podium-block"></div></div>`;
+        if (!item) return `<div class="podium-place ${medals[di]}"><div class="podium-block podium-block-empty"></div></div>`;
         const pal   = shoePalette(item.shoe.model);
         const color = pal ? pal.primary : item.shoe.color;
         const imgFile = shoeImage(item.shoe.model);
@@ -554,7 +556,7 @@
           <div class="podium-shoe-model">${item.shoe.name}</div>
           <div class="podium-value" style="color:${color}">${item.value}</div>
           ${item.sub ? `<div class="podium-sub">${item.sub}</div>` : ''}
-          <div class="podium-block"></div>
+          <div class="podium-block" style="background:${color}"></div>
         </div>`;
       }).join('');
 
@@ -626,19 +628,32 @@
         type: 'line',
         data: {
           labels: months,
-          datasets: shoes.map(s => ({
-            label: s.model, data: s.cumulative, borderColor: s.color,
-            backgroundColor: s.color + '12', borderWidth: s.retired ? 1.5 : 2.5,
-            borderDash: s.retired ? [4,3] : [], pointRadius: 0, pointHoverRadius: 5,
-            fill: false, tension: 0.4,
-          })),
+          datasets: shoes.map(s => {
+            // Start each line at the shoe's first run (null before it existed).
+            // Retired shoes stop at their last run; active shoes stay in the
+            // graph and simply hold a flat line until they're used again.
+            const first = s.monthly.findIndex(v => v > 0);
+            let last = -1;
+            for (let i = s.monthly.length - 1; i >= 0; i--) { if (s.monthly[i] > 0) { last = i; break; } }
+            const data = s.cumulative.map((v, i) => {
+              if (first === -1 || i < first) return null;   // before it existed
+              if (s.retired && i > last)     return null;   // retired: stop at last run
+              return v;                                     // active: flat to present
+            });
+            return {
+              label: s.model, data, borderColor: s.color,
+              backgroundColor: s.color + '12', borderWidth: s.retired ? 1.5 : 2.5,
+              borderDash: s.retired ? [4,3] : [], pointRadius: 0, pointHoverRadius: 5,
+              fill: false, tension: 0.4, spanGaps: false,
+            };
+          }),
         },
         options: {
           responsive: true,
           interaction: { mode:'index', intersect:false },
           plugins: {
             legend: { labels: { color:'#888', font:{ size:11 }, boxWidth:24, padding:16 } },
-            tooltip: { ...tip, callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y} km` } },
+            tooltip: { ...tip, filter: c => c.parsed.y !== null, callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y} km` } },
           },
           scales: {
             x: { ticks:{ color:tick, font:{ size:10 }, maxRotation:45 }, grid:{ color:grid } },
