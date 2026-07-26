@@ -26,9 +26,11 @@ When running in GitHub Actions, the same keys are read from environment variable
 ## Architecture
 
 ```
-refresh.py      — Python script: Strava API -> injects data into index.html
-index.html      — Static HTML/JS: reads inline DASHBOARD_DATA -> Chart.js visualisations
-shoe_config.json — Per-shoe config (retirement distances, race shoe flags, colors)
+refresh.py             — Python script: Strava API -> injects data into index.html
+index.html             — Static HTML/JS: reads inline DASHBOARD_DATA -> Chart.js visualisations
+shoe_config.json       — Per-shoe config (retirement distances, race shoe flags, colors)
+best_efforts_cache.json — Generated: per-activity best efforts from Strava
+speed_points_log.json   — Generated: frozen per-activity speed point scores
 ```
 
 **Data flow:**
@@ -37,11 +39,33 @@ shoe_config.json — Per-shoe config (retirement distances, race shoe flags, col
 3. Processed data is injected as `const DASHBOARD_DATA = {...}; // injected by refresh.py` directly into `index.html`.
 4. `index.html` reads that inline constant and renders everything client-side with Chart.js.
 
+## Speed points
+
+Speed points rank the shoes against each other at each of the 13 best-effort
+distances — 8/5/3/2/1 for 1st→5th. Two things compute them, deliberately:
+
+- `computeSpeedPoints()` in `index.html` derives the **current standings** shown
+  on the shoe cards and the sort. It always reflects the latest data.
+- `sync_speed_points()` in `refresh.py` scores **individual activities** for the
+  logbook: how far a run moved the standings at the moment it happened. Because
+  that answer depends on a moment in time, it is computed once and frozen in
+  `speed_points_log.json`, and is never recomputed.
+
+Scoring is **forward-only**. The first ever run of `sync_speed_points` records a
+`seeded_at` watermark and leaves every pre-existing activity unscored (`pts: null`
+in the payload) — there is no record of what the standings looked like back then.
+Only activities newer than the watermark get a score.
+
+Both rankers must break ties on gear ID. Without it a tied time is resolved by
+list order, which is sorted by most recent use and therefore drifts.
+
 ## GitHub Actions
 
-`.github/workflows/refresh.yml` runs every Monday at 07:00 UTC and on `workflow_dispatch`. It runs `refresh.py` then deploys the repo to GitHub Pages.
+`.github/workflows/refresh.yml` runs daily at 06:00 UTC and on `workflow_dispatch`. It runs `refresh.py` then deploys the repo to GitHub Pages.
 
 Required repository secrets: `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`.
+
+⚠️ The commit step lists files explicitly (`git add best_efforts_cache.json speed_points_log.json index.html shoe_ids.md`). Any new generated file that must survive between runs has to be added there, or it is silently rebuilt from scratch every time.
 
 ## Key constants & config
 

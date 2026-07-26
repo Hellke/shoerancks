@@ -1,0 +1,4761 @@
+{
+  "scored": {
+    "12121675647": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:56",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "4:06",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "1k",
+          "new": "5:08",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "1 mile",
+          "new": "8:39",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "2 mile",
+          "new": "19:39",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "5k",
+          "new": "33:42",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "10k",
+          "new": "1:13:15",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        }
+      ],
+      "pts": 56
+    },
+    "12189433165": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:52",
+          "passed": [],
+          "prev": "1:56",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "12279973122": {
+      "details": [],
+      "pts": 0
+    },
+    "12323046631": {
+      "details": [],
+      "pts": 0
+    },
+    "12326052353": {
+      "details": [
+        {
+          "dist": "5k",
+          "new": "32:28",
+          "passed": [],
+          "prev": "33:42",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "10k",
+          "new": "1:09:04",
+          "passed": [],
+          "prev": "1:13:15",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "12418152513": {
+      "details": [],
+      "pts": 0
+    },
+    "12434102023": {
+      "details": [],
+      "pts": 0
+    },
+    "12484619238": {
+      "details": [
+        {
+          "dist": "2 mile",
+          "new": "18:59",
+          "passed": [],
+          "prev": "19:39",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "5k",
+          "new": "31:51",
+          "passed": [],
+          "prev": "32:28",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "12520837183": {
+      "details": [],
+      "pts": 0
+    },
+    "12554353281": {
+      "details": [],
+      "pts": 0
+    },
+    "12573305302": {
+      "details": [
+        {
+          "dist": "1/2 mile",
+          "new": "4:04",
+          "passed": [],
+          "prev": "4:06",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "1k",
+          "new": "5:03",
+          "passed": [],
+          "prev": "5:08",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "1 mile",
+          "new": "8:23",
+          "passed": [],
+          "prev": "8:39",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "2 mile",
+          "new": "17:19",
+          "passed": [],
+          "prev": "18:59",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "5k",
+          "new": "28:37",
+          "passed": [],
+          "prev": "31:51",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "12591224917": {
+      "details": [],
+      "pts": 0
+    },
+    "12610822964": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:47",
+          "passed": [],
+          "prev": "1:52",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:43",
+          "passed": [],
+          "prev": "4:04",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "1k",
+          "new": "4:42",
+          "passed": [],
+          "prev": "5:03",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "12610823006": {
+      "details": [],
+      "pts": 0
+    },
+    "12618720465": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "2:21",
+          "passed": [],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "4:49",
+          "passed": [],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "1k",
+          "new": "6:02",
+          "passed": [],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "1 mile",
+          "new": "10:03",
+          "passed": [],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        }
+      ],
+      "pts": 20
+    },
+    "12618849174": {
+      "details": [],
+      "pts": 0
+    },
+    "12643206353": {
+      "details": [],
+      "pts": 0
+    },
+    "12662010856": {
+      "details": [],
+      "pts": 0
+    },
+    "12699668020": {
+      "details": [],
+      "pts": 0
+    },
+    "12722425752": {
+      "details": [],
+      "pts": 0
+    },
+    "12735261558": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:40",
+          "passed": [],
+          "prev": "1:47",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:31",
+          "passed": [],
+          "prev": "3:43",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "1k",
+          "new": "4:27",
+          "passed": [],
+          "prev": "4:42",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "12759554396": {
+      "details": [],
+      "pts": 0
+    },
+    "12772547456": {
+      "details": [
+        {
+          "dist": "1 mile",
+          "new": "7:59",
+          "passed": [],
+          "prev": "8:23",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "2 mile",
+          "new": "16:56",
+          "passed": [],
+          "prev": "17:19",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "5k",
+          "new": "26:53",
+          "passed": [],
+          "prev": "28:37",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "10k",
+          "new": "55:54",
+          "passed": [],
+          "prev": "1:09:04",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "12803884905": {
+      "details": [],
+      "pts": 0
+    },
+    "12812595633": {
+      "details": [
+        {
+          "dist": "1 mile",
+          "new": "7:32",
+          "passed": [],
+          "prev": "7:59",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "2 mile",
+          "new": "16:24",
+          "passed": [],
+          "prev": "16:56",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "12893908569": {
+      "details": [
+        {
+          "dist": "15k",
+          "new": "1:36:12",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        }
+      ],
+      "pts": 8
+    },
+    "12914307109": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "2:05",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "4:22",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "1k",
+          "new": "5:32",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "1 mile",
+          "new": "9:14",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "2 mile",
+          "new": "18:45",
+          "passed": [],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "5k",
+          "new": "30:15",
+          "passed": [],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "10k",
+          "new": "1:02:02",
+          "passed": [],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "15k",
+          "new": "1:37:53",
+          "passed": [],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:45:16",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "20k",
+          "new": "2:14:42",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "half-marathon",
+          "new": "2:21:50",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        }
+      ],
+      "pts": 64
+    },
+    "12964794346": {
+      "details": [],
+      "pts": 0
+    },
+    "12984594266": {
+      "details": [],
+      "pts": 0
+    },
+    "12984594422": {
+      "details": [],
+      "pts": 0
+    },
+    "12992357517": {
+      "details": [
+        {
+          "dist": "1/2 mile",
+          "new": "3:27",
+          "passed": [],
+          "prev": "3:31",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "13003983494": {
+      "details": [],
+      "pts": 0
+    },
+    "13006674245": {
+      "details": [],
+      "pts": 0
+    },
+    "13049802212": {
+      "details": [],
+      "pts": 0
+    },
+    "13049843196": {
+      "details": [],
+      "pts": 0
+    },
+    "13056468005": {
+      "details": [],
+      "pts": 0
+    },
+    "13071985337": {
+      "details": [],
+      "pts": 0
+    },
+    "13091222706": {
+      "details": [],
+      "pts": 0
+    },
+    "13121582615": {
+      "details": [],
+      "pts": 0
+    },
+    "13139519794": {
+      "details": [
+        {
+          "dist": "1k",
+          "new": "4:18",
+          "passed": [],
+          "prev": "4:27",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "13152836161": {
+      "details": [],
+      "pts": 0
+    },
+    "13166807256": {
+      "details": [],
+      "pts": 0
+    },
+    "13179709031": {
+      "details": [],
+      "pts": 0
+    },
+    "13199019932": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:56",
+          "passed": [],
+          "prev": "2:05",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "4:04",
+          "passed": [],
+          "prev": "4:22",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "1k",
+          "new": "5:12",
+          "passed": [],
+          "prev": "5:32",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "1 mile",
+          "new": "8:58",
+          "passed": [],
+          "prev": "9:14",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "5k",
+          "new": "30:08",
+          "passed": [],
+          "prev": "30:15",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        }
+      ],
+      "pts": 0
+    },
+    "13215647600": {
+      "details": [],
+      "pts": 0
+    },
+    "13229634837": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "2:20",
+          "passed": [],
+          "prev": "2:21",
+          "pts": 0,
+          "rank_after": 3,
+          "rank_before": 3
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "4:48",
+          "passed": [],
+          "prev": "4:49",
+          "pts": 0,
+          "rank_after": 3,
+          "rank_before": 3
+        },
+        {
+          "dist": "1k",
+          "new": "6:00",
+          "passed": [],
+          "prev": "6:02",
+          "pts": 0,
+          "rank_after": 3,
+          "rank_before": 3
+        },
+        {
+          "dist": "1 mile",
+          "new": "9:43",
+          "passed": [],
+          "prev": "10:03",
+          "pts": 0,
+          "rank_after": 3,
+          "rank_before": 3
+        },
+        {
+          "dist": "2 mile",
+          "new": "20:07",
+          "passed": [],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        },
+        {
+          "dist": "5k",
+          "new": "31:34",
+          "passed": [],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        },
+        {
+          "dist": "10k",
+          "new": "1:11:37",
+          "passed": [],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        }
+      ],
+      "pts": 9
+    },
+    "13271429059": {
+      "details": [
+        {
+          "dist": "2 mile",
+          "new": "18:15",
+          "passed": [],
+          "prev": "18:45",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        }
+      ],
+      "pts": 0
+    },
+    "13286931025": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:43",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": "2:20",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:46",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": "4:48",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        },
+        {
+          "dist": "1k",
+          "new": "4:43",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": "6:00",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        },
+        {
+          "dist": "1 mile",
+          "new": "8:31",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": "9:43",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        },
+        {
+          "dist": "2 mile",
+          "new": "17:53",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": "20:07",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        },
+        {
+          "dist": "5k",
+          "new": "28:07",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": "31:34",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        }
+      ],
+      "pts": 12
+    },
+    "13300999825": {
+      "details": [],
+      "pts": 0
+    },
+    "13304846600": {
+      "details": [],
+      "pts": 0
+    },
+    "13326336032": {
+      "details": [],
+      "pts": 0
+    },
+    "13334589728": {
+      "details": [],
+      "pts": 0
+    },
+    "13349119089": {
+      "details": [],
+      "pts": 0
+    },
+    "13388249037": {
+      "details": [],
+      "pts": 0
+    },
+    "13410985962": {
+      "details": [],
+      "pts": 0
+    },
+    "13471317620": {
+      "details": [],
+      "pts": 0
+    },
+    "13480617666": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:39",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "1:43",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:34",
+          "passed": [],
+          "prev": "3:46",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "1k",
+          "new": "4:37",
+          "passed": [],
+          "prev": "4:43",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "2 mile",
+          "new": "17:33",
+          "passed": [],
+          "prev": "17:53",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "5k",
+          "new": "27:56",
+          "passed": [],
+          "prev": "28:07",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        }
+      ],
+      "pts": 3
+    },
+    "13489660363": {
+      "details": [],
+      "pts": 0
+    },
+    "13519504461": {
+      "details": [],
+      "pts": 0
+    },
+    "13522604517": {
+      "details": [
+        {
+          "dist": "1 mile",
+          "new": "7:49",
+          "passed": [],
+          "prev": "8:31",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "2 mile",
+          "new": "15:45",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "17:33",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        },
+        {
+          "dist": "5k",
+          "new": "24:49",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "27:56",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        },
+        {
+          "dist": "10k",
+          "new": "51:11",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": "1:11:37",
+          "pts": 5,
+          "rank_after": 1,
+          "rank_before": 3
+        },
+        {
+          "dist": "15k",
+          "new": "1:22:15",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:28:09",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "20k",
+          "new": "1:49:48",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "half-marathon",
+          "new": "1:55:27",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        }
+      ],
+      "pts": 43
+    },
+    "13538783261": {
+      "details": [],
+      "pts": 0
+    },
+    "13548371841": {
+      "details": [],
+      "pts": 0
+    },
+    "13552639689": {
+      "details": [],
+      "pts": 0
+    },
+    "13570969469": {
+      "details": [],
+      "pts": 0
+    },
+    "13702078122": {
+      "details": [],
+      "pts": 0
+    },
+    "13705877814": {
+      "details": [],
+      "pts": 0
+    },
+    "13766533229": {
+      "details": [],
+      "pts": 0
+    },
+    "13783072636": {
+      "details": [],
+      "pts": 0
+    },
+    "13798541655": {
+      "details": [],
+      "pts": 0
+    },
+    "13799008760": {
+      "details": [
+        {
+          "dist": "1k",
+          "new": "4:29",
+          "passed": [],
+          "prev": "4:37",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        }
+      ],
+      "pts": 0
+    },
+    "13811225118": {
+      "details": [
+        {
+          "dist": "1/2 mile",
+          "new": "3:12",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "3:34",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        }
+      ],
+      "pts": 3
+    },
+    "13830507686": {
+      "details": [],
+      "pts": 0
+    },
+    "13839465835": {
+      "details": [],
+      "pts": 0
+    },
+    "13904168178": {
+      "details": [
+        {
+          "dist": "1 mile",
+          "new": "7:28",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "7:49",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        },
+        {
+          "dist": "2 mile",
+          "new": "15:41",
+          "passed": [],
+          "prev": "15:45",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "5k",
+          "new": "24:29",
+          "passed": [],
+          "prev": "24:49",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 3
+    },
+    "13945484645": {
+      "details": [],
+      "pts": 0
+    },
+    "13966192487": {
+      "details": [
+        {
+          "dist": "1k",
+          "new": "5:10",
+          "passed": [],
+          "prev": "5:12",
+          "pts": 0,
+          "rank_after": 3,
+          "rank_before": 3
+        },
+        {
+          "dist": "1 mile",
+          "new": "8:42",
+          "passed": [],
+          "prev": "8:58",
+          "pts": 0,
+          "rank_after": 3,
+          "rank_before": 3
+        },
+        {
+          "dist": "2 mile",
+          "new": "17:30",
+          "passed": [],
+          "prev": "18:15",
+          "pts": 0,
+          "rank_after": 3,
+          "rank_before": 3
+        },
+        {
+          "dist": "5k",
+          "new": "29:09",
+          "passed": [],
+          "prev": "30:08",
+          "pts": 0,
+          "rank_after": 3,
+          "rank_before": 3
+        },
+        {
+          "dist": "10k",
+          "new": "1:00:02",
+          "passed": [],
+          "prev": "1:02:02",
+          "pts": 0,
+          "rank_after": 3,
+          "rank_before": 3
+        },
+        {
+          "dist": "15k",
+          "new": "1:30:46",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "1:37:53",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        }
+      ],
+      "pts": 2
+    },
+    "13971728163": {
+      "details": [],
+      "pts": 0
+    },
+    "13998859096": {
+      "details": [],
+      "pts": 0
+    },
+    "13998901032": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:37",
+          "passed": [],
+          "prev": "1:39",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "1k",
+          "new": "4:10",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "4:29",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        }
+      ],
+      "pts": 3
+    },
+    "14044970858": {
+      "details": [],
+      "pts": 0
+    },
+    "14048109104": {
+      "details": [
+        {
+          "dist": "1k",
+          "new": "4:08",
+          "passed": [],
+          "prev": "4:10",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "1 mile",
+          "new": "7:04",
+          "passed": [],
+          "prev": "7:28",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "14070499294": {
+      "details": [
+        {
+          "dist": "2 mile",
+          "new": "15:37",
+          "passed": [],
+          "prev": "15:41",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "5k",
+          "new": "23:54",
+          "passed": [],
+          "prev": "24:29",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "14074378115": {
+      "details": [],
+      "pts": 0
+    },
+    "14138211141": {
+      "details": [],
+      "pts": 0
+    },
+    "14151636806": {
+      "details": [],
+      "pts": 0
+    },
+    "14165891363": {
+      "details": [],
+      "pts": 0
+    },
+    "14185810719": {
+      "details": [],
+      "pts": 0
+    },
+    "14210658417": {
+      "details": [],
+      "pts": 0
+    },
+    "14219610732": {
+      "details": [],
+      "pts": 0
+    },
+    "14241972693": {
+      "details": [],
+      "pts": 0
+    },
+    "14267268986": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "2:03",
+          "passed": [],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "4:15",
+          "passed": [],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        },
+        {
+          "dist": "1k",
+          "new": "5:18",
+          "passed": [],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        },
+        {
+          "dist": "1 mile",
+          "new": "8:47",
+          "passed": [],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        },
+        {
+          "dist": "2 mile",
+          "new": "18:50",
+          "passed": [],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        },
+        {
+          "dist": "5k",
+          "new": "38:43",
+          "passed": [],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        }
+      ],
+      "pts": 12
+    },
+    "14285797432": {
+      "details": [],
+      "pts": 0
+    },
+    "14295768972": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:37",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": "2:03",
+          "pts": 3,
+          "rank_after": 2,
+          "rank_before": 4
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:23",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": "4:15",
+          "pts": 3,
+          "rank_after": 2,
+          "rank_before": 4
+        },
+        {
+          "dist": "1k",
+          "new": "4:22",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": "5:18",
+          "pts": 1,
+          "rank_after": 3,
+          "rank_before": 4
+        },
+        {
+          "dist": "1 mile",
+          "new": "7:17",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": "8:47",
+          "pts": 3,
+          "rank_after": 2,
+          "rank_before": 4
+        },
+        {
+          "dist": "2 mile",
+          "new": "15:13",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Trail workhorse"
+          ],
+          "prev": "18:50",
+          "pts": 6,
+          "rank_after": 1,
+          "rank_before": 4
+        },
+        {
+          "dist": "5k",
+          "new": "24:22",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": "38:43",
+          "pts": 3,
+          "rank_after": 2,
+          "rank_before": 4
+        }
+      ],
+      "pts": 19
+    },
+    "14316898271": {
+      "details": [
+        {
+          "dist": "10k",
+          "new": "1:08:59",
+          "passed": [],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        }
+      ],
+      "pts": 2
+    },
+    "14327617346": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:31",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": "1:37",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:13",
+          "passed": [],
+          "prev": "3:23",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "1k",
+          "new": "4:00",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run"
+          ],
+          "prev": "4:22",
+          "pts": 5,
+          "rank_after": 1,
+          "rank_before": 3
+        }
+      ],
+      "pts": 8
+    },
+    "14338719406": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:49",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:44",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        },
+        {
+          "dist": "1k",
+          "new": "4:40",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        },
+        {
+          "dist": "1 mile",
+          "new": "7:46",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        },
+        {
+          "dist": "2 mile",
+          "new": "16:23",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        },
+        {
+          "dist": "5k",
+          "new": "26:10",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        }
+      ],
+      "pts": 14
+    },
+    "14360251107": {
+      "details": [],
+      "pts": 0
+    },
+    "14371856777": {
+      "details": [],
+      "pts": 0
+    },
+    "14380985200": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:29",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Race",
+            "Trail workhorse",
+            "Workhorse"
+          ],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:11",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Race",
+            "Trail workhorse",
+            "Workhorse"
+          ],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "1k",
+          "new": "4:04",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Race",
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "1 mile",
+          "new": "7:00",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Race",
+            "Trail workhorse",
+            "Workhorse"
+          ],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "2 mile",
+          "new": "14:29",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Race",
+            "Trail workhorse",
+            "Workhorse"
+          ],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "5k",
+          "new": "22:29",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Race",
+            "Trail workhorse",
+            "Workhorse"
+          ],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        }
+      ],
+      "pts": 45
+    },
+    "14381059706": {
+      "details": [],
+      "pts": 0
+    },
+    "14417410310": {
+      "details": [],
+      "pts": 0
+    },
+    "14422114059": {
+      "details": [],
+      "pts": 0
+    },
+    "14431588060": {
+      "details": [],
+      "pts": 0
+    },
+    "14434152412": {
+      "details": [],
+      "pts": 0
+    },
+    "14447080321": {
+      "details": [
+        {
+          "dist": "1/2 mile",
+          "new": "3:11",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Long run",
+            "Workhorse"
+          ],
+          "prev": "3:44",
+          "pts": 7,
+          "rank_after": 1,
+          "rank_before": 5
+        },
+        {
+          "dist": "1k",
+          "new": "3:54",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Long run",
+            "Workhorse"
+          ],
+          "prev": "4:40",
+          "pts": 7,
+          "rank_after": 1,
+          "rank_before": 5
+        },
+        {
+          "dist": "2 mile",
+          "new": "15:51",
+          "passed": [],
+          "prev": "16:23",
+          "pts": 0,
+          "rank_after": 4,
+          "rank_before": 4
+        },
+        {
+          "dist": "5k",
+          "new": "25:46",
+          "passed": [],
+          "prev": "26:10",
+          "pts": 0,
+          "rank_after": 4,
+          "rank_before": 4
+        },
+        {
+          "dist": "10k",
+          "new": "52:58",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse",
+            "Workhorse"
+          ],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "15k",
+          "new": "1:24:56",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:31:07",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        },
+        {
+          "dist": "20k",
+          "new": "2:02:08",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": null
+        }
+      ],
+      "pts": 34
+    },
+    "14456917068": {
+      "details": [],
+      "pts": 0
+    },
+    "14464745818": {
+      "details": [],
+      "pts": 0
+    },
+    "14478800355": {
+      "details": [],
+      "pts": 0
+    },
+    "14479689569": {
+      "details": [
+        {
+          "dist": "1k",
+          "new": "3:58",
+          "passed": [
+            "Workhorse"
+          ],
+          "prev": "4:04",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        },
+        {
+          "dist": "1 mile",
+          "new": "6:33",
+          "passed": [],
+          "prev": "7:00",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 2
+    },
+    "14490061902": {
+      "details": [],
+      "pts": 0
+    },
+    "14497184418": {
+      "details": [],
+      "pts": 0
+    },
+    "14508174816": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:42",
+          "passed": [],
+          "prev": "1:49",
+          "pts": 0,
+          "rank_after": 5,
+          "rank_before": 5
+        },
+        {
+          "dist": "1 mile",
+          "new": "7:17",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "7:46",
+          "pts": 1,
+          "rank_after": 4,
+          "rank_before": 5
+        },
+        {
+          "dist": "2 mile",
+          "new": "14:57",
+          "passed": [
+            "Easy run",
+            "Workhorse"
+          ],
+          "prev": "15:51",
+          "pts": 3,
+          "rank_after": 2,
+          "rank_before": 4
+        },
+        {
+          "dist": "5k",
+          "new": "23:40",
+          "passed": [
+            "Easy run",
+            "Workhorse"
+          ],
+          "prev": "25:46",
+          "pts": 3,
+          "rank_after": 2,
+          "rank_before": 4
+        },
+        {
+          "dist": "10k",
+          "new": "47:51",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": "52:58",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        },
+        {
+          "dist": "15k",
+          "new": "1:11:55",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": "1:24:56",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:17:01",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": "1:31:07",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        },
+        {
+          "dist": "20k",
+          "new": "1:36:43",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": "2:02:08",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        },
+        {
+          "dist": "half-marathon",
+          "new": "1:42:07",
+          "passed": [
+            "Easy run",
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        }
+      ],
+      "pts": 27
+    },
+    "14508183150": {
+      "details": [],
+      "pts": 0
+    },
+    "14522358651": {
+      "details": [],
+      "pts": 0
+    },
+    "14530643852": {
+      "details": [],
+      "pts": 0
+    },
+    "14537902768": {
+      "details": [
+        {
+          "dist": "2 mile",
+          "new": "15:21",
+          "passed": [],
+          "prev": "15:37",
+          "pts": 0,
+          "rank_after": 4,
+          "rank_before": 4
+        }
+      ],
+      "pts": 0
+    },
+    "14547040066": {
+      "details": [],
+      "pts": 0
+    },
+    "14562848073": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:31",
+          "passed": [
+            "Workhorse"
+          ],
+          "prev": "1:37",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        }
+      ],
+      "pts": 2
+    },
+    "14567007779": {
+      "details": [],
+      "pts": 0
+    },
+    "14576949504": {
+      "details": [],
+      "pts": 0
+    },
+    "14588643758": {
+      "details": [],
+      "pts": 0
+    },
+    "14601509972": {
+      "details": [
+        {
+          "dist": "1 mile",
+          "new": "6:44",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": "7:17",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        },
+        {
+          "dist": "2 mile",
+          "new": "13:49",
+          "passed": [
+            "Long run",
+            "Race"
+          ],
+          "prev": "15:13",
+          "pts": 5,
+          "rank_after": 1,
+          "rank_before": 3
+        },
+        {
+          "dist": "5k",
+          "new": "22:49",
+          "passed": [
+            "Easy run",
+            "Race"
+          ],
+          "prev": "24:22",
+          "pts": 3,
+          "rank_after": 2,
+          "rank_before": 4
+        }
+      ],
+      "pts": 10
+    },
+    "14606847185": {
+      "details": [],
+      "pts": 0
+    },
+    "14611631235": {
+      "details": [],
+      "pts": 0
+    },
+    "14623489080": {
+      "details": [],
+      "pts": 0
+    },
+    "14633034917": {
+      "details": [],
+      "pts": 0
+    },
+    "14652171583": {
+      "details": [],
+      "pts": 0
+    },
+    "14665554076": {
+      "details": [],
+      "pts": 0
+    },
+    "14674300445": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:28",
+          "passed": [
+            "Easy run",
+            "Long run"
+          ],
+          "prev": "1:31",
+          "pts": 5,
+          "rank_after": 1,
+          "rank_before": 3
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "2:59",
+          "passed": [
+            "Easy run",
+            "Long run",
+            "Race"
+          ],
+          "prev": "3:13",
+          "pts": 6,
+          "rank_after": 1,
+          "rank_before": 4
+        },
+        {
+          "dist": "1k",
+          "new": "3:45",
+          "passed": [
+            "Long run",
+            "Race"
+          ],
+          "prev": "4:00",
+          "pts": 5,
+          "rank_after": 1,
+          "rank_before": 3
+        }
+      ],
+      "pts": 16
+    },
+    "14681474495": {
+      "details": [],
+      "pts": 0
+    },
+    "14696980124": {
+      "details": [],
+      "pts": 0
+    },
+    "14705693352": {
+      "details": [
+        {
+          "dist": "10k",
+          "new": "56:53",
+          "passed": [
+            "Trail workhorse",
+            "Workhorse"
+          ],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        },
+        {
+          "dist": "15k",
+          "new": "1:27:11",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:33:08",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        },
+        {
+          "dist": "20k",
+          "new": "1:56:22",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        },
+        {
+          "dist": "half-marathon",
+          "new": "2:02:59",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        }
+      ],
+      "pts": 14
+    },
+    "14711600176": {
+      "details": [],
+      "pts": 0
+    },
+    "14721235252": {
+      "details": [],
+      "pts": 0
+    },
+    "14736507058": {
+      "details": [],
+      "pts": 0
+    },
+    "14746504179": {
+      "details": [],
+      "pts": 0
+    },
+    "14756646212": {
+      "details": [],
+      "pts": 0
+    },
+    "14769205322": {
+      "details": [],
+      "pts": 0
+    },
+    "14779776877": {
+      "details": [],
+      "pts": 0
+    },
+    "14788106735": {
+      "details": [],
+      "pts": 0
+    },
+    "14792579820": {
+      "details": [],
+      "pts": 0
+    },
+    "14808707611": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:53",
+          "passed": [],
+          "prev": "1:56",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "4:03",
+          "passed": [],
+          "prev": "4:04",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        },
+        {
+          "dist": "1k",
+          "new": "5:02",
+          "passed": [],
+          "prev": "5:10",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        },
+        {
+          "dist": "1 mile",
+          "new": "8:29",
+          "passed": [],
+          "prev": "8:42",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        }
+      ],
+      "pts": 0
+    },
+    "14811149471": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:41",
+          "passed": [
+            "Race"
+          ],
+          "prev": "1:53",
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": 6
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:36",
+          "passed": [],
+          "prev": "4:03",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        },
+        {
+          "dist": "1k",
+          "new": "4:29",
+          "passed": [],
+          "prev": "5:02",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        }
+      ],
+      "pts": 1
+    },
+    "14813465163": {
+      "details": [],
+      "pts": 0
+    },
+    "14813542355": {
+      "details": [],
+      "pts": 0
+    },
+    "14829026684": {
+      "details": [],
+      "pts": 0
+    },
+    "14841646097": {
+      "details": [],
+      "pts": 0
+    },
+    "14847569096": {
+      "details": [],
+      "pts": 0
+    },
+    "14857590737": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:29",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Long run",
+            "Trail workhorse"
+          ],
+          "prev": "1:42",
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": 6
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:07",
+          "passed": [],
+          "prev": "3:11",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "1 mile",
+          "new": "6:25",
+          "passed": [
+            "Easy run",
+            "Long run",
+            "Workhorse"
+          ],
+          "prev": "7:17",
+          "pts": 6,
+          "rank_after": 1,
+          "rank_before": 4
+        },
+        {
+          "dist": "2 mile",
+          "new": "13:20",
+          "passed": [
+            "Long run",
+            "Workhorse"
+          ],
+          "prev": "14:57",
+          "pts": 5,
+          "rank_after": 1,
+          "rank_before": 3
+        },
+        {
+          "dist": "5k",
+          "new": "21:15",
+          "passed": [
+            "Long run",
+            "Workhorse"
+          ],
+          "prev": "23:40",
+          "pts": 5,
+          "rank_after": 1,
+          "rank_before": 3
+        }
+      ],
+      "pts": 21
+    },
+    "14871841340": {
+      "details": [],
+      "pts": 0
+    },
+    "14883995031": {
+      "details": [
+        {
+          "dist": "30k",
+          "new": "3:16:53",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        }
+      ],
+      "pts": 8
+    },
+    "14913130633": {
+      "details": [],
+      "pts": 0
+    },
+    "14955307197": {
+      "details": [
+        {
+          "dist": "30k",
+          "new": "3:13:33",
+          "passed": [],
+          "prev": "3:16:53",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "14986686871": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:22",
+          "passed": [],
+          "prev": "1:28",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "1k",
+          "new": "3:41",
+          "passed": [],
+          "prev": "3:45",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "14992593142": {
+      "details": [],
+      "pts": 0
+    },
+    "15011229448": {
+      "details": [],
+      "pts": 0
+    },
+    "15032042922": {
+      "details": [],
+      "pts": 0
+    },
+    "15053864448": {
+      "details": [],
+      "pts": 0
+    },
+    "15065203311": {
+      "details": [],
+      "pts": 0
+    },
+    "15096378224": {
+      "details": [],
+      "pts": 0
+    },
+    "15107502836": {
+      "details": [],
+      "pts": 0
+    },
+    "15129654245": {
+      "details": [],
+      "pts": 0
+    },
+    "15144649397": {
+      "details": [],
+      "pts": 0
+    },
+    "15234066050": {
+      "details": [
+        {
+          "dist": "10k",
+          "new": "53:49",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Long run",
+            "Trail workhorse"
+          ],
+          "prev": "1:08:59",
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": 6
+        }
+      ],
+      "pts": 3
+    },
+    "15243644932": {
+      "details": [],
+      "pts": 0
+    },
+    "15253300884": {
+      "details": [],
+      "pts": 0
+    },
+    "15274472250": {
+      "details": [],
+      "pts": 0
+    },
+    "15274561969": {
+      "details": [],
+      "pts": 0
+    },
+    "15306393689": {
+      "details": [],
+      "pts": 0
+    },
+    "15320436245": {
+      "details": [],
+      "pts": 0
+    },
+    "15364588723": {
+      "details": [],
+      "pts": 0
+    },
+    "15378052170": {
+      "details": [],
+      "pts": 0
+    },
+    "15378114498": {
+      "details": [],
+      "pts": 0
+    },
+    "15400007078": {
+      "details": [],
+      "pts": 0
+    },
+    "15428537227": {
+      "details": [],
+      "pts": 0
+    },
+    "15448055653": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:27",
+          "passed": [],
+          "prev": "1:29",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        }
+      ],
+      "pts": 0
+    },
+    "15481589236": {
+      "details": [],
+      "pts": 0
+    },
+    "15492084794": {
+      "details": [],
+      "pts": 0
+    },
+    "15508303865": {
+      "details": [],
+      "pts": 0
+    },
+    "15510817566": {
+      "details": [],
+      "pts": 0
+    },
+    "15515660324": {
+      "details": [],
+      "pts": 0
+    },
+    "15527577800": {
+      "details": [],
+      "pts": 0
+    },
+    "15562479317": {
+      "details": [],
+      "pts": 0
+    },
+    "15563186742": {
+      "details": [],
+      "pts": 0
+    },
+    "15584715187": {
+      "details": [
+        {
+          "dist": "2 mile",
+          "new": "14:23",
+          "passed": [],
+          "prev": "14:29",
+          "pts": 0,
+          "rank_after": 3,
+          "rank_before": 3
+        },
+        {
+          "dist": "10k",
+          "new": "48:10",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Workhorse"
+          ],
+          "prev": "56:53",
+          "pts": 4,
+          "rank_after": 2,
+          "rank_before": 5
+        },
+        {
+          "dist": "15k",
+          "new": "1:15:04",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": "1:27:11",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:20:35",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": "1:33:08",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        },
+        {
+          "dist": "20k",
+          "new": "1:45:17",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": "1:56:22",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        },
+        {
+          "dist": "half-marathon",
+          "new": "1:50:44",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": "2:02:59",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        }
+      ],
+      "pts": 12
+    },
+    "15605962590": {
+      "details": [],
+      "pts": 0
+    },
+    "15628027079": {
+      "details": [],
+      "pts": 0
+    },
+    "15634850689": {
+      "details": [],
+      "pts": 0
+    },
+    "15660916975": {
+      "details": [],
+      "pts": 0
+    },
+    "15669050517": {
+      "details": [],
+      "pts": 0
+    },
+    "15685295433": {
+      "details": [],
+      "pts": 0
+    },
+    "15716383907": {
+      "details": [
+        {
+          "dist": "30k",
+          "new": "2:33:32",
+          "passed": [
+            "Long run"
+          ],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        },
+        {
+          "dist": "marathon",
+          "new": "3:37:16",
+          "passed": [],
+          "prev": null,
+          "pts": 8,
+          "rank_after": 1,
+          "rank_before": null
+        }
+      ],
+      "pts": 16
+    },
+    "15767688093": {
+      "details": [],
+      "pts": 0
+    },
+    "15776039651": {
+      "details": [],
+      "pts": 0
+    },
+    "15793637887": {
+      "details": [],
+      "pts": 0
+    },
+    "15806010005": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:22",
+          "passed": [
+            "Race"
+          ],
+          "prev": "1:29",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        }
+      ],
+      "pts": 2
+    },
+    "15828603318": {
+      "details": [],
+      "pts": 0
+    },
+    "15833187735": {
+      "details": [],
+      "pts": 0
+    },
+    "15845486915": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:18",
+          "passed": [
+            "Workhorse"
+          ],
+          "prev": "1:22",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "2:50",
+          "passed": [
+            "Race",
+            "Workhorse"
+          ],
+          "prev": "3:11",
+          "pts": 5,
+          "rank_after": 1,
+          "rank_before": 3
+        },
+        {
+          "dist": "1k",
+          "new": "3:35",
+          "passed": [
+            "Race",
+            "Workhorse"
+          ],
+          "prev": "3:58",
+          "pts": 5,
+          "rank_after": 1,
+          "rank_before": 3
+        }
+      ],
+      "pts": 13
+    },
+    "15852297669": {
+      "details": [],
+      "pts": 0
+    },
+    "15885111050": {
+      "details": [],
+      "pts": 0
+    },
+    "15908135219": {
+      "details": [],
+      "pts": 0
+    },
+    "15924441840": {
+      "details": [
+        {
+          "dist": "5k",
+          "new": "22:26",
+          "passed": [
+            "Long run"
+          ],
+          "prev": "22:49",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        }
+      ],
+      "pts": 2
+    },
+    "15928829891": {
+      "details": [],
+      "pts": 0
+    },
+    "15943969562": {
+      "details": [],
+      "pts": 0
+    },
+    "15949692533": {
+      "details": [],
+      "pts": 0
+    },
+    "15964312107": {
+      "details": [
+        {
+          "dist": "5k",
+          "new": "28:37",
+          "passed": [],
+          "prev": "29:09",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        },
+        {
+          "dist": "10k",
+          "new": "57:41",
+          "passed": [],
+          "prev": "1:00:02",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        },
+        {
+          "dist": "15k",
+          "new": "1:29:43",
+          "passed": [],
+          "prev": "1:30:46",
+          "pts": 0,
+          "rank_after": 4,
+          "rank_before": 4
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:36:17",
+          "passed": [],
+          "prev": "1:45:16",
+          "pts": 0,
+          "rank_after": 4,
+          "rank_before": 4
+        }
+      ],
+      "pts": 0
+    },
+    "15984801822": {
+      "details": [],
+      "pts": 0
+    },
+    "16000460198": {
+      "details": [],
+      "pts": 0
+    },
+    "16001127811": {
+      "details": [
+        {
+          "dist": "1 mile",
+          "new": "6:11",
+          "passed": [
+            "Race"
+          ],
+          "prev": "6:33",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        }
+      ],
+      "pts": 3
+    },
+    "16020755753": {
+      "details": [],
+      "pts": 0
+    },
+    "16026793220": {
+      "details": [],
+      "pts": 0
+    },
+    "16048360711": {
+      "details": [],
+      "pts": 0
+    },
+    "16061172032": {
+      "details": [],
+      "pts": 0
+    },
+    "16073736281": {
+      "details": [],
+      "pts": 0
+    },
+    "16084490895": {
+      "details": [],
+      "pts": 0
+    },
+    "16113033734": {
+      "details": [],
+      "pts": 0
+    },
+    "16116296765": {
+      "details": [
+        {
+          "dist": "10k",
+          "new": "47:39",
+          "passed": [],
+          "prev": "47:51",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "15k",
+          "new": "1:11:35",
+          "passed": [],
+          "prev": "1:11:55",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:16:49",
+          "passed": [],
+          "prev": "1:17:01",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "20k",
+          "new": "1:36:02",
+          "passed": [],
+          "prev": "1:36:43",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "half-marathon",
+          "new": "1:41:10",
+          "passed": [],
+          "prev": "1:42:07",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "30k",
+          "new": "2:24:49",
+          "passed": [],
+          "prev": "2:33:32",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "marathon",
+          "new": "3:29:02",
+          "passed": [],
+          "prev": "3:37:16",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "16162024829": {
+      "details": [],
+      "pts": 0
+    },
+    "16166766053": {
+      "details": [],
+      "pts": 0
+    },
+    "16171225164": {
+      "details": [],
+      "pts": 0
+    },
+    "16193413581": {
+      "details": [],
+      "pts": 0
+    },
+    "16207989372": {
+      "details": [],
+      "pts": 0
+    },
+    "16212008527": {
+      "details": [],
+      "pts": 0
+    },
+    "16218736758": {
+      "details": [],
+      "pts": 0
+    },
+    "16223095281": {
+      "details": [],
+      "pts": 0
+    },
+    "16229052866": {
+      "details": [],
+      "pts": 0
+    },
+    "16259916717": {
+      "details": [
+        {
+          "dist": "5k",
+          "new": "28:00",
+          "passed": [],
+          "prev": "28:37",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        },
+        {
+          "dist": "10k",
+          "new": "57:11",
+          "passed": [],
+          "prev": "57:41",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        },
+        {
+          "dist": "15k",
+          "new": "1:26:20",
+          "passed": [],
+          "prev": "1:29:43",
+          "pts": 0,
+          "rank_after": 4,
+          "rank_before": 4
+        }
+      ],
+      "pts": 0
+    },
+    "16273810089": {
+      "details": [],
+      "pts": 0
+    },
+    "16278346773": {
+      "details": [],
+      "pts": 0
+    },
+    "16283141682": {
+      "details": [],
+      "pts": 0
+    },
+    "16299311060": {
+      "details": [],
+      "pts": 0
+    },
+    "16299609039": {
+      "details": [],
+      "pts": 0
+    },
+    "16304256184": {
+      "details": [],
+      "pts": 0
+    },
+    "16313731612": {
+      "details": [],
+      "pts": 0
+    },
+    "16333375763": {
+      "details": [],
+      "pts": 0
+    },
+    "16343964192": {
+      "details": [],
+      "pts": 0
+    },
+    "16348773548": {
+      "details": [],
+      "pts": 0
+    },
+    "16350736267": {
+      "details": [],
+      "pts": 0
+    },
+    "16354211341": {
+      "details": [],
+      "pts": 0
+    },
+    "16370686955": {
+      "details": [],
+      "pts": 0
+    },
+    "16375831875": {
+      "details": [],
+      "pts": 0
+    },
+    "16415796961": {
+      "details": [],
+      "pts": 0
+    },
+    "16421216430": {
+      "details": [],
+      "pts": 0
+    },
+    "16423384988": {
+      "details": [],
+      "pts": 0
+    },
+    "16437800404": {
+      "details": [],
+      "pts": 0
+    },
+    "16452299792": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:34",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "1:41",
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": 6
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:15",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "3:36",
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": 6
+        },
+        {
+          "dist": "1k",
+          "new": "4:12",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "4:29",
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": 6
+        },
+        {
+          "dist": "1 mile",
+          "new": "7:14",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "8:29",
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": 6
+        },
+        {
+          "dist": "2 mile",
+          "new": "16:24",
+          "passed": [],
+          "prev": "17:30",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        },
+        {
+          "dist": "5k",
+          "new": "27:35",
+          "passed": [],
+          "prev": "28:00",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        }
+      ],
+      "pts": 4
+    },
+    "16461662080": {
+      "details": [],
+      "pts": 0
+    },
+    "16462437905": {
+      "details": [],
+      "pts": 0
+    },
+    "16485912305": {
+      "details": [],
+      "pts": 0
+    },
+    "16502030915": {
+      "details": [],
+      "pts": 0
+    },
+    "16511915830": {
+      "details": [],
+      "pts": 0
+    },
+    "16524919013": {
+      "details": [
+        {
+          "dist": "5k",
+          "new": "27:16",
+          "passed": [],
+          "prev": "27:35",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        },
+        {
+          "dist": "10k",
+          "new": "55:08",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "57:11",
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": 6
+        }
+      ],
+      "pts": 1
+    },
+    "16530264756": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "2:14",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": null
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "4:38",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": null
+        },
+        {
+          "dist": "1k",
+          "new": "5:47",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": null
+        },
+        {
+          "dist": "1 mile",
+          "new": "9:32",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": null
+        },
+        {
+          "dist": "2 mile",
+          "new": "26:14",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": null
+        }
+      ],
+      "pts": 0
+    },
+    "16562111343": {
+      "details": [],
+      "pts": 0
+    },
+    "16575198876": {
+      "details": [],
+      "pts": 0
+    },
+    "16579315159": {
+      "details": [],
+      "pts": 0
+    },
+    "16613192768": {
+      "details": [
+        {
+          "dist": "10k",
+          "new": "48:37",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": "53:49",
+          "pts": 1,
+          "rank_after": 3,
+          "rank_before": 4
+        },
+        {
+          "dist": "15k",
+          "new": "1:16:43",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        }
+      ],
+      "pts": 4
+    },
+    "16616086838": {
+      "details": [],
+      "pts": 0
+    },
+    "16620291428": {
+      "details": [],
+      "pts": 0
+    },
+    "16630645412": {
+      "details": [],
+      "pts": 0
+    },
+    "16645329486": {
+      "details": [],
+      "pts": 0
+    },
+    "16654326017": {
+      "details": [],
+      "pts": 0
+    },
+    "16657972932": {
+      "details": [],
+      "pts": 0
+    },
+    "16672968670": {
+      "details": [],
+      "pts": 0
+    },
+    "16692680289": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:40",
+          "passed": [],
+          "prev": "2:14",
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": 7
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:23",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "4:38",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 7
+        },
+        {
+          "dist": "1k",
+          "new": "4:15",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "5:47",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 7
+        },
+        {
+          "dist": "1 mile",
+          "new": "7:02",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Trail workhorse"
+          ],
+          "prev": "9:32",
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": 7
+        },
+        {
+          "dist": "2 mile",
+          "new": "15:00",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Trail workhorse"
+          ],
+          "prev": "26:14",
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": 7
+        },
+        {
+          "dist": "5k",
+          "new": "24:11",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": null
+        }
+      ],
+      "pts": 5
+    },
+    "16705836211": {
+      "details": [],
+      "pts": 0
+    },
+    "16710657123": {
+      "details": [],
+      "pts": 0
+    },
+    "16719441684": {
+      "details": [],
+      "pts": 0
+    },
+    "16723266049": {
+      "details": [],
+      "pts": 0
+    },
+    "16757061380": {
+      "details": [],
+      "pts": 0
+    },
+    "16766264655": {
+      "details": [
+        {
+          "dist": "1k",
+          "new": "3:53",
+          "passed": [],
+          "prev": "3:54",
+          "pts": 0,
+          "rank_after": 3,
+          "rank_before": 3
+        },
+        {
+          "dist": "1 mile",
+          "new": "6:23",
+          "passed": [],
+          "prev": "6:25",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        }
+      ],
+      "pts": 0
+    },
+    "16782370504": {
+      "details": [],
+      "pts": 0
+    },
+    "16786069377": {
+      "details": [],
+      "pts": 0
+    },
+    "16791826338": {
+      "details": [
+        {
+          "dist": "10 mile",
+          "new": "1:37:20",
+          "passed": [],
+          "prev": null,
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": null
+        },
+        {
+          "dist": "20k",
+          "new": "2:04:09",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        },
+        {
+          "dist": "half-marathon",
+          "new": "2:11:17",
+          "passed": [
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": null
+        }
+      ],
+      "pts": 5
+    },
+    "16792350453": {
+      "details": [],
+      "pts": 0
+    },
+    "16846472542": {
+      "details": [],
+      "pts": 0
+    },
+    "16892108031": {
+      "details": [],
+      "pts": 0
+    },
+    "16943062961": {
+      "details": [],
+      "pts": 0
+    },
+    "16976295810": {
+      "details": [],
+      "pts": 0
+    },
+    "16980523085": {
+      "details": [],
+      "pts": 0
+    },
+    "17013759296": {
+      "details": [],
+      "pts": 0
+    },
+    "17033123680": {
+      "details": [],
+      "pts": 0
+    },
+    "17060727119": {
+      "details": [],
+      "pts": 0
+    },
+    "17106019051": {
+      "details": [],
+      "pts": 0
+    },
+    "17118091773": {
+      "details": [],
+      "pts": 0
+    },
+    "17135820884": {
+      "details": [],
+      "pts": 0
+    },
+    "17151204845": {
+      "details": [],
+      "pts": 0
+    },
+    "17158026811": {
+      "details": [],
+      "pts": 0
+    },
+    "17192682141": {
+      "details": [],
+      "pts": 0
+    },
+    "17208887174": {
+      "details": [],
+      "pts": 0
+    },
+    "17229492832": {
+      "details": [],
+      "pts": 0
+    },
+    "17262348395": {
+      "details": [],
+      "pts": 0
+    },
+    "17274380702": {
+      "details": [],
+      "pts": 0
+    },
+    "17286839094": {
+      "details": [],
+      "pts": 0
+    },
+    "17307863998": {
+      "details": [],
+      "pts": 0
+    },
+    "17314018376": {
+      "details": [
+        {
+          "dist": "10k",
+          "new": "1:56:19",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": null
+        },
+        {
+          "dist": "15k",
+          "new": "2:35:49",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": null
+        },
+        {
+          "dist": "10 mile",
+          "new": "2:44:11",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": null
+        }
+      ],
+      "pts": 0
+    },
+    "17341651378": {
+      "details": [],
+      "pts": 0
+    },
+    "17364924519": {
+      "details": [],
+      "pts": 0
+    },
+    "17391352323": {
+      "details": [],
+      "pts": 0
+    },
+    "17494202599": {
+      "details": [
+        {
+          "dist": "5k",
+          "new": "26:51",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "27:16",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 7
+        }
+      ],
+      "pts": 0
+    },
+    "17494281263": {
+      "details": [],
+      "pts": 0
+    },
+    "17531507336": {
+      "details": [],
+      "pts": 0
+    },
+    "17562943531": {
+      "details": [
+        {
+          "dist": "5k",
+          "new": "26:24",
+          "passed": [],
+          "prev": "26:51",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        }
+      ],
+      "pts": 0
+    },
+    "17586614307": {
+      "details": [
+        {
+          "dist": "2 mile",
+          "new": "15:45",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "16:24",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 7
+        },
+        {
+          "dist": "5k",
+          "new": "25:13",
+          "passed": [],
+          "prev": "26:24",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        }
+      ],
+      "pts": 0
+    },
+    "17613384964": {
+      "details": [
+        {
+          "dist": "5k",
+          "new": "23:20",
+          "passed": [
+            "Easy run"
+          ],
+          "prev": "24:11",
+          "pts": 1,
+          "rank_after": 4,
+          "rank_before": 5
+        }
+      ],
+      "pts": 1
+    },
+    "17639974946": {
+      "details": [],
+      "pts": 0
+    },
+    "17650988928": {
+      "details": [],
+      "pts": 0
+    },
+    "17671374919": {
+      "details": [],
+      "pts": 0
+    },
+    "17700536425": {
+      "details": [],
+      "pts": 0
+    },
+    "17720105146": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:42",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 8,
+          "rank_before": null
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:41",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 8,
+          "rank_before": null
+        },
+        {
+          "dist": "1k",
+          "new": "4:36",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 8,
+          "rank_before": null
+        },
+        {
+          "dist": "1 mile",
+          "new": "7:26",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": null
+        },
+        {
+          "dist": "2 mile",
+          "new": "15:57",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": null
+        },
+        {
+          "dist": "5k",
+          "new": "25:24",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": null
+        },
+        {
+          "dist": "10k",
+          "new": "55:01",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse",
+            "the mudfuckers"
+          ],
+          "prev": null,
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": null
+        }
+      ],
+      "pts": 1
+    },
+    "17731755974": {
+      "details": [],
+      "pts": 0
+    },
+    "17752319005": {
+      "details": [],
+      "pts": 0
+    },
+    "17777638274": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:38",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "the mudfuckers"
+          ],
+          "prev": "1:42",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 8
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:22",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "the mudfuckers"
+          ],
+          "prev": "3:41",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 8
+        },
+        {
+          "dist": "1k",
+          "new": "4:11",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse",
+            "the mudfuckers"
+          ],
+          "prev": "4:36",
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": 8
+        },
+        {
+          "dist": "1 mile",
+          "new": "6:51",
+          "passed": [
+            "Easy run",
+            "Trail workhorse",
+            "the mudfuckers"
+          ],
+          "prev": "7:26",
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": 7
+        },
+        {
+          "dist": "2 mile",
+          "new": "14:03",
+          "passed": [
+            "Easy run",
+            "Long run",
+            "Trail workhorse",
+            "the mudfuckers"
+          ],
+          "prev": "15:57",
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": 7
+        },
+        {
+          "dist": "5k",
+          "new": "22:58",
+          "passed": [
+            "Easy run",
+            "Trail workhorse",
+            "the mudfuckers"
+          ],
+          "prev": "25:24",
+          "pts": 2,
+          "rank_after": 4,
+          "rank_before": 7
+        },
+        {
+          "dist": "10k",
+          "new": "47:27",
+          "passed": [
+            "Easy run",
+            "Long run",
+            "Race",
+            "Workhorse"
+          ],
+          "prev": "55:01",
+          "pts": 7,
+          "rank_after": 1,
+          "rank_before": 5
+        }
+      ],
+      "pts": 15
+    },
+    "17799473671": {
+      "details": [],
+      "pts": 0
+    },
+    "17812964991": {
+      "details": [],
+      "pts": 0
+    },
+    "17838998592": {
+      "details": [],
+      "pts": 0
+    },
+    "17855237518": {
+      "details": [],
+      "pts": 0
+    },
+    "17877977512": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:25",
+          "passed": [
+            "Easy run",
+            "Race",
+            "Trail workhorse"
+          ],
+          "prev": "1:38",
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": 6
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:20",
+          "passed": [],
+          "prev": "3:22",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        },
+        {
+          "dist": "1k",
+          "new": "4:09",
+          "passed": [],
+          "prev": "4:11",
+          "pts": 0,
+          "rank_after": 5,
+          "rank_before": 5
+        },
+        {
+          "dist": "1 mile",
+          "new": "6:50",
+          "passed": [],
+          "prev": "6:51",
+          "pts": 0,
+          "rank_after": 4,
+          "rank_before": 4
+        },
+        {
+          "dist": "5k",
+          "new": "22:27",
+          "passed": [
+            "Long run"
+          ],
+          "prev": "22:58",
+          "pts": 1,
+          "rank_after": 3,
+          "rank_before": 4
+        },
+        {
+          "dist": "10k",
+          "new": "47:18",
+          "passed": [],
+          "prev": "47:27",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 4
+    },
+    "17903591697": {
+      "details": [
+        {
+          "dist": "10k",
+          "new": "1:04:14",
+          "passed": [],
+          "prev": "1:56:19",
+          "pts": 0,
+          "rank_after": 8,
+          "rank_before": 8
+        },
+        {
+          "dist": "15k",
+          "new": "1:34:53",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "2:35:49",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 7
+        }
+      ],
+      "pts": 0
+    },
+    "17925801772": {
+      "details": [],
+      "pts": 0
+    },
+    "17953762640": {
+      "details": [],
+      "pts": 0
+    },
+    "18001433112": {
+      "details": [],
+      "pts": 0
+    },
+    "18010577315": {
+      "details": [
+        {
+          "dist": "1/2 mile",
+          "new": "3:02",
+          "passed": [
+            "Easy run",
+            "Race",
+            "Trail workhorse"
+          ],
+          "prev": "3:20",
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": 6
+        },
+        {
+          "dist": "1k",
+          "new": "3:47",
+          "passed": [
+            "Easy run",
+            "Race"
+          ],
+          "prev": "4:09",
+          "pts": 2,
+          "rank_after": 3,
+          "rank_before": 5
+        }
+      ],
+      "pts": 5
+    },
+    "18036680705": {
+      "details": [],
+      "pts": 0
+    },
+    "18075506877": {
+      "details": [],
+      "pts": 0
+    },
+    "18076372653": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:22",
+          "passed": [
+            "Tempo & Threshold"
+          ],
+          "prev": "1:27",
+          "pts": 1,
+          "rank_after": 3,
+          "rank_before": 4
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "2:58",
+          "passed": [
+            "Tempo & Threshold",
+            "Workhorse"
+          ],
+          "prev": "3:07",
+          "pts": 3,
+          "rank_after": 2,
+          "rank_before": 4
+        },
+        {
+          "dist": "1k",
+          "new": "3:45",
+          "passed": [
+            "Tempo & Threshold"
+          ],
+          "prev": "3:53",
+          "pts": 1,
+          "rank_after": 3,
+          "rank_before": 4
+        },
+        {
+          "dist": "1 mile",
+          "new": "6:15",
+          "passed": [],
+          "prev": "6:23",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "2 mile",
+          "new": "13:00",
+          "passed": [],
+          "prev": "13:20",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "5k",
+          "new": "20:30",
+          "passed": [],
+          "prev": "21:15",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "10k",
+          "new": "41:44",
+          "passed": [
+            "Tempo & Threshold"
+          ],
+          "prev": "47:39",
+          "pts": 3,
+          "rank_after": 1,
+          "rank_before": 2
+        }
+      ],
+      "pts": 8
+    },
+    "18077649642": {
+      "details": [],
+      "pts": 0
+    },
+    "18101945603": {
+      "details": [],
+      "pts": 0
+    },
+    "18119989512": {
+      "details": [],
+      "pts": 0
+    },
+    "18129629918": {
+      "details": [],
+      "pts": 0
+    },
+    "18159002725": {
+      "details": [
+        {
+          "dist": "10k",
+          "new": "46:55",
+          "passed": [
+            "Tempo & Threshold"
+          ],
+          "prev": "48:10",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        },
+        {
+          "dist": "15k",
+          "new": "1:13:09",
+          "passed": [],
+          "prev": "1:15:04",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:18:14",
+          "passed": [],
+          "prev": "1:20:35",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "20k",
+          "new": "1:37:34",
+          "passed": [],
+          "prev": "1:45:17",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        },
+        {
+          "dist": "half-marathon",
+          "new": "1:42:40",
+          "passed": [],
+          "prev": "1:50:44",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        }
+      ],
+      "pts": 2
+    },
+    "18194762477": {
+      "details": [],
+      "pts": 0
+    },
+    "18223648796": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:20",
+          "passed": [
+            "Race",
+            "Workhorse"
+          ],
+          "prev": "1:25",
+          "pts": 3,
+          "rank_after": 2,
+          "rank_before": 4
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "2:58",
+          "passed": [
+            "Workhorse"
+          ],
+          "prev": "3:02",
+          "pts": 1,
+          "rank_after": 3,
+          "rank_before": 4
+        },
+        {
+          "dist": "1 mile",
+          "new": "6:22",
+          "passed": [
+            "Workhorse"
+          ],
+          "prev": "6:50",
+          "pts": 1,
+          "rank_after": 3,
+          "rank_before": 4
+        },
+        {
+          "dist": "15k",
+          "new": "1:22:55",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse",
+            "the mudfuckers"
+          ],
+          "prev": null,
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": null
+        }
+      ],
+      "pts": 6
+    },
+    "18236754676": {
+      "details": [],
+      "pts": 0
+    },
+    "18266797933": {
+      "details": [],
+      "pts": 0
+    },
+    "18289513663": {
+      "details": [],
+      "pts": 0
+    },
+    "18307221954": {
+      "details": [],
+      "pts": 0
+    },
+    "18317129011": {
+      "details": [],
+      "pts": 0
+    },
+    "18382865607": {
+      "details": [],
+      "pts": 0
+    },
+    "18478202395": {
+      "details": [],
+      "pts": 0
+    },
+    "18486908646": {
+      "details": [],
+      "pts": 0
+    },
+    "18514533363": {
+      "details": [
+        {
+          "dist": "15k",
+          "new": "1:14:25",
+          "passed": [
+            "Easy run",
+            "Workhorse"
+          ],
+          "prev": "1:22:55",
+          "pts": 2,
+          "rank_after": 3,
+          "rank_before": 5
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:20:06",
+          "passed": [
+            "Easy run",
+            "Trail workhorse",
+            "Workhorse",
+            "the mudfuckers"
+          ],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        },
+        {
+          "dist": "20k",
+          "new": "1:39:29",
+          "passed": [
+            "Easy run",
+            "Trail workhorse",
+            "Workhorse"
+          ],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        }
+      ],
+      "pts": 8
+    },
+    "18569613868": {
+      "details": [],
+      "pts": 0
+    },
+    "18596910890": {
+      "details": [],
+      "pts": 0
+    },
+    "18621646683": {
+      "details": [
+        {
+          "dist": "15k",
+          "new": "1:06:26",
+          "passed": [],
+          "prev": "1:11:35",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:11:14",
+          "passed": [],
+          "prev": "1:16:49",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "20k",
+          "new": "1:29:15",
+          "passed": [],
+          "prev": "1:36:02",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "half-marathon",
+          "new": "1:35:47",
+          "passed": [],
+          "prev": "1:41:10",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
+    },
+    "18656959738": {
+      "details": [],
+      "pts": 0
+    },
+    "18690728815": {
+      "details": [],
+      "pts": 0
+    },
+    "18690728849": {
+      "details": [],
+      "pts": 0
+    },
+    "18753242900": {
+      "details": [],
+      "pts": 0
+    },
+    "18765492327": {
+      "details": [],
+      "pts": 0
+    },
+    "18771202196": {
+      "details": [],
+      "pts": 0
+    },
+    "18792914608": {
+      "details": [],
+      "pts": 0
+    },
+    "18823418062": {
+      "details": [],
+      "pts": 0
+    },
+    "18838116201": {
+      "details": [],
+      "pts": 0
+    },
+    "18846006107": {
+      "details": [],
+      "pts": 0
+    },
+    "18847942127": {
+      "details": [],
+      "pts": 0
+    },
+    "18854237445": {
+      "details": [],
+      "pts": 0
+    },
+    "18860315023": {
+      "details": [],
+      "pts": 0
+    },
+    "18865365071": {
+      "details": [],
+      "pts": 0
+    },
+    "18917898108": {
+      "details": [],
+      "pts": 0
+    },
+    "18982576272": {
+      "details": [],
+      "pts": 0
+    },
+    "18995377728": {
+      "details": [],
+      "pts": 0
+    },
+    "19010958885": {
+      "details": [],
+      "pts": 0
+    },
+    "19023429564": {
+      "details": [],
+      "pts": 0
+    },
+    "19033456269": {
+      "details": [],
+      "pts": 0
+    },
+    "19037395183": {
+      "details": [],
+      "pts": 0
+    },
+    "19050641211": {
+      "details": [],
+      "pts": 0
+    },
+    "19106609588": {
+      "details": [],
+      "pts": 0
+    },
+    "19111439448": {
+      "details": [
+        {
+          "dist": "2 mile",
+          "new": "15:12",
+          "passed": [],
+          "prev": "15:21",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 6
+        }
+      ],
+      "pts": 0
+    },
+    "19121254336": {
+      "details": [],
+      "pts": 0
+    },
+    "19133454088": {
+      "details": [],
+      "pts": 0
+    },
+    "19189431581": {
+      "details": [],
+      "pts": 0
+    },
+    "19202279582": {
+      "details": [],
+      "pts": 0
+    },
+    "19211975444": {
+      "details": [],
+      "pts": 0
+    },
+    "19224327750": {
+      "details": [],
+      "pts": 0
+    },
+    "19230239320": {
+      "details": [],
+      "pts": 0
+    },
+    "19240554150": {
+      "details": [],
+      "pts": 0
+    },
+    "19264871833": {
+      "details": [],
+      "pts": 0
+    },
+    "19334014684": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "2:32",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 9,
+          "rank_before": null
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "5:14",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 9,
+          "rank_before": null
+        },
+        {
+          "dist": "1k",
+          "new": "6:32",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 9,
+          "rank_before": null
+        },
+        {
+          "dist": "1 mile",
+          "new": "10:38",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 9,
+          "rank_before": null
+        },
+        {
+          "dist": "2 mile",
+          "new": "21:24",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 9,
+          "rank_before": null
+        }
+      ],
+      "pts": 0
+    },
+    "19358020182": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:46",
+          "passed": [],
+          "prev": "2:32",
+          "pts": 0,
+          "rank_after": 9,
+          "rank_before": 9
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:41",
+          "passed": [],
+          "prev": "5:14",
+          "pts": 0,
+          "rank_after": 9,
+          "rank_before": 9
+        },
+        {
+          "dist": "1k",
+          "new": "4:39",
+          "passed": [],
+          "prev": "6:32",
+          "pts": 0,
+          "rank_after": 9,
+          "rank_before": 9
+        },
+        {
+          "dist": "1 mile",
+          "new": "7:28",
+          "passed": [
+            "ASICS Gel-Nimbus 25"
+          ],
+          "prev": "10:38",
+          "pts": 0,
+          "rank_after": 8,
+          "rank_before": 9
+        },
+        {
+          "dist": "2 mile",
+          "new": "15:28",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": "21:24",
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": 9
+        },
+        {
+          "dist": "5k",
+          "new": "24:20",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse"
+          ],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": null
+        },
+        {
+          "dist": "10k",
+          "new": "49:24",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Easy run",
+            "Trail workhorse",
+            "the mudfuckers"
+          ],
+          "prev": null,
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": null
+        }
+      ],
+      "pts": 1
+    },
+    "19371526475": {
+      "details": [],
+      "pts": 0
+    },
+    "19390862004": {
+      "details": [],
+      "pts": 0
+    },
+    "19393207374": {
+      "details": [],
+      "pts": 0
+    },
+    "19405110318": {
+      "details": [],
+      "pts": 0
+    },
+    "19475282767": {
+      "details": [],
+      "pts": 0
+    },
+    "19476308142": {
+      "details": [
+        {
+          "dist": "400m",
+          "new": "1:35",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "the mudfuckers"
+          ],
+          "prev": "1:46",
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": 9
+        },
+        {
+          "dist": "1/2 mile",
+          "new": "3:14",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse",
+            "the mudfuckers"
+          ],
+          "prev": "3:41",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 9
+        },
+        {
+          "dist": "1k",
+          "new": "4:10",
+          "passed": [
+            "ASICS Gel-Nimbus 25",
+            "Trail workhorse",
+            "the mudfuckers"
+          ],
+          "prev": "4:39",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 9
+        },
+        {
+          "dist": "1 mile",
+          "new": "6:51",
+          "passed": [
+            "Easy run",
+            "Trail workhorse",
+            "the mudfuckers"
+          ],
+          "prev": "7:28",
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": 8
+        },
+        {
+          "dist": "2 mile",
+          "new": "14:25",
+          "passed": [
+            "Easy run",
+            "the mudfuckers"
+          ],
+          "prev": "15:28",
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": 7
+        },
+        {
+          "dist": "5k",
+          "new": "22:19",
+          "passed": [
+            "Easy run",
+            "Long run",
+            "Tempo & Threshold",
+            "Workhorse",
+            "the mudfuckers"
+          ],
+          "prev": "24:20",
+          "pts": 5,
+          "rank_after": 2,
+          "rank_before": 7
+        }
+      ],
+      "pts": 7
+    }
+  },
+  "seeded_at": "2026-07-26T18:15:50Z"
+}

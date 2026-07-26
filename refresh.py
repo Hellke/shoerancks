@@ -12,8 +12,15 @@ config.json keys:
   github_pat, github_repo                   — optional, for the Refresh button in the dashboard
 
 shoe_config.json keys:
+  race_shoe_ids          — list of shoe_ids treated as race shoes
   retirement_distances   — dict of shoe_id -> retirement_km
   default_retirement_km  — fallback when a shoe has no explicit entry (default: 500)
+  shoe_colors            — dict of shoe_id -> {primary, secondary}
+
+Generated files (all committed, so state survives between GitHub Actions runs):
+  best_efforts_cache.json — per-activity best efforts fetched from Strava
+  speed_points_log.json   — frozen per-activity speed point scores
+  shoe_ids.md             — human-readable name -> ID reference
 """
 
 import json
@@ -196,6 +203,164 @@ def fmt_pace(elapsed_seconds, distance_m):
     return f"{int(pace_sec) // 60}:{int(pace_sec) % 60:02d}/km"
 
 
+# ── Speed points ────────────────────────────────────────────────────────────────
+# Speed points rank the shoes against each other at every best-effort distance
+# (8/5/3/2/1 for 1st→5th). A single run's score is how far it moved those
+# standings *at the moment it happened*, so it has to be computed once and then
+# frozen — recomputing it later would score it against a rotation that has since
+# changed. Scoring is therefore forward-only: everything that already existed
+# when this feature was first run is baseline and stays unscored, because there
+# is no record of what the standings looked like back then.
+#
+# speed_points_log.json holds:
+#   seeded_at — watermark; activities up to and including it are never scored
+#   scored    — {activity_id: {pts, details}}, written once and never revisited
+#
+# The standings themselves are deliberately NOT stored. They are rebuilt from
+# the best-efforts cache on every run, which keeps the log small and lets it
+# heal itself if the cache is ever backfilled.
+
+SPEED_PTS      = [8, 5, 3, 2, 1]  # 1st → 5th place
+POINTS_LOG     = "speed_points_log.json"
+
+
+def load_points_log():
+    path = Path(__file__).parent / POINTS_LOG
+    if path.exists():
+        with open(path) as f:
+            return json.load(f)
+    return None
+
+
+def save_points_log(log):
+    path = Path(__file__).parent / POINTS_LOG
+    with open(path, "w") as f:
+        json.dump(log, f, indent=2, sort_keys=True)
+
+
+def efforts_of(be_cache, activity_id):
+    """Best-effort times for one activity, as {distance_name: elapsed_seconds}."""
+    out = {}
+    for effort in be_cache.get(str(activity_id), []):
+        name = (effort.get("name") or "").lower()
+        t    = effort.get("elapsed_time", 0)
+        if name in BEST_EFFORT_DISTANCES and t and (name not in out or t < out[name]):
+            out[name] = t
+    return out
+
+
+def rank_shoes(best):
+    """Rank shoes at every distance. Returns (points_by_shoe, shoe_order_by_distance).
+
+    best: {gear_id: {distance_name: elapsed_seconds}}
+    Ties break on gear_id so a rank is never decided by dict ordering.
+    """
+    points = defaultdict(int)
+    order  = {}
+    for dist in BEST_EFFORT_ORDER:
+        ranked = sorted(
+            (gid for gid, prs in best.items() if dist in prs),
+            key=lambda gid: (best[gid][dist], gid),
+        )
+        order[dist] = ranked
+        for i, gid in enumerate(ranked[:len(SPEED_PTS)]):
+            points[gid] += SPEED_PTS[i]
+    return points, order
+
+
+def score_activity(best, gid, efforts, shoe_names):
+    """Score one activity against the standings in `best`, then fold it in.
+
+    Returns (points_gained, details). Mutates `best` with any new records.
+    """
+    improved = {d: t for d, t in efforts.items()
+                if d not in best.get(gid, {}) or t < best[gid][d]}
+    if not improved:
+        return 0, []
+
+    before_pts, before_order = rank_shoes(best)
+    previous = {d: best.get(gid, {}).get(d) for d in improved}
+    best.setdefault(gid, {}).update(improved)
+    after_pts, after_order = rank_shoes(best)
+
+    details = []
+    for dist in BEST_EFFORT_ORDER:
+        if dist not in improved:
+            continue
+        rank_before = before_order[dist].index(gid) + 1 if gid in before_order[dist] else None
+        rank_after  = after_order[dist].index(gid) + 1
+        pts_before  = SPEED_PTS[rank_before - 1] if rank_before and rank_before <= len(SPEED_PTS) else 0
+        pts_after   = SPEED_PTS[rank_after - 1]  if rank_after <= len(SPEED_PTS) else 0
+        # Shoes that were ahead at this distance before but are behind now
+        ahead_before = set(before_order[dist][:rank_before - 1]) if rank_before else set(before_order[dist])
+        ahead_after  = set(after_order[dist][:rank_after - 1])
+        details.append({
+            "dist":        dist,
+            "prev":        fmt_time(previous[dist]) if previous[dist] else None,
+            "new":         fmt_time(improved[dist]),
+            "rank_before": rank_before,
+            "rank_after":  rank_after,
+            "pts":         pts_after - pts_before,
+            "passed":      sorted(shoe_names.get(g, g) for g in ahead_before - ahead_after),
+        })
+    return after_pts[gid] - before_pts[gid], details
+
+
+def sync_speed_points(activities, shoe_ids, be_cache, shoe_names):
+    """Score every activity recorded since the last run. Returns {activity_id: {pts, details}}."""
+    tracked = sorted(
+        (a for a in activities if a.get("gear_id") in shoe_ids and a.get("distance")),
+        key=lambda a: a["start_date_local"],
+    )
+    log = load_points_log()
+
+    if log is None:
+        # First ever run: freeze the current state as the baseline, score nothing.
+        watermark = tracked[-1]["start_date_local"] if tracked else ""
+        save_points_log({"seeded_at": watermark, "scored": {}})
+        print(f"  Speed points baseline seeded at {watermark[:10] or 'empty'} — "
+              f"{len(tracked)} existing activities left unscored.")
+        return {}
+
+    scored    = log.get("scored", {})
+    watermark = log.get("seeded_at", "")
+
+    # Rebuild the standings as they stood at the watermark, then walk forward.
+    best, pending = {}, []
+    for act in tracked:
+        if act["start_date_local"] <= watermark:
+            prs = best.setdefault(act["gear_id"], {})
+            for dist, t in efforts_of(be_cache, act["id"]).items():
+                if dist not in prs or t < prs[dist]:
+                    prs[dist] = t
+        else:
+            pending.append(act)
+
+    processed, earned, deferred = 0, 0, 0
+    for i, act in enumerate(pending):
+        aid = str(act["id"])
+        if (act.get("sport_type") or act.get("type") or "") == "Run" and aid not in be_cache:
+            # Efforts not fetched yet. Leave this one and everything after it for
+            # the next run, so activities are always scored in chronological order.
+            deferred = len(pending) - i
+            break
+        pts, details = score_activity(best, act["gear_id"], efforts_of(be_cache, act["id"]), shoe_names)
+        if aid not in scored:
+            scored[aid] = {"pts": pts, "details": details}
+        watermark  = act["start_date_local"]
+        earned    += scored[aid]["pts"]
+        processed += 1
+
+    save_points_log({"seeded_at": watermark, "scored": scored})
+    if processed:
+        print(f"  Scored {processed} new activit{'y' if processed == 1 else 'ies'} (+{earned} speed points).")
+    else:
+        print("  No new activities to score.")
+    if deferred:
+        print(f"  {deferred} activit{'y' if deferred == 1 else 'ies'} deferred until best efforts are cached.")
+    return scored
+
+
 # ── Output ─────────────────────────────────────────────────────────────────────
 def write_dashboard_json(data):
     """Inject dashboard data inline into index.html."""
@@ -252,10 +417,20 @@ def color_for(shoe):
     return FALLBACK_COLORS[hash(shoe["id"]) % len(FALLBACK_COLORS)]
 
 
+def display_name(gear):
+    """Strip the Strava prefix from a gear name: "Jacob - Kayano 30" → "Kayano 30"."""
+    name = gear["name"]
+    for separator in (" - ", " · "):
+        if separator in name:
+            return name.split(separator, 1)[-1]
+    return name
+
+
 # ── Data Processing ────────────────────────────────────────────────────────────
-def process(activities, gear_map, shoe_config=None, be_cache=None):
+def process(activities, gear_map, shoe_config=None, be_cache=None, scored=None):
     shoe_config    = shoe_config or {}
     be_cache       = be_cache or {}
+    scored         = scored or {}
     race_ids       = set(shoe_config.get("race_shoe_ids", []))
     ret_distances  = shoe_config.get("retirement_distances", {})
     default_ret_km = shoe_config.get("default_retirement_km", 500)
@@ -267,6 +442,7 @@ def process(activities, gear_map, shoe_config=None, be_cache=None):
     shoe_total_km  = {id: 0.0               for id in shoe_ids}
     shoe_run_count = {id: 0                 for id in shoe_ids}
     shoe_acts      = {id: []               for id in shoe_ids}
+    activities_out = []
 
     for act in activities:
         gid = act.get("gear_id")
@@ -288,6 +464,26 @@ def process(activities, gear_map, shoe_config=None, be_cache=None):
         shoe_total_km[gid]       += km
         shoe_run_count[gid]      += 1
         shoe_acts[gid].append(act)
+
+        # Logbook entry. `pts` is None for anything predating the speed points
+        # baseline — see sync_speed_points.
+        entry = scored.get(str(act["id"]))
+        record = {
+            "id":   act["id"],
+            "date": act["start_date_local"],   # full ISO — orders runs within a day
+            "name": act.get("name", ""),
+            "type": atype,
+            "km":   round(km, 2),
+            "elev": round(act.get("total_elevation_gain") or 0),
+            "time": act.get("moving_time") or 0,
+            "gear": gid,
+            "pts":  entry["pts"] if entry else None,
+        }
+        # Omitted rather than empty — most runs set no records, and this is
+        # repeated once per activity in the inlined payload.
+        if entry and entry["details"]:
+            record["details"] = entry["details"]
+        activities_out.append(record)
 
     all_months = sorted({m for sid in shoe_ids for m in shoe_monthly[sid]})
     all_weeks  = sorted({w for sid in shoe_ids for w in shoe_weekly[sid]})
@@ -318,13 +514,6 @@ def process(activities, gear_map, shoe_config=None, be_cache=None):
 
         retired  = g.get("retired", False)
         pct_life = round(min(100, total_km / ret_km * 100), 1)
-
-        # Display name: strip Strava prefix like "Jacob - Name" or "Jacob · Name"
-        display_name = g["name"]
-        if " - " in display_name:
-            display_name = display_name.split(" - ", 1)[-1]
-        elif " · " in display_name:
-            display_name = display_name.split(" · ", 1)[-1]
 
         # Monthly, weekly & cumulative series
         monthly_series = [round(shoe_monthly[gid].get(m, 0), 1) for m in all_months]
@@ -374,7 +563,7 @@ def process(activities, gear_map, shoe_config=None, be_cache=None):
 
         shoes_out.append({
             "id":            gid,
-            "name":          display_name,
+            "name":          display_name(g),
             "model":         g.get("model_name", ""),
             "brand":         g.get("brand_name", "ASICS"),
             "color":         primary,
@@ -421,6 +610,7 @@ def process(activities, gear_map, shoe_config=None, be_cache=None):
         "all_weeks":   all_weeks,
         "shoes":       shoes_out,
         "leaderboard": leaderboard,
+        "activities":  sorted(activities_out, key=lambda a: a["date"], reverse=True),
         "totals": {
             "km":         round(sum(shoe_total_km[sid] for sid in shoe_ids)),
             "activities": sum(shoe_run_count[sid] for sid in shoe_ids),
@@ -453,7 +643,11 @@ def main():
     print("Syncing best efforts cache...")
     be_cache = sync_best_efforts(activities, shoe_ids, headers)
 
-    data = process(activities, gear_map, shoe_config, be_cache)
+    print("Scoring speed points...")
+    shoe_names = {gid: display_name(g) for gid, g in gear_map.items()}
+    scored     = sync_speed_points(activities, shoe_ids, be_cache, shoe_names)
+
+    data = process(activities, gear_map, shoe_config, be_cache, scored)
     data["athlete"] = {"firstname": athlete["firstname"], "lastname": athlete["lastname"]}
 
     print("Injecting data into index.html...")
