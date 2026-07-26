@@ -427,7 +427,7 @@
           "dist": "400m",
           "new": "2:05",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": null,
           "pts": 5,
@@ -438,7 +438,7 @@
           "dist": "1/2 mile",
           "new": "4:22",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": null,
           "pts": 5,
@@ -449,7 +449,7 @@
           "dist": "1k",
           "new": "5:32",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": null,
           "pts": 5,
@@ -460,7 +460,7 @@
           "dist": "1 mile",
           "new": "9:14",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": null,
           "pts": 5,
@@ -759,7 +759,7 @@
           "dist": "400m",
           "new": "1:43",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": "2:20",
           "pts": 2,
@@ -770,7 +770,7 @@
           "dist": "1/2 mile",
           "new": "3:46",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": "4:48",
           "pts": 2,
@@ -781,7 +781,7 @@
           "dist": "1k",
           "new": "4:43",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": "6:00",
           "pts": 2,
@@ -792,7 +792,7 @@
           "dist": "1 mile",
           "new": "8:31",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": "9:43",
           "pts": 2,
@@ -803,7 +803,7 @@
           "dist": "2 mile",
           "new": "17:53",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": "20:07",
           "pts": 2,
@@ -814,7 +814,7 @@
           "dist": "5k",
           "new": "28:07",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": "31:34",
           "pts": 2,
@@ -862,7 +862,7 @@
           "dist": "400m",
           "new": "1:39",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "1:43",
           "pts": 3,
@@ -931,7 +931,7 @@
           "dist": "2 mile",
           "new": "15:45",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "17:33",
           "pts": 3,
@@ -942,7 +942,7 @@
           "dist": "5k",
           "new": "24:49",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "27:56",
           "pts": 3,
@@ -953,8 +953,8 @@
           "dist": "10k",
           "new": "51:11",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19867062",
+            "g19945538"
           ],
           "prev": "1:11:37",
           "pts": 5,
@@ -965,8 +965,8 @@
           "dist": "15k",
           "new": "1:22:15",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19867062",
+            "g19945538"
           ],
           "prev": null,
           "pts": 8,
@@ -977,7 +977,7 @@
           "dist": "10 mile",
           "new": "1:28:09",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 8,
@@ -988,7 +988,7 @@
           "dist": "20k",
           "new": "1:49:48",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 8,
@@ -999,7 +999,7 @@
           "dist": "half-marathon",
           "new": "1:55:27",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 8,
@@ -1065,7 +1065,7 @@
           "dist": "1/2 mile",
           "new": "3:12",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "3:34",
           "pts": 3,
@@ -1089,7 +1089,7 @@
           "dist": "1 mile",
           "new": "7:28",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "7:49",
           "pts": 3,
@@ -1172,7 +1172,7 @@
           "dist": "15k",
           "new": "1:30:46",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "1:37:53",
           "pts": 2,
@@ -1205,7 +1205,7 @@
           "dist": "1k",
           "new": "4:10",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "4:29",
           "pts": 3,
@@ -1366,8 +1366,8 @@
           "dist": "400m",
           "new": "1:37",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19867062",
+            "g19945538"
           ],
           "prev": "2:03",
           "pts": 3,
@@ -1378,8 +1378,8 @@
           "dist": "1/2 mile",
           "new": "3:23",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19867062",
+            "g19945538"
           ],
           "prev": "4:15",
           "pts": 3,
@@ -1390,7 +1390,7 @@
           "dist": "1k",
           "new": "4:22",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": "5:18",
           "pts": 1,
@@ -1401,8 +1401,8 @@
           "dist": "1 mile",
           "new": "7:17",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19867062",
+            "g19945538"
           ],
           "prev": "8:47",
           "pts": 3,
@@ -1413,9 +1413,9 @@
           "dist": "2 mile",
           "new": "15:13",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Trail workhorse"
+            "g21011736",
+            "g19867062",
+            "g19945538"
           ],
           "prev": "18:50",
           "pts": 6,
@@ -1426,8 +1426,8 @@
           "dist": "5k",
           "new": "24:22",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19867062",
+            "g19945538"
           ],
           "prev": "38:43",
           "pts": 3,
@@ -1457,7 +1457,7 @@
           "dist": "400m",
           "new": "1:31",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": "1:37",
           "pts": 3,
@@ -1477,8 +1477,8 @@
           "dist": "1k",
           "new": "4:00",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run"
+            "g21011736",
+            "g19867062"
           ],
           "prev": "4:22",
           "pts": 5,
@@ -1494,7 +1494,7 @@
           "dist": "400m",
           "new": "1:49",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 2,
@@ -1505,7 +1505,7 @@
           "dist": "1/2 mile",
           "new": "3:44",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 2,
@@ -1516,7 +1516,7 @@
           "dist": "1k",
           "new": "4:40",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 2,
@@ -1527,7 +1527,7 @@
           "dist": "1 mile",
           "new": "7:46",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 2,
@@ -1538,8 +1538,8 @@
           "dist": "2 mile",
           "new": "16:23",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19867062",
+            "g19945538"
           ],
           "prev": null,
           "pts": 3,
@@ -1550,8 +1550,8 @@
           "dist": "5k",
           "new": "26:10",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19867062",
+            "g19945538"
           ],
           "prev": null,
           "pts": 3,
@@ -1575,11 +1575,11 @@
           "dist": "400m",
           "new": "1:29",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Race",
-            "Trail workhorse",
-            "Workhorse"
+            "g23052419",
+            "g21011736",
+            "g19867062",
+            "g23195462",
+            "g19945538"
           ],
           "prev": null,
           "pts": 8,
@@ -1590,11 +1590,11 @@
           "dist": "1/2 mile",
           "new": "3:11",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Race",
-            "Trail workhorse",
-            "Workhorse"
+            "g21011736",
+            "g23052419",
+            "g19867062",
+            "g23195462",
+            "g19945538"
           ],
           "prev": null,
           "pts": 8,
@@ -1605,10 +1605,10 @@
           "dist": "1k",
           "new": "4:04",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Race",
-            "Trail workhorse"
+            "g21011736",
+            "g19867062",
+            "g23195462",
+            "g19945538"
           ],
           "prev": null,
           "pts": 5,
@@ -1619,11 +1619,11 @@
           "dist": "1 mile",
           "new": "7:00",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Race",
-            "Trail workhorse",
-            "Workhorse"
+            "g21011736",
+            "g23052419",
+            "g19867062",
+            "g23195462",
+            "g19945538"
           ],
           "prev": null,
           "pts": 8,
@@ -1634,11 +1634,11 @@
           "dist": "2 mile",
           "new": "14:29",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Race",
-            "Trail workhorse",
-            "Workhorse"
+            "g23052419",
+            "g21011736",
+            "g23195462",
+            "g19867062",
+            "g19945538"
           ],
           "prev": null,
           "pts": 8,
@@ -1649,11 +1649,11 @@
           "dist": "5k",
           "new": "22:29",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Race",
-            "Trail workhorse",
-            "Workhorse"
+            "g21011736",
+            "g23052419",
+            "g23195462",
+            "g19867062",
+            "g19945538"
           ],
           "prev": null,
           "pts": 8,
@@ -1689,10 +1689,10 @@
           "dist": "1/2 mile",
           "new": "3:11",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Long run",
-            "Workhorse"
+            "g23262007",
+            "g21011736",
+            "g23052419",
+            "g19867062"
           ],
           "prev": "3:44",
           "pts": 7,
@@ -1703,10 +1703,10 @@
           "dist": "1k",
           "new": "3:54",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Long run",
-            "Workhorse"
+            "g23052419",
+            "g23262007",
+            "g21011736",
+            "g19867062"
           ],
           "prev": "4:40",
           "pts": 7,
@@ -1735,9 +1735,9 @@
           "dist": "10k",
           "new": "52:58",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse",
-            "Workhorse"
+            "g19867062",
+            "g19945538",
+            "g23052419"
           ],
           "prev": null,
           "pts": 5,
@@ -1748,8 +1748,8 @@
           "dist": "15k",
           "new": "1:24:56",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19945538",
+            "g19867062"
           ],
           "prev": null,
           "pts": 5,
@@ -1760,7 +1760,7 @@
           "dist": "10 mile",
           "new": "1:31:07",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 5,
@@ -1771,7 +1771,7 @@
           "dist": "20k",
           "new": "2:02:08",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 5,
@@ -1799,7 +1799,7 @@
           "dist": "1k",
           "new": "3:58",
           "passed": [
-            "Workhorse"
+            "g23052419"
           ],
           "prev": "4:04",
           "pts": 2,
@@ -1841,7 +1841,7 @@
           "dist": "1 mile",
           "new": "7:17",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "7:46",
           "pts": 1,
@@ -1852,8 +1852,8 @@
           "dist": "2 mile",
           "new": "14:57",
           "passed": [
-            "Easy run",
-            "Workhorse"
+            "g23052419",
+            "g21011736"
           ],
           "prev": "15:51",
           "pts": 3,
@@ -1864,8 +1864,8 @@
           "dist": "5k",
           "new": "23:40",
           "passed": [
-            "Easy run",
-            "Workhorse"
+            "g21011736",
+            "g23052419"
           ],
           "prev": "25:46",
           "pts": 3,
@@ -1876,7 +1876,7 @@
           "dist": "10k",
           "new": "47:51",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": "52:58",
           "pts": 3,
@@ -1887,7 +1887,7 @@
           "dist": "15k",
           "new": "1:11:55",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": "1:24:56",
           "pts": 3,
@@ -1898,7 +1898,7 @@
           "dist": "10 mile",
           "new": "1:17:01",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": "1:31:07",
           "pts": 3,
@@ -1909,7 +1909,7 @@
           "dist": "20k",
           "new": "1:36:43",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": "2:02:08",
           "pts": 3,
@@ -1920,8 +1920,8 @@
           "dist": "half-marathon",
           "new": "1:42:07",
           "passed": [
-            "Easy run",
-            "Trail workhorse"
+            "g21011736",
+            "g19945538"
           ],
           "prev": null,
           "pts": 8,
@@ -1967,7 +1967,7 @@
           "dist": "400m",
           "new": "1:31",
           "passed": [
-            "Workhorse"
+            "g23052419"
           ],
           "prev": "1:37",
           "pts": 2,
@@ -1995,7 +1995,7 @@
           "dist": "1 mile",
           "new": "6:44",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": "7:17",
           "pts": 2,
@@ -2006,8 +2006,8 @@
           "dist": "2 mile",
           "new": "13:49",
           "passed": [
-            "Long run",
-            "Race"
+            "g23262007",
+            "g23195462"
           ],
           "prev": "15:13",
           "pts": 5,
@@ -2018,8 +2018,8 @@
           "dist": "5k",
           "new": "22:49",
           "passed": [
-            "Easy run",
-            "Race"
+            "g23195462",
+            "g21011736"
           ],
           "prev": "24:22",
           "pts": 3,
@@ -2059,8 +2059,8 @@
           "dist": "400m",
           "new": "1:28",
           "passed": [
-            "Easy run",
-            "Long run"
+            "g23262007",
+            "g21011736"
           ],
           "prev": "1:31",
           "pts": 5,
@@ -2071,9 +2071,9 @@
           "dist": "1/2 mile",
           "new": "2:59",
           "passed": [
-            "Easy run",
-            "Long run",
-            "Race"
+            "g23195462",
+            "g23262007",
+            "g21011736"
           ],
           "prev": "3:13",
           "pts": 6,
@@ -2084,8 +2084,8 @@
           "dist": "1k",
           "new": "3:45",
           "passed": [
-            "Long run",
-            "Race"
+            "g23195462",
+            "g23262007"
           ],
           "prev": "4:00",
           "pts": 5,
@@ -2109,8 +2109,8 @@
           "dist": "10k",
           "new": "56:53",
           "passed": [
-            "Trail workhorse",
-            "Workhorse"
+            "g19945538",
+            "g23052419"
           ],
           "prev": null,
           "pts": 2,
@@ -2121,8 +2121,8 @@
           "dist": "15k",
           "new": "1:27:11",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19945538",
+            "g19867062"
           ],
           "prev": null,
           "pts": 3,
@@ -2133,7 +2133,7 @@
           "dist": "10 mile",
           "new": "1:33:08",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 3,
@@ -2144,7 +2144,7 @@
           "dist": "20k",
           "new": "1:56:22",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 3,
@@ -2155,7 +2155,7 @@
           "dist": "half-marathon",
           "new": "2:02:59",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 3,
@@ -2248,7 +2248,7 @@
           "dist": "400m",
           "new": "1:41",
           "passed": [
-            "Race"
+            "g23195462"
           ],
           "prev": "1:53",
           "pts": 1,
@@ -2302,10 +2302,10 @@
           "dist": "400m",
           "new": "1:29",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Long run",
-            "Trail workhorse"
+            "g23262007",
+            "g21011736",
+            "g19867062",
+            "g19945538"
           ],
           "prev": "1:42",
           "pts": 5,
@@ -2325,9 +2325,9 @@
           "dist": "1 mile",
           "new": "6:25",
           "passed": [
-            "Easy run",
-            "Long run",
-            "Workhorse"
+            "g23262007",
+            "g23052419",
+            "g21011736"
           ],
           "prev": "7:17",
           "pts": 6,
@@ -2338,8 +2338,8 @@
           "dist": "2 mile",
           "new": "13:20",
           "passed": [
-            "Long run",
-            "Workhorse"
+            "g23052419",
+            "g23262007"
           ],
           "prev": "14:57",
           "pts": 5,
@@ -2350,8 +2350,8 @@
           "dist": "5k",
           "new": "21:15",
           "passed": [
-            "Long run",
-            "Workhorse"
+            "g23262007",
+            "g23052419"
           ],
           "prev": "23:40",
           "pts": 5,
@@ -2462,9 +2462,9 @@
           "dist": "10k",
           "new": "53:49",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Long run",
-            "Trail workhorse"
+            "g19867062",
+            "g23262007",
+            "g19945538"
           ],
           "prev": "1:08:59",
           "pts": 3,
@@ -2579,9 +2579,9 @@
           "dist": "10k",
           "new": "48:10",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Workhorse"
+            "g21011736",
+            "g23052419",
+            "g19867062"
           ],
           "prev": "56:53",
           "pts": 4,
@@ -2592,7 +2592,7 @@
           "dist": "15k",
           "new": "1:15:04",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": "1:27:11",
           "pts": 2,
@@ -2603,7 +2603,7 @@
           "dist": "10 mile",
           "new": "1:20:35",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": "1:33:08",
           "pts": 2,
@@ -2614,7 +2614,7 @@
           "dist": "20k",
           "new": "1:45:17",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": "1:56:22",
           "pts": 2,
@@ -2625,7 +2625,7 @@
           "dist": "half-marathon",
           "new": "1:50:44",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": "2:02:59",
           "pts": 2,
@@ -2665,7 +2665,7 @@
           "dist": "30k",
           "new": "2:33:32",
           "passed": [
-            "Long run"
+            "g23262007"
           ],
           "prev": null,
           "pts": 8,
@@ -2702,7 +2702,7 @@
           "dist": "400m",
           "new": "1:22",
           "passed": [
-            "Race"
+            "g23195462"
           ],
           "prev": "1:29",
           "pts": 2,
@@ -2726,7 +2726,7 @@
           "dist": "400m",
           "new": "1:18",
           "passed": [
-            "Workhorse"
+            "g23052419"
           ],
           "prev": "1:22",
           "pts": 3,
@@ -2737,8 +2737,8 @@
           "dist": "1/2 mile",
           "new": "2:50",
           "passed": [
-            "Race",
-            "Workhorse"
+            "g23052419",
+            "g23195462"
           ],
           "prev": "3:11",
           "pts": 5,
@@ -2749,8 +2749,8 @@
           "dist": "1k",
           "new": "3:35",
           "passed": [
-            "Race",
-            "Workhorse"
+            "g23052419",
+            "g23195462"
           ],
           "prev": "3:58",
           "pts": 5,
@@ -2778,7 +2778,7 @@
           "dist": "5k",
           "new": "22:26",
           "passed": [
-            "Long run"
+            "g23262007"
           ],
           "prev": "22:49",
           "pts": 2,
@@ -2855,7 +2855,7 @@
           "dist": "1 mile",
           "new": "6:11",
           "passed": [
-            "Race"
+            "g23195462"
           ],
           "prev": "6:33",
           "pts": 3,
@@ -3107,7 +3107,7 @@
           "dist": "400m",
           "new": "1:34",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "1:41",
           "pts": 1,
@@ -3118,7 +3118,7 @@
           "dist": "1/2 mile",
           "new": "3:15",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "3:36",
           "pts": 1,
@@ -3129,7 +3129,7 @@
           "dist": "1k",
           "new": "4:12",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "4:29",
           "pts": 1,
@@ -3140,7 +3140,7 @@
           "dist": "1 mile",
           "new": "7:14",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "8:29",
           "pts": 1,
@@ -3203,7 +3203,7 @@
           "dist": "10k",
           "new": "55:08",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "57:11",
           "pts": 1,
@@ -3281,7 +3281,7 @@
           "dist": "10k",
           "new": "48:37",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": "53:49",
           "pts": 1,
@@ -3292,9 +3292,9 @@
           "dist": "15k",
           "new": "1:16:43",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Trail workhorse"
+            "g21011736",
+            "g19945538",
+            "g19867062"
           ],
           "prev": null,
           "pts": 3,
@@ -3347,7 +3347,7 @@
           "dist": "1/2 mile",
           "new": "3:23",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "4:38",
           "pts": 0,
@@ -3358,7 +3358,7 @@
           "dist": "1k",
           "new": "4:15",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "5:47",
           "pts": 0,
@@ -3369,9 +3369,9 @@
           "dist": "1 mile",
           "new": "7:02",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Trail workhorse"
+            "g21011736",
+            "g19945538",
+            "g19867062"
           ],
           "prev": "9:32",
           "pts": 2,
@@ -3382,9 +3382,9 @@
           "dist": "2 mile",
           "new": "15:00",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Trail workhorse"
+            "g21011736",
+            "g19867062",
+            "g19945538"
           ],
           "prev": "26:14",
           "pts": 2,
@@ -3395,8 +3395,8 @@
           "dist": "5k",
           "new": "24:11",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19867062",
+            "g19945538"
           ],
           "prev": null,
           "pts": 1,
@@ -3472,7 +3472,7 @@
           "dist": "20k",
           "new": "2:04:09",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 2,
@@ -3483,7 +3483,7 @@
           "dist": "half-marathon",
           "new": "2:11:17",
           "passed": [
-            "Trail workhorse"
+            "g19945538"
           ],
           "prev": null,
           "pts": 2,
@@ -3627,7 +3627,7 @@
           "dist": "5k",
           "new": "26:51",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "27:16",
           "pts": 0,
@@ -3665,7 +3665,7 @@
           "dist": "2 mile",
           "new": "15:45",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "16:24",
           "pts": 0,
@@ -3690,7 +3690,7 @@
           "dist": "5k",
           "new": "23:20",
           "passed": [
-            "Easy run"
+            "g21011736"
           ],
           "prev": "24:11",
           "pts": 1,
@@ -3749,7 +3749,7 @@
           "dist": "1 mile",
           "new": "7:26",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": null,
           "pts": 0,
@@ -3760,7 +3760,7 @@
           "dist": "2 mile",
           "new": "15:57",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": null,
           "pts": 0,
@@ -3771,7 +3771,7 @@
           "dist": "5k",
           "new": "25:24",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": null,
           "pts": 0,
@@ -3782,9 +3782,9 @@
           "dist": "10k",
           "new": "55:01",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse",
-            "the mudfuckers"
+            "g19945538",
+            "g19867062",
+            "g21173164"
           ],
           "prev": null,
           "pts": 1,
@@ -3808,8 +3808,8 @@
           "dist": "400m",
           "new": "1:38",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "the mudfuckers"
+            "g19867062",
+            "g21173164"
           ],
           "prev": "1:42",
           "pts": 0,
@@ -3820,8 +3820,8 @@
           "dist": "1/2 mile",
           "new": "3:22",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "the mudfuckers"
+            "g21173164",
+            "g19867062"
           ],
           "prev": "3:41",
           "pts": 0,
@@ -3832,9 +3832,9 @@
           "dist": "1k",
           "new": "4:11",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse",
-            "the mudfuckers"
+            "g19945538",
+            "g21173164",
+            "g19867062"
           ],
           "prev": "4:36",
           "pts": 1,
@@ -3845,9 +3845,9 @@
           "dist": "1 mile",
           "new": "6:51",
           "passed": [
-            "Easy run",
-            "Trail workhorse",
-            "the mudfuckers"
+            "g21173164",
+            "g21011736",
+            "g19945538"
           ],
           "prev": "7:26",
           "pts": 2,
@@ -3858,10 +3858,10 @@
           "dist": "2 mile",
           "new": "14:03",
           "passed": [
-            "Easy run",
-            "Long run",
-            "Trail workhorse",
-            "the mudfuckers"
+            "g23262007",
+            "g21173164",
+            "g21011736",
+            "g19945538"
           ],
           "prev": "15:57",
           "pts": 3,
@@ -3872,9 +3872,9 @@
           "dist": "5k",
           "new": "22:58",
           "passed": [
-            "Easy run",
-            "Trail workhorse",
-            "the mudfuckers"
+            "g21173164",
+            "g21011736",
+            "g19945538"
           ],
           "prev": "25:24",
           "pts": 2,
@@ -3885,10 +3885,10 @@
           "dist": "10k",
           "new": "47:27",
           "passed": [
-            "Easy run",
-            "Long run",
-            "Race",
-            "Workhorse"
+            "g23195462",
+            "g23262007",
+            "g23052419",
+            "g21011736"
           ],
           "prev": "55:01",
           "pts": 7,
@@ -3920,9 +3920,9 @@
           "dist": "400m",
           "new": "1:25",
           "passed": [
-            "Easy run",
-            "Race",
-            "Trail workhorse"
+            "g23195462",
+            "g21011736",
+            "g19945538"
           ],
           "prev": "1:38",
           "pts": 3,
@@ -3960,7 +3960,7 @@
           "dist": "5k",
           "new": "22:27",
           "passed": [
-            "Long run"
+            "g23262007"
           ],
           "prev": "22:58",
           "pts": 1,
@@ -3994,7 +3994,7 @@
           "dist": "15k",
           "new": "1:34:53",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "2:35:49",
           "pts": 0,
@@ -4022,9 +4022,9 @@
           "dist": "1/2 mile",
           "new": "3:02",
           "passed": [
-            "Easy run",
-            "Race",
-            "Trail workhorse"
+            "g23195462",
+            "g21011736",
+            "g19945538"
           ],
           "prev": "3:20",
           "pts": 3,
@@ -4035,8 +4035,8 @@
           "dist": "1k",
           "new": "3:47",
           "passed": [
-            "Easy run",
-            "Race"
+            "g23195462",
+            "g21011736"
           ],
           "prev": "4:09",
           "pts": 2,
@@ -4060,7 +4060,7 @@
           "dist": "400m",
           "new": "1:22",
           "passed": [
-            "Tempo & Threshold"
+            "g29593716"
           ],
           "prev": "1:27",
           "pts": 1,
@@ -4071,8 +4071,8 @@
           "dist": "1/2 mile",
           "new": "2:58",
           "passed": [
-            "Tempo & Threshold",
-            "Workhorse"
+            "g23052419",
+            "g29593716"
           ],
           "prev": "3:07",
           "pts": 3,
@@ -4083,7 +4083,7 @@
           "dist": "1k",
           "new": "3:45",
           "passed": [
-            "Tempo & Threshold"
+            "g29593716"
           ],
           "prev": "3:53",
           "pts": 1,
@@ -4121,7 +4121,7 @@
           "dist": "10k",
           "new": "41:44",
           "passed": [
-            "Tempo & Threshold"
+            "g29593716"
           ],
           "prev": "47:39",
           "pts": 3,
@@ -4153,7 +4153,7 @@
           "dist": "10k",
           "new": "46:55",
           "passed": [
-            "Tempo & Threshold"
+            "g29593716"
           ],
           "prev": "48:10",
           "pts": 2,
@@ -4209,8 +4209,8 @@
           "dist": "400m",
           "new": "1:20",
           "passed": [
-            "Race",
-            "Workhorse"
+            "g23052419",
+            "g23195462"
           ],
           "prev": "1:25",
           "pts": 3,
@@ -4221,7 +4221,7 @@
           "dist": "1/2 mile",
           "new": "2:58",
           "passed": [
-            "Workhorse"
+            "g23052419"
           ],
           "prev": "3:02",
           "pts": 1,
@@ -4232,7 +4232,7 @@
           "dist": "1 mile",
           "new": "6:22",
           "passed": [
-            "Workhorse"
+            "g23052419"
           ],
           "prev": "6:50",
           "pts": 1,
@@ -4243,9 +4243,9 @@
           "dist": "15k",
           "new": "1:22:55",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse",
-            "the mudfuckers"
+            "g19945538",
+            "g21173164",
+            "g19867062"
           ],
           "prev": null,
           "pts": 1,
@@ -4293,8 +4293,8 @@
           "dist": "15k",
           "new": "1:14:25",
           "passed": [
-            "Easy run",
-            "Workhorse"
+            "g23052419",
+            "g21011736"
           ],
           "prev": "1:22:55",
           "pts": 2,
@@ -4305,10 +4305,10 @@
           "dist": "10 mile",
           "new": "1:20:06",
           "passed": [
-            "Easy run",
-            "Trail workhorse",
-            "Workhorse",
-            "the mudfuckers"
+            "g21011736",
+            "g19945538",
+            "g23052419",
+            "g21173164"
           ],
           "prev": null,
           "pts": 3,
@@ -4319,9 +4319,9 @@
           "dist": "20k",
           "new": "1:39:29",
           "passed": [
-            "Easy run",
-            "Trail workhorse",
-            "Workhorse"
+            "g21011736",
+            "g23052419",
+            "g19945538"
           ],
           "prev": null,
           "pts": 3,
@@ -4605,7 +4605,7 @@
           "dist": "1 mile",
           "new": "7:28",
           "passed": [
-            "ASICS Gel-Nimbus 25"
+            "g19867062"
           ],
           "prev": "10:38",
           "pts": 0,
@@ -4616,8 +4616,8 @@
           "dist": "2 mile",
           "new": "15:28",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19945538",
+            "g19867062"
           ],
           "prev": "21:24",
           "pts": 0,
@@ -4628,8 +4628,8 @@
           "dist": "5k",
           "new": "24:20",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse"
+            "g19945538",
+            "g19867062"
           ],
           "prev": null,
           "pts": 0,
@@ -4640,10 +4640,10 @@
           "dist": "10k",
           "new": "49:24",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Easy run",
-            "Trail workhorse",
-            "the mudfuckers"
+            "g21011736",
+            "g19945538",
+            "g19867062",
+            "g21173164"
           ],
           "prev": null,
           "pts": 1,
@@ -4679,8 +4679,8 @@
           "dist": "400m",
           "new": "1:35",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "the mudfuckers"
+            "g19867062",
+            "g21173164"
           ],
           "prev": "1:46",
           "pts": 0,
@@ -4691,9 +4691,9 @@
           "dist": "1/2 mile",
           "new": "3:14",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse",
-            "the mudfuckers"
+            "g19945538",
+            "g21173164",
+            "g19867062"
           ],
           "prev": "3:41",
           "pts": 0,
@@ -4704,9 +4704,9 @@
           "dist": "1k",
           "new": "4:10",
           "passed": [
-            "ASICS Gel-Nimbus 25",
-            "Trail workhorse",
-            "the mudfuckers"
+            "g19945538",
+            "g21173164",
+            "g19867062"
           ],
           "prev": "4:39",
           "pts": 0,
@@ -4717,9 +4717,9 @@
           "dist": "1 mile",
           "new": "6:51",
           "passed": [
-            "Easy run",
-            "Trail workhorse",
-            "the mudfuckers"
+            "g21173164",
+            "g21011736",
+            "g19945538"
           ],
           "prev": "7:28",
           "pts": 1,
@@ -4730,8 +4730,8 @@
           "dist": "2 mile",
           "new": "14:25",
           "passed": [
-            "Easy run",
-            "the mudfuckers"
+            "g21173164",
+            "g21011736"
           ],
           "prev": "15:28",
           "pts": 1,
@@ -4742,11 +4742,11 @@
           "dist": "5k",
           "new": "22:19",
           "passed": [
-            "Easy run",
-            "Long run",
-            "Tempo & Threshold",
-            "Workhorse",
-            "the mudfuckers"
+            "g23052419",
+            "g29593716",
+            "g23262007",
+            "g21173164",
+            "g21011736"
           ],
           "prev": "24:20",
           "pts": 5,

@@ -268,10 +268,12 @@ def rank_shoes(best):
     return points, order
 
 
-def score_activity(best, gid, efforts, shoe_names):
+def score_activity(best, gid, efforts):
     """Score one activity against the standings in `best`, then fold it in.
 
     Returns (points_gained, details). Mutates `best` with any new records.
+    Overtaken shoes are recorded as gear ids, not names — the log is frozen
+    forever, so display names have to stay resolvable at render time.
     """
     improved = {d: t for d, t in efforts.items()
                 if d not in best.get(gid, {}) or t < best[gid][d]}
@@ -301,12 +303,14 @@ def score_activity(best, gid, efforts, shoe_names):
             "rank_before": rank_before,
             "rank_after":  rank_after,
             "pts":         pts_after - pts_before,
-            "passed":      sorted(shoe_names.get(g, g) for g in ahead_before - ahead_after),
+            # kept in standings order rather than sorted, so the list reads
+            # from the shoe that was closest ahead to the furthest
+            "passed":      [g for g in before_order[dist] if g in ahead_before - ahead_after],
         })
     return after_pts[gid] - before_pts[gid], details
 
 
-def sync_speed_points(activities, shoe_ids, be_cache, shoe_names):
+def sync_speed_points(activities, shoe_ids, be_cache):
     """Score every activity recorded since the last run. Returns {activity_id: {pts, details}}."""
     tracked = sorted(
         (a for a in activities if a.get("gear_id") in shoe_ids and a.get("distance")),
@@ -344,7 +348,7 @@ def sync_speed_points(activities, shoe_ids, be_cache, shoe_names):
             # the next run, so activities are always scored in chronological order.
             deferred = len(pending) - i
             break
-        pts, details = score_activity(best, act["gear_id"], efforts_of(be_cache, act["id"]), shoe_names)
+        pts, details = score_activity(best, act["gear_id"], efforts_of(be_cache, act["id"]))
         if aid not in scored:
             scored[aid] = {"pts": pts, "details": details}
         watermark  = act["start_date_local"]
@@ -440,6 +444,7 @@ def process(activities, gear_map, shoe_config=None, be_cache=None, scored=None):
     shoe_weekly    = {id: defaultdict(float) for id in shoe_ids}
     shoe_types     = {id: defaultdict(int)   for id in shoe_ids}
     shoe_total_km  = {id: 0.0               for id in shoe_ids}
+    shoe_total_elev= {id: 0.0               for id in shoe_ids}
     shoe_run_count = {id: 0                 for id in shoe_ids}
     shoe_acts      = {id: []               for id in shoe_ids}
     activities_out = []
@@ -449,6 +454,7 @@ def process(activities, gear_map, shoe_config=None, be_cache=None, scored=None):
         if not gid or gid not in shoe_ids or not act.get("distance"):
             continue
         km    = act["distance"] / 1000
+        elev  = act.get("total_elevation_gain") or 0
         month = act["start_date_local"][:7]
         iso   = datetime.strptime(act["start_date_local"][:10], "%Y-%m-%d").date().isocalendar()
         week  = f"{iso[0]}-W{iso[1]:02d}"
@@ -462,6 +468,7 @@ def process(activities, gear_map, shoe_config=None, be_cache=None, scored=None):
         shoe_weekly[gid][week]   += km
         shoe_types[gid][atype]   += 1
         shoe_total_km[gid]       += km
+        shoe_total_elev[gid]     += elev
         shoe_run_count[gid]      += 1
         shoe_acts[gid].append(act)
 
@@ -474,7 +481,7 @@ def process(activities, gear_map, shoe_config=None, be_cache=None, scored=None):
             "name": act.get("name", ""),
             "type": atype,
             "km":   round(km, 2),
-            "elev": round(act.get("total_elevation_gain") or 0),
+            "elev": round(elev),
             "time": act.get("moving_time") or 0,
             "gear": gid,
             "pts":  entry["pts"] if entry else None,
@@ -570,6 +577,7 @@ def process(activities, gear_map, shoe_config=None, be_cache=None, scored=None):
             "secondary":     secondary,
             "retired":       retired,
             "total_km":      round(total_km),
+            "total_elev":    round(shoe_total_elev[gid]),
             "runs":          runs,
             "avg_km":        avg_km,
             "km_per_week":   km_per_week,
@@ -613,6 +621,7 @@ def process(activities, gear_map, shoe_config=None, be_cache=None, scored=None):
         "activities":  sorted(activities_out, key=lambda a: a["date"], reverse=True),
         "totals": {
             "km":         round(sum(shoe_total_km[sid] for sid in shoe_ids)),
+            "elev":       round(sum(shoe_total_elev[sid] for sid in shoe_ids)),
             "activities": sum(shoe_run_count[sid] for sid in shoe_ids),
             "shoes":      len(shoe_ids),
         },
@@ -644,8 +653,7 @@ def main():
     be_cache = sync_best_efforts(activities, shoe_ids, headers)
 
     print("Scoring speed points...")
-    shoe_names = {gid: display_name(g) for gid, g in gear_map.items()}
-    scored     = sync_speed_points(activities, shoe_ids, be_cache, shoe_names)
+    scored = sync_speed_points(activities, shoe_ids, be_cache)
 
     data = process(activities, gear_map, shoe_config, be_cache, scored)
     data["athlete"] = {"firstname": athlete["firstname"], "lastname": athlete["lastname"]}
