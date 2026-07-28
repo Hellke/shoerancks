@@ -11,5 +11,5 @@ Last updated: 28 Jul 2026
 | the mudfuckers | ASICS | 324 km | `g21173164` |
 | ASICS Gel-Nimbus 25 | ASICS | 253 km | `g19867062` |
 | Race | ASICS | 234 km | `g23195462` |
-| Tempo & Threshold | ASICS | 168 km | `g29593716` |
+| Tempo & Threshold | ASICS | 178 km | `g29593716` |
 | Long run | ASICS | 32 km | `g32434469` |
