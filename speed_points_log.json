@@ -4780,7 +4780,37 @@
     "19542219154": {
       "details": [],
       "pts": 0
+    },
+    "19573273215": {
+      "details": [
+        {
+          "dist": "15k",
+          "new": "1:27:54",
+          "passed": [
+            "g21173164",
+            "g19867062"
+          ],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 7,
+          "rank_before": null
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:34:50",
+          "passed": [
+            "g19945538",
+            "g23052419",
+            "g21173164"
+          ],
+          "prev": null,
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": null
+        }
+      ],
+      "pts": 1
     }
   },
-  "seeded_at": "2026-07-31T13:26:31Z"
+  "seeded_at": "2026-08-02T17:20:58Z"
 }

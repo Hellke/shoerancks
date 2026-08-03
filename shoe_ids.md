@@ -1,6 +1,6 @@
 # Shoe IDs
 Use these IDs in `shoe_config.json` under `retirement_distances`.
-Last updated: 02 Aug 2026
+Last updated: 03 Aug 2026
 
 | Name | Brand | Total km | Strava ID |
 |------|-------|----------|-----------|
@@ -12,4 +12,4 @@ Last updated: 02 Aug 2026
 | ASICS Gel-Nimbus 25 | ASICS | 253 km | `g19867062` |
 | Race | ASICS | 234 km | `g23195462` |
 | Tempo & Threshold | ASICS | 178 km | `g29593716` |
-| Long run | ASICS | 32 km | `g32434469` |
+| Long run | ASICS | 50 km | `g32434469` |
