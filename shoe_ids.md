@@ -1,6 +1,6 @@
 # Shoe IDs
 Use these IDs in `shoe_config.json` under `retirement_distances`.
-Last updated: 14 Aug 2026
+Last updated: 15 Aug 2026
 
 | Name | Brand | Total km | Strava ID |
 |------|-------|----------|-----------|
