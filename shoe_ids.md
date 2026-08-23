@@ -1,11 +1,11 @@
 # Shoe IDs
 Use these IDs in `shoe_config.json` under `retirement_distances`.
-Last updated: 22 Aug 2026
+Last updated: 23 Aug 2026
 
 | Name | Brand | Total km | Strava ID |
 |------|-------|----------|-----------|
 | Easy run | ASICS | 800 km | `g21011736` |
-| Long run | ASICS | 689 km | `g23262007` |
+| Long run | ASICS | 706 km | `g23262007` |
 | Workhorse | ASICS | 639 km | `g23052419` |
 | Trail workhorse | ASICS | 325 km | `g19945538` |
 | the mudfuckers | ASICS | 324 km | `g21173164` |
