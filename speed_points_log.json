@@ -4894,7 +4894,57 @@
     "19936264529": {
       "details": [],
       "pts": 0
+    },
+    "19945925678": {
+      "details": [
+        {
+          "dist": "15k",
+          "new": "1:22:48",
+          "passed": [
+            "g19945538"
+          ],
+          "prev": "1:27:54",
+          "pts": 0,
+          "rank_after": 6,
+          "rank_before": 7
+        },
+        {
+          "dist": "10 mile",
+          "new": "1:28:26",
+          "passed": [],
+          "prev": "1:34:50",
+          "pts": 0,
+          "rank_after": 5,
+          "rank_before": 5
+        },
+        {
+          "dist": "20k",
+          "new": "1:49:53",
+          "passed": [
+            "g23052419",
+            "g19945538"
+          ],
+          "prev": null,
+          "pts": 1,
+          "rank_after": 5,
+          "rank_before": null
+        },
+        {
+          "dist": "half-marathon",
+          "new": "1:55:21",
+          "passed": [
+            "g21011736",
+            "g23052419",
+            "g19945538"
+          ],
+          "prev": null,
+          "pts": 3,
+          "rank_after": 3,
+          "rank_before": null
+        }
+      ],
+      "pts": 4
     }
   },
-  "seeded_at": "2026-08-28T15:06:05Z"
+  "seeded_at": "2026-08-29T09:13:32Z"
 }
