@@ -4970,7 +4970,21 @@
     "20063495613": {
       "details": [],
       "pts": 0
+    },
+    "20075159810": {
+      "details": [
+        {
+          "dist": "2 mile",
+          "new": "13:46",
+          "passed": [],
+          "prev": "13:49",
+          "pts": 0,
+          "rank_after": 2,
+          "rank_before": 2
+        }
+      ],
+      "pts": 0
     }
   },
-  "seeded_at": "2026-09-06T16:45:31Z"
+  "seeded_at": "2026-09-07T16:45:17Z"
 }
