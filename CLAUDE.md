@@ -30,6 +30,7 @@ refresh.py             — Python script: Strava API -> injects data into index.
 index.html             — Static HTML/JS: reads inline DASHBOARD_DATA -> Chart.js visualisations
 shoe_config.json       — Per-shoe config (retirement distances, race shoe flags, colors)
 best_efforts_cache.json — Generated: per-activity best efforts from Strava
+laps_cache.json         — Generated: per-activity lap distance/time/heart rate
 speed_points_log.json   — Generated: frozen per-activity speed point scores
 ```
 
@@ -59,13 +60,44 @@ Only activities newer than the watermark get a score.
 Both rankers must break ties on gear ID. Without it a tied time is resolved by
 list order, which is sorted by most recent use and therefore drifts.
 
+## Pace & heart rate profiles
+
+Each shoe card's detail page shows two histograms: kilometers run per pace band
+and per heart rate band. Both are built from **laps**, not the kilometer splits
+Strava also exposes. A lap is the unit a run was actually structured in, so an
+interval session contributes its reps at rep pace and its recoveries at jog
+pace. Kilometer splits average the two together and every interval session comes
+out looking like a steady medium run.
+
+Bin edges live in `refresh.py` as `PACE_EDGES` (min/km) and `HR_EDGES` (bpm).
+They are *interior* edges: n edges produce n+1 bins, one open at each end. The
+labels are generated from them and shipped in the payload as `pace_bins` /
+`hr_bins`, so the two ends cannot drift apart — `index.html` only draws a chart
+when the bin count it receives matches the data it receives.
+
+**Backfill.** Laps arrive in the same `/activities/{id}` payload as best efforts,
+so any activity fetched for the best-efforts cache fills both caches at once.
+Everything predating this feature has to be re-fetched, and Strava allows only
+100 reads per 15 minutes, so `backfill_laps()` walks history newest-first, one
+window per run:
+
+- `LAPS_INITIAL_WINDOW_DAYS` (30) — how far back the very first run reaches
+- `LAPS_WINDOW_STEP_DAYS` (60) — how much further each later run reaches, applied
+  only once the current window has been fully drained
+- `LAPS_FETCH_BUDGET` (40) — hard cap on fetches per run
+
+With a daily workflow that takes roughly two weeks to cover two years of
+history. Until then coverage is partial, which is why every shoe ships a
+`lap_coverage` block and each chart prints how many of the shoe's activities it
+actually speaks for.
+
 ## GitHub Actions
 
 `.github/workflows/refresh.yml` runs daily at 06:00 UTC and on `workflow_dispatch`. It runs `refresh.py` then deploys the repo to GitHub Pages.
 
 Required repository secrets: `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`.
 
-⚠️ The commit step lists files explicitly (`git add best_efforts_cache.json speed_points_log.json index.html shoe_ids.md`). Any new generated file that must survive between runs has to be added there, or it is silently rebuilt from scratch every time.
+⚠️ The commit step lists files explicitly (`git add best_efforts_cache.json laps_cache.json speed_points_log.json index.html shoe_ids.md`). Any new generated file that must survive between runs has to be added there, or it is silently rebuilt from scratch every time.
 
 ## Key constants & config
 

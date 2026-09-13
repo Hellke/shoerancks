@@ -106,7 +106,10 @@
     .overlay-life-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; gap:16px; flex-wrap:wrap; }
     .overlay-life-pct { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
     .overlay-charts { display:grid; grid-template-columns:2fr 1fr; gap:20px; }
-    @media(max-width:900px) { .overlay-charts { grid-template-columns:1fr; } }
+    .profile-charts { grid-template-columns:1fr 1fr; margin-top:20px; }
+    @media(max-width:900px) { .overlay-charts, .profile-charts { grid-template-columns:1fr; } }
+    .profile-note { margin-top:16px; font-size:10px; color:var(--muted); letter-spacing:.5px; }
+    .profile-note.partial { color:#FBBF24; }
     .overlay-prs { margin-top:32px; }
     .overlay-prs h3 { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:16px; }
     .pr-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(130px,1fr)); gap:10px; }
@@ -350,6 +353,10 @@
     };
     function typeColor(t) { return TYPE_COLORS[t] || '#888'; }
 
+    // Heart rate bins run cool to hot, so the shape of the bars reads as effort
+    // regardless of which shoe is open. One colour per bin in refresh.py's HR_EDGES.
+    const HR_BIN_COLORS = ['#3d9af1','#2DD4BF','#34D399','#A3E635','#FBBF24','#FB923C','#EF4444','#B91C1C'];
+
     // Activity names are free text from Strava — everything else interpolated
     // into these templates is generated data.
     function esc(s) {
@@ -362,7 +369,9 @@
     let months = [];
     let weeks  = [];
     let activities = [];
-    let cumChart, monthlyChart, typeChart, histChart, pieChart;
+    let paceBins  = [];
+    let hrBins    = [];
+    let cumChart, monthlyChart, typeChart, histChart, pieChart, paceChart, hrChart;
     let retirementProjections = {};
     let speedPoints = { pts: {}, breakdown: {} };
     let currentSort = 'latest';
@@ -499,6 +508,8 @@
         months     = d.all_months;
         weeks      = d.all_weeks || [];
         activities = d.activities || [];
+        paceBins   = d.pace_bins || [];
+        hrBins     = d.hr_bins   || [];
         computeSpeedPoints();
         renderApp(d);
         initTargetInput();
@@ -1058,6 +1069,40 @@
       const pieLabels = Object.keys(shoe.types);
       const pieData   = Object.values(shoe.types);
 
+      // Pace / heart rate profile, aggregated from lap data rather than km
+      // splits so an interval session shows its reps and its recoveries
+      // separately instead of averaging into one middling pace.
+      //
+      // refresh.py backfills laps a window of history at a time, so a shoe can
+      // legitimately cover fewer activities than it has runs. The note under
+      // each chart says how much of the shoe the profile actually speaks for.
+      const paceKm   = shoe.pace_km || [];
+      const hrKm     = shoe.hr_km   || [];
+      const coverage = shoe.lap_coverage || { activities: 0, of: shoe.runs, km: 0, hr_km: 0 };
+      const hasPace  = paceBins.length === paceKm.length && paceKm.some(v => v > 0);
+      const hasHr    = hrBins.length   === hrKm.length   && hrKm.some(v => v > 0);
+
+      function coverageNote(km) {
+        const partial = coverage.activities < coverage.of;
+        return '<div class="profile-note' + (partial ? ' partial' : '') + '">' +
+          coverage.activities + ' of ' + coverage.of + ' activities · ' + km + ' km of lap data' +
+          (partial ? ' · still backfilling history' : '') + '</div>';
+      }
+
+      const profileHTML = hasPace || hasHr ? `
+        <div class="overlay-charts profile-charts"${hasPace && hasHr ? '' : ' style="grid-template-columns:1fr"'}>
+          ${hasPace ? `<div class="chart-block">
+            <h3>Distance by pace</h3>
+            <canvas id="overlayPace"></canvas>
+            ${coverageNote(coverage.km)}
+          </div>` : ''}
+          ${hasHr ? `<div class="chart-block">
+            <h3>Distance by heart rate</h3>
+            <canvas id="overlayHr"></canvas>
+            ${coverageNote(coverage.hr_km)}
+          </div>` : ''}
+        </div>` : '';
+
       document.getElementById('overlay-content').innerHTML = `
         <div class="overlay-accent" style="background:repeating-linear-gradient(45deg,${shoe.color},${shoe.color} 8px,${shoe.secondary} 8px,${shoe.secondary} 16px)"></div>
         <div class="overlay-tag">${shoe.brand} · ${shoe.model}</div>
@@ -1121,6 +1166,7 @@
             <canvas id="overlayPie"></canvas>
           </div>
         </div>
+        ${profileHTML}
         ${shoe.best_efforts && Object.keys(shoe.best_efforts).length > 0 ? `
         <div class="overlay-prs">
           <h3>Personal Records on this shoe</h3>
@@ -1151,8 +1197,10 @@
         })() : ''}
       `;
 
-      if (histChart) { histChart.destroy(); histChart = null; }
-      if (pieChart)  { pieChart.destroy();  pieChart  = null; }
+      if (histChart)  { histChart.destroy();  histChart  = null; }
+      if (pieChart)   { pieChart.destroy();   pieChart   = null; }
+      if (paceChart)  { paceChart.destroy();  paceChart  = null; }
+      if (hrChart)    { hrChart.destroy();    hrChart    = null; }
 
       histChart = new Chart(document.getElementById('overlayHist'), {
         type: 'bar',
@@ -1191,6 +1239,40 @@
           },
         },
       });
+
+      // Both profiles are distributions of the same quantity (km), so they share
+      // one config and differ only in how the bars are coloured.
+      function profileChart(canvasId, labels, data, colors) {
+        const total = data.reduce((a, b) => a + b, 0);
+        return new Chart(document.getElementById(canvasId), {
+          type: 'bar',
+          data: { labels, datasets: [{ data, backgroundColor: colors, borderRadius:3, borderSkipped:false }] },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { display:false },
+              tooltip: { ...tip, callbacks: {
+                label: c => ` ${c.parsed.y.toFixed(1)} km · ${total ? Math.round(c.parsed.y / total * 100) : 0}%`,
+              } },
+            },
+            scales: {
+              x: { ticks:{ color:tick, font:{ size:10 }, maxRotation:60 }, grid:{ color:grid } },
+              y: { ticks:{ color:tick, font:{ size:10 }, callback: v => v + ' km' }, grid:{ color:grid } },
+            },
+          },
+        });
+      }
+
+      if (hasPace) {
+        paceChart = profileChart('overlayPace', paceBins, paceKm, shoe.color + 'bb');
+      }
+      if (hasHr) {
+        // Fall back to the hottest colour if refresh.py ever ships more bins than
+        // HR_BIN_COLORS has entries, rather than rendering a transparent bar.
+        const last = HR_BIN_COLORS[HR_BIN_COLORS.length - 1];
+        hrChart = profileChart('overlayHr', hrBins, hrKm,
+          hrKm.map((_, i) => (HR_BIN_COLORS[i] || last) + 'dd'));
+      }
 
       document.getElementById('overlay').style.display = 'block';
       document.body.style.overflow = 'hidden';

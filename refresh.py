@@ -19,6 +19,7 @@ shoe_config.json keys:
 
 Generated files (all committed, so state survives between GitHub Actions runs):
   best_efforts_cache.json — per-activity best efforts fetched from Strava
+  laps_cache.json         — per-activity lap distance/time/heart rate
   speed_points_log.json   — frozen per-activity speed point scores
   shoe_ids.md             — human-readable name -> ID reference
 """
@@ -43,6 +44,11 @@ BEST_EFFORT_ORDER = [
     "400m", "1/2 mile", "1k", "1 mile", "2 mile", "5k", "10k",
     "15k", "10 mile", "20k", "half-marathon", "30k", "marathon",
 ]
+
+# Bin boundaries for the per-shoe pace and heart rate profiles. Both are
+# *interior* edges: n edges produce n+1 bins, one open at each end.
+PACE_EDGES = [3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 8.0]  # minutes per km
+HR_EDGES   = [120, 130, 140, 150, 160, 170, 180]            # bpm
 
 
 # ── Credentials ────────────────────────────────────────────────────────────────
@@ -158,12 +164,15 @@ def save_best_efforts_cache(cache):
         json.dump(cache, f, separators=(",", ":"))
 
 
-def sync_best_efforts(activities, shoe_ids, headers):
+def sync_best_efforts(activities, shoe_ids, headers, laps_cache):
     """Fetch best_efforts for any Run activities on tracked shoes not yet cached.
 
     Strava allows 100 requests/15 min. We use a ~10s gap between calls so the
     initial sync of ~300 activities takes ~50 min. Progress is saved every 20
     fetches so re-running picks up where it left off on rate-limit errors.
+
+    The same payload carries the activity's laps, so they are stashed here too
+    and a new activity never needs a second fetch to build its shoe profile.
     """
     cache = load_best_efforts_cache()
     run_ids = [
@@ -179,14 +188,129 @@ def sync_best_efforts(activities, shoe_ids, headers):
     for i, aid in enumerate(new_ids):
         detail = fetch_activity_detail(aid, headers)
         cache[aid] = detail.get("best_efforts", [])
+        laps_cache["laps"][aid] = compact_laps(detail)
         # Save progress every 20 fetches
         if (i + 1) % 20 == 0:
             save_best_efforts_cache(cache)
+            save_laps_cache(laps_cache)
             print(f"    {i + 1}/{len(new_ids)} (progress saved)")
         # ~10s between calls keeps us well under 100 req/15 min
         time.sleep(10)
     save_best_efforts_cache(cache)
+    save_laps_cache(laps_cache)
     print(f"  Cache saved ({len(cache)} activities total).")
+    return cache
+
+
+# ── Lap cache ──────────────────────────────────────────────────────────────────
+# The per-shoe pace and heart rate profiles are built from *laps*, not from the
+# kilometre splits Strava also exposes. A lap is the unit a run was actually
+# structured in, so an interval session contributes its reps at rep pace and its
+# recoveries at jog pace. Kilometre splits average the two together, and every
+# interval session would come out looking like a steady medium run.
+#
+# laps_cache.json holds:
+#   window_days — how far back in history the backfill currently reaches
+#   laps        — {activity_id: [[distance_m, moving_time_s, avg_hr|null], ...]}
+#
+# Laps arrive in the same /activities/{id} payload as best efforts, so anything
+# fetched for the best-efforts cache fills both at once and costs nothing extra.
+# Everything older than this feature has to be re-fetched, and Strava allows only
+# 100 reads per 15 minutes, so that is done a slice at a time: the first run
+# covers the last month, and each run after it reaches a little further back.
+
+LAPS_CACHE               = "laps_cache.json"
+LAPS_INITIAL_WINDOW_DAYS = 30   # how far back the very first run reaches
+LAPS_WINDOW_STEP_DAYS    = 60   # how much further each subsequent run reaches
+LAPS_FETCH_BUDGET        = 40   # max activity fetches per run (~7 min at 10s apart)
+MIN_LAP_DISTANCE_M       = 50   # below this a lap is a GPS artefact, not a rep
+
+
+def load_laps_cache():
+    path = Path(__file__).parent / LAPS_CACHE
+    if path.exists():
+        with open(path) as f:
+            cache = json.load(f)
+        cache.setdefault("laps", {})
+        cache.setdefault("window_days", LAPS_INITIAL_WINDOW_DAYS)
+        return cache
+    return {"window_days": LAPS_INITIAL_WINDOW_DAYS, "laps": {}}
+
+
+def save_laps_cache(cache):
+    path = Path(__file__).parent / LAPS_CACHE
+    with open(path, "w") as f:
+        json.dump(cache, f, separators=(",", ":"), sort_keys=True)
+
+
+def compact_laps(detail):
+    """Reduce an activity's laps to [distance_m, moving_time_s, avg_hr|null] triples.
+
+    Moving time rather than elapsed time, so a lap that contains a pause is
+    scored at the pace it was actually run at.
+    """
+    out = []
+    for lap in detail.get("laps") or []:
+        dist = lap.get("distance") or 0
+        secs = lap.get("moving_time") or 0
+        if dist < MIN_LAP_DISTANCE_M or secs <= 0:
+            continue
+        hr = lap.get("average_heartrate")
+        out.append([round(dist), secs, round(hr, 1) if hr else None])
+    return out
+
+
+def tracked_runs(activities, shoe_ids):
+    """Run activities on a tracked shoe, newest first."""
+    return sorted(
+        (a for a in activities
+         if a.get("gear_id") in shoe_ids
+         and (a.get("sport_type") or a.get("type", "")) == "Run"),
+        key=lambda a: a["start_date_local"],
+        reverse=True,
+    )
+
+
+def backfill_laps(activities, shoe_ids, headers, cache):
+    """Fill in laps for one window of history per run, newest first.
+
+    Only activities inside the current window are fetched. The window widens by
+    LAPS_WINDOW_STEP_DAYS once it has been drained, so history is pulled in over
+    a series of runs rather than in one burst that would hit the rate limit.
+    """
+    laps    = cache["laps"]
+    window  = cache.get("window_days", LAPS_INITIAL_WINDOW_DAYS)
+    cutoff  = (datetime.utcnow() - timedelta(days=window)).strftime("%Y-%m-%d")
+    missing = [a for a in tracked_runs(activities, shoe_ids) if str(a["id"]) not in laps]
+
+    if not missing:
+        print(f"  Laps cache up to date ({len(laps)} activities cached).")
+        return cache
+
+    in_window = [a for a in missing if a["start_date_local"][:10] >= cutoff]
+    batch     = in_window[:LAPS_FETCH_BUDGET]
+
+    if batch:
+        print(f"  Fetching laps for {len(batch)} activities within the last {window} days "
+              f"({len(missing) - len(batch)} still missing)...")
+        for i, act in enumerate(batch):
+            detail = fetch_activity_detail(act["id"], headers)
+            laps[str(act["id"])] = compact_laps(detail)
+            if (i + 1) % 20 == 0:
+                save_laps_cache(cache)
+                print(f"    {i + 1}/{len(batch)} (progress saved)")
+            # ~10s between calls keeps us well under 100 req/15 min
+            time.sleep(10)
+
+    # Widen only once the window has actually been drained, so each run reaches
+    # exactly one step further back than the last.
+    if len(batch) == len(in_window) and len(missing) > len(batch):
+        cache["window_days"] = window + LAPS_WINDOW_STEP_DAYS
+        print(f"  Last {window} days complete — reaching back "
+              f"{cache['window_days']} days on the next run.")
+
+    save_laps_cache(cache)
+    print(f"  Laps cache saved ({len(laps)} activities total).")
     return cache
 
 
@@ -201,6 +325,65 @@ def fmt_time(seconds):
 def fmt_pace(elapsed_seconds, distance_m):
     pace_sec = elapsed_seconds / (distance_m / 1000)
     return f"{int(pace_sec) // 60}:{int(pace_sec) % 60:02d}/km"
+
+
+# ── Profile bins ────────────────────────────────────────────────────────────────
+def bin_index(value, edges):
+    """Which of the len(edges)+1 bins a value falls in. Bins are [edge, next_edge)."""
+    for i, edge in enumerate(edges):
+        if value < edge:
+            return i
+    return len(edges)
+
+
+def pace_bin_labels():
+    def mmss(minutes):
+        return f"{int(minutes)}:{round((minutes - int(minutes)) * 60):02d}"
+    labels = [f"<{mmss(PACE_EDGES[0])}"]
+    labels += [f"{mmss(a)}–{mmss(b)}" for a, b in zip(PACE_EDGES, PACE_EDGES[1:])]
+    labels.append(f"{mmss(PACE_EDGES[-1])}+")
+    return labels
+
+
+def hr_bin_labels():
+    labels = [f"<{HR_EDGES[0]}"]
+    labels += [f"{a}–{b}" for a, b in zip(HR_EDGES, HR_EDGES[1:])]
+    labels.append(f"{HR_EDGES[-1]}+")
+    return labels
+
+
+def lap_profile(acts, laps_cache):
+    """Aggregate one shoe's laps into km-per-pace-bin and km-per-HR-bin.
+
+    Returns (pace_km, hr_km, coverage). Laps without a heart rate still count
+    towards pace, so the two charts can cover different amounts of the same
+    distance — coverage reports both.
+    """
+    pace_km = [0.0] * (len(PACE_EDGES) + 1)
+    hr_km   = [0.0] * (len(HR_EDGES) + 1)
+    covered_acts, covered_km, hr_covered_km = 0, 0.0, 0.0
+
+    for act in acts:
+        laps = laps_cache.get(str(act["id"]))
+        if laps is None:
+            continue
+        covered_acts += 1
+        for dist_m, secs, hr in laps:
+            km   = dist_m / 1000
+            pace = (secs / 60) / km  # minutes per km
+            pace_km[bin_index(pace, PACE_EDGES)] += km
+            covered_km += km
+            if hr:
+                hr_km[bin_index(hr, HR_EDGES)] += km
+                hr_covered_km += km
+
+    coverage = {
+        "activities": covered_acts,
+        "of":         len(acts),
+        "km":         round(covered_km),
+        "hr_km":      round(hr_covered_km),
+    }
+    return ([round(v, 1) for v in pace_km], [round(v, 1) for v in hr_km], coverage)
 
 
 # ── Speed points ────────────────────────────────────────────────────────────────
@@ -431,10 +614,11 @@ def display_name(gear):
 
 
 # ── Data Processing ────────────────────────────────────────────────────────────
-def process(activities, gear_map, shoe_config=None, be_cache=None, scored=None):
+def process(activities, gear_map, shoe_config=None, be_cache=None, scored=None, laps_cache=None):
     shoe_config    = shoe_config or {}
     be_cache       = be_cache or {}
     scored         = scored or {}
+    laps_cache     = laps_cache or {}
     race_ids       = set(shoe_config.get("race_shoe_ids", []))
     ret_distances  = shoe_config.get("retirement_distances", {})
     default_ret_km = shoe_config.get("default_retirement_km", 500)
@@ -568,6 +752,11 @@ def process(activities, gear_map, shoe_config=None, be_cache=None, scored=None):
                         "is_overall_pr": effort.get("pr_rank") == 1,
                     }
 
+        # Pace / heart rate profile from lap data. Backfilled a window at a
+        # time, so coverage is partial until the backfill has walked all the
+        # way back — the dashboard renders what it has and says how much.
+        pace_km, hr_km, lap_coverage = lap_profile(acts, laps_cache)
+
         shoes_out.append({
             "id":            gid,
             "name":          display_name(g),
@@ -595,6 +784,9 @@ def process(activities, gear_map, shoe_config=None, be_cache=None, scored=None):
             "cumulative":    cum_series,
             "run_distances": [round(a["distance"] / 1000, 2) for a in acts],
             "best_efforts":  shoe_prs,
+            "pace_km":       pace_km,
+            "hr_km":         hr_km,
+            "lap_coverage":  lap_coverage,
             "race":          gid in race_ids,
         })
 
@@ -616,6 +808,8 @@ def process(activities, gear_map, shoe_config=None, be_cache=None, scored=None):
         "generated":   datetime.utcnow().strftime("%d %b %Y"),
         "all_months":  all_months,
         "all_weeks":   all_weeks,
+        "pace_bins":   pace_bin_labels(),
+        "hr_bins":     hr_bin_labels(),
         "shoes":       shoes_out,
         "leaderboard": leaderboard,
         "activities":  sorted(activities_out, key=lambda a: a["date"], reverse=True),
@@ -649,13 +843,18 @@ def main():
         print(f"  · {gear_map[gid]['name']}")
 
     shoe_ids = {gid for gid in gear_map if not gid.startswith("b")}
+    laps_cache = load_laps_cache()
+
     print("Syncing best efforts cache...")
-    be_cache = sync_best_efforts(activities, shoe_ids, headers)
+    be_cache = sync_best_efforts(activities, shoe_ids, headers, laps_cache)
+
+    print("Backfilling lap data...")
+    backfill_laps(activities, shoe_ids, headers, laps_cache)
 
     print("Scoring speed points...")
     scored = sync_speed_points(activities, shoe_ids, be_cache)
 
-    data = process(activities, gear_map, shoe_config, be_cache, scored)
+    data = process(activities, gear_map, shoe_config, be_cache, scored, laps_cache["laps"])
     data["athlete"] = {"firstname": athlete["firstname"], "lastname": athlete["lastname"]}
 
     print("Injecting data into index.html...")
