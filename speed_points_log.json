@@ -5004,7 +5004,35 @@
     "20182232889": {
       "details": [],
       "pts": 0
+    },
+    "20211303117": {
+      "details": [
+        {
+          "dist": "2 mile",
+          "new": "13:18",
+          "passed": [
+            "g23052419"
+          ],
+          "prev": "14:03",
+          "pts": 2,
+          "rank_after": 2,
+          "rank_before": 3
+        },
+        {
+          "dist": "5k",
+          "new": "21:44",
+          "passed": [
+            "g32434469",
+            "g23052419"
+          ],
+          "prev": "22:27",
+          "pts": 3,
+          "rank_after": 2,
+          "rank_before": 4
+        }
+      ],
+      "pts": 5
     }
   },
-  "seeded_at": "2026-09-15T11:11:20Z"
+  "seeded_at": "2026-09-17T11:22:25Z"
 }
