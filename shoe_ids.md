@@ -12,4 +12,4 @@ Last updated: 22 Sep 2026
 | Race | ASICS | 254 km | `g23195462` |
 | ASICS Gel-Nimbus 25 | ASICS | 253 km | `g19867062` |
 | Tempo & Threshold | ASICS | 234 km | `g29593716` |
-| Long run | ASICS | 151 km | `g32434469` |
+| Long run | ASICS | 156 km | `g32434469` |
