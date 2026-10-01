@@ -5120,7 +5120,21 @@
         }
       ],
       "pts": 16
+    },
+    "20396813600": {
+      "details": [
+        {
+          "dist": "2 mile",
+          "new": "14:03",
+          "passed": [],
+          "prev": "14:23",
+          "pts": 0,
+          "rank_after": 4,
+          "rank_before": 4
+        }
+      ],
+      "pts": 0
     }
   },
-  "seeded_at": "2026-09-27T16:16:54Z"
+  "seeded_at": "2026-09-30T19:26:01Z"
 }
