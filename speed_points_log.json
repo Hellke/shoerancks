@@ -5138,7 +5138,34 @@
     "20415960851": {
       "details": [],
       "pts": 0
+    },
+    "20427776132": {
+      "details": [],
+      "pts": 0
+    },
+    "20431801485": {
+      "details": [
+        {
+          "dist": "30k",
+          "new": "2:21:18",
+          "passed": [],
+          "prev": "2:24:49",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        },
+        {
+          "dist": "marathon",
+          "new": "3:26:16",
+          "passed": [],
+          "prev": "3:29:02",
+          "pts": 0,
+          "rank_after": 1,
+          "rank_before": 1
+        }
+      ],
+      "pts": 0
     }
   },
-  "seeded_at": "2026-10-02T07:41:56Z"
+  "seeded_at": "2026-10-03T10:00:22Z"
 }
