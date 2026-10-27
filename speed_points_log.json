@@ -5189,7 +5189,30 @@
     "20715152363": {
       "details": [],
       "pts": 0
+    },
+    "20742102883": {
+      "details": [
+        {
+          "dist": "20k",
+          "new": "8:16:50",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 8,
+          "rank_before": null
+        },
+        {
+          "dist": "half-marathon",
+          "new": "8:24:52",
+          "passed": [],
+          "prev": null,
+          "pts": 0,
+          "rank_after": 8,
+          "rank_before": null
+        }
+      ],
+      "pts": 0
     }
   },
-  "seeded_at": "2026-10-24T15:49:27Z"
+  "seeded_at": "2026-10-26T07:42:36Z"
 }
