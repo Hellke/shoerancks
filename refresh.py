@@ -224,6 +224,7 @@ LAPS_INITIAL_WINDOW_DAYS = 30   # how far back the very first run reaches
 LAPS_WINDOW_STEP_DAYS    = 60   # how much further each subsequent run reaches
 LAPS_FETCH_BUDGET        = 40   # max activity fetches per run (~7 min at 10s apart)
 MIN_LAP_DISTANCE_M       = 50   # below this a lap is a GPS artefact, not a rep
+PROFILE_SPORTS           = {"Run", "TrailRun"}  # sport types the profile covers
 
 
 def load_laps_cache():
@@ -260,12 +261,21 @@ def compact_laps(detail):
     return out
 
 
+def is_profiled(act):
+    """Whether an activity belongs in the pace / heart rate profile.
+
+    Shared by the backfill and the coverage count so the two always agree —
+    otherwise a shoe with walks on it reports "still backfilling" forever.
+    Walks and hikes are left out because they would swamp the slowest pace bin.
+    """
+    return (act.get("sport_type") or act.get("type", "")) in PROFILE_SPORTS
+
+
 def tracked_runs(activities, shoe_ids):
-    """Run activities on a tracked shoe, newest first."""
+    """Profiled activities on a tracked shoe, newest first."""
     return sorted(
         (a for a in activities
-         if a.get("gear_id") in shoe_ids
-         and (a.get("sport_type") or a.get("type", "")) == "Run"),
+         if a.get("gear_id") in shoe_ids and is_profiled(a)),
         key=lambda a: a["start_date_local"],
         reverse=True,
     )
@@ -359,6 +369,7 @@ def lap_profile(acts, laps_cache):
     towards pace, so the two charts can cover different amounts of the same
     distance — coverage reports both.
     """
+    acts    = [a for a in acts if is_profiled(a)]
     pace_km = [0.0] * (len(PACE_EDGES) + 1)
     hr_km   = [0.0] * (len(HR_EDGES) + 1)
     covered_acts, covered_km, hr_covered_km = 0, 0.0, 0.0
